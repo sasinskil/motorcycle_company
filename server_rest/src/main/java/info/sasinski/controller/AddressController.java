@@ -1,11 +1,10 @@
 package info.sasinski.controller;
 
 import info.sasinski.entity.Address;
-import info.sasinski.service.impl.AddressServiceImpl;
-import info.sasinski.validationResponse.ConstraintViolationsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
+import info.sasinski.service.AddressService;
+import info.sasinski.transfer.response.ConstraintViolationsResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -13,87 +12,55 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
+@AllArgsConstructor
 
 @RestController
 @RequestMapping(value = "/api/address")
 @CrossOrigin(origins = "*")
-public class AddressController {
+public class AddressController extends ControllerBase {
 
-    private final AddressServiceImpl addressService;
-
-    @Autowired
-    public AddressController(AddressServiceImpl addressService) {
-        this.addressService = addressService;
-    }
+    final AddressService _addressService;
 
     @GetMapping
-    public HttpEntity<List<Address>> getAll() {
-
-            List<Address> getAllA = addressService.findAll();
-
-            if(getAllA !=null) {
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(getAllA);
-            }
-
-            return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .body(null);
-
+    public ResponseEntity<List<Address>> get() {
+        List<Address> list = _addressService.findAll();
+        return list.isEmpty() ?
+                notFound() :
+                ok(list);
     }
 
     @GetMapping("/{id:\\d+}")
-    public HttpEntity<Address> getAddressById(@PathVariable("id") long id) {
-
-            Address address = addressService.findAddressById(id);
-
-            if(address !=null) {
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(address);
-            }
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(null);
+    public ResponseEntity<Address> get(@PathVariable("id") long id) {
+        Address addressById = _addressService.findAddressById(id);
+        return addressById == null ?
+                notFound() :
+                ok(addressById);
     }
 
     @PutMapping("/save/{id:\\d+}")
     @Transactional
-    public HttpEntity updateExistAddress(@Validated @RequestBody Address address, BindingResult bindingResult, @PathVariable("id") long id) {
+    public ResponseEntity<?> put(@Validated @RequestBody Address address,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") long id) {
 
-        Address address1 = addressService.findAddressById(id);
-
-        if(address1==null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-        else if (bindingResult.hasErrors())
-        {
+        Address addressById = _addressService.findAddressById(id);
+        if (addressById == null) {
+            return notFound();
+        } else if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
-            address.setId(id);
+        address.setId(id);
+        _addressService.saveAddress(address);
 
-            addressService.saveAddress(address);
-
-            return ResponseEntity.noContent().build();
-
+        return noContent();
     }
 }
