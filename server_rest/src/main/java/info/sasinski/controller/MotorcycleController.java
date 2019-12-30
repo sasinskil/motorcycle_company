@@ -1,11 +1,10 @@
 package info.sasinski.controller;
 
 import info.sasinski.entity.Motorcycle;
-import info.sasinski.service.impl.MotorcycleServiceImpl;
-import info.sasinski.validationResponse.ConstraintViolationsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
+import info.sasinski.service.MotorcycleService;
+import info.sasinski.transfer.response.ConstraintViolationsResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,130 +15,74 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+
 @RestController
-@RequestMapping(value = "/api/motorcycle", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-public class MotorcycleController {
+@RequestMapping(
+        value = "/api/motorcycle",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+public class MotorcycleController extends ControllerBase {
 
-    private final MotorcycleServiceImpl motorcycleService;
-
-    @Autowired
-    public MotorcycleController(MotorcycleServiceImpl motorcycleService) {
-        this.motorcycleService = motorcycleService;
-    }
+    final MotorcycleService _motorcycleService;
 
     @GetMapping
-    public HttpEntity<List<Motorcycle>> getAll() {
-
-        List<Motorcycle> all = motorcycleService.allMotorcyclesInStock();
-
-        if(!(all.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(all);
-        }
-
-
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<List<Motorcycle>> get() {
+        List<Motorcycle> list = _motorcycleService.allMotorcyclesInStock();
+        return list.isEmpty() ?
+                notFound() :
+                ok(list);
     }
 
     @GetMapping("/{id:\\d+}")
-    public HttpEntity<Motorcycle> getMotorcycleById(@PathVariable("id") long id) {
-
-        Motorcycle motorcycle = motorcycleService.getMotorcycleById(id);
-
-        if(motorcycle != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(motorcycle);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<Motorcycle> get(@PathVariable("id") long id) {
+        Motorcycle motorcycleById = _motorcycleService.getMotorcycleById(id);
+        return motorcycleById == null ?
+                notFound() :
+                ok(motorcycleById);
     }
 
     @GetMapping("/byBrand/{brand}")
-    HttpEntity<List<Motorcycle>> findByBrand(@PathVariable("brand") String brand) {
-
-        List<Motorcycle> byBrand = motorcycleService.findByBrand(brand);
-        List<Motorcycle> allInStock = getAll().getBody();
-
-        if(!(byBrand.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(byBrand);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(allInStock);
-        }
+    public ResponseEntity<List<Motorcycle>> get(@PathVariable("brand") String brand) {
+        List<Motorcycle> byBrand = _motorcycleService.findByBrand(brand);
+        return ok(byBrand.isEmpty() ? get().getBody() : byBrand);
     }
 
     @GetMapping("/powerGreaterThan/{power}")
-    HttpEntity<List<Motorcycle>> powerGreaterThan(@PathVariable("power") int pow) {
-
-        List<Motorcycle> byPower = motorcycleService.powerGreaterThan(pow);
-
-        if(!(byPower.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(byPower);
-        }
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
-
+    public ResponseEntity<List<Motorcycle>> get(@PathVariable("power") int pow) {
+        List<Motorcycle> byPower = _motorcycleService.powerGreaterThan(pow);
+        return byPower.isEmpty() ?
+                notFound() :
+                ok(byPower);
     }
 
     @GetMapping("/count")
-    public int countMotorcyclesInStock() {
-
-        return motorcycleService.countMotorcyclesInStock();
+    public ResponseEntity<Long> count() {
+        return ok(_motorcycleService.countMotorcyclesInStock());
     }
 
     @PutMapping("/{id:\\d+}")
     @Transactional
-    public HttpEntity updateMotorcycle(@Validated @RequestBody Motorcycle motorcycle, BindingResult bindingResult, @PathVariable("id") long id) {
+    public ResponseEntity<?> put(@Validated @RequestBody Motorcycle motorcycle,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") long id) {
 
-        Motorcycle motorcycle1 = motorcycleService.getMotorcycleById(id);
-
-        if(motorcycle1==null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        else if (bindingResult.hasErrors())
-        {
+        Motorcycle motorcycleById = _motorcycleService.getMotorcycleById(id);
+        if (motorcycleById == null) {
+            return notFound();
+        } else if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
         motorcycle.setId(id);
-        motorcycleService.saveMotorcycle(motorcycle);
+        _motorcycleService.saveMotorcycle(motorcycle);
 
-        return ResponseEntity.noContent().build();
-
+        return noContent();
     }
-
-
-
 }
