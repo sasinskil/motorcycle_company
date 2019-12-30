@@ -1,12 +1,11 @@
 package info.sasinski.controller;
 
 import info.sasinski.entity.Employee;
-import info.sasinski.service.impl.EmployeeServiceImpl;
-import info.sasinski.validationResponse.ConstraintViolationsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import info.sasinski.service.EmployeeService;
+import info.sasinski.transfer.response.ConstraintViolationsResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -17,148 +16,91 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+
 @RestController
 @RequestMapping(value = "/api/employee")
-public class EmployeeController {
-    private final EmployeeServiceImpl employeeService;
+public class EmployeeController extends ControllerBase {
 
-    @Autowired
-    public EmployeeController(EmployeeServiceImpl employeeService) {
-        this.employeeService = employeeService;
-    }
+    final EmployeeService _employeeService;
 
     @GetMapping
-    public HttpEntity<List<Employee>> getEmployees() {
-
-        List<Employee> getAll = employeeService.findAll();
-
-        if(!(getAll.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(getAll);
-        }
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<List<Employee>> get() {
+        List<Employee> list = _employeeService.findAll();
+        return list.isEmpty() ?
+                notFound() :
+                ok(list);
     }
 
     @GetMapping(value = "/{id:\\d+}")
-    public HttpEntity<Employee> findEmployeeById(@PathVariable("id") long id) {
-        Employee emp = employeeService.findEmployeeById(id);
-
-        if(emp != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(emp);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<Employee> get(@PathVariable("id") long id) {
+        Employee employeeById = _employeeService.findEmployeeById(id);
+        return employeeById == null ?
+                notFound() :
+                ok(employeeById);
     }
 
     @GetMapping("/countByFirstName/{firstName}")
-    public int countByFirstNameIgnoreCase(@PathVariable("firstName") String firstName) {
-
-        return employeeService.countByFirstNameIgnoreCase(firstName);
+    public ResponseEntity<Integer> get(@PathVariable("firstName") String firstName) {
+        return ok(_employeeService.countByFirstNameIgnoreCase(firstName));
     }
 
     @GetMapping("/allByDateOfEmployment/{date}")
-    public HttpEntity<List<Employee>> findAllByDateOfEmployment
-            (@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("date") LocalDate dateOfEmployment) {
-
-        List<Employee> byDateOfEmployment = employeeService.findAllByDateOfEmployment(dateOfEmployment);
-
-        if(!(byDateOfEmployment.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(byDateOfEmployment);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<List<Employee>> get(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("date") LocalDate dateOfEmployment) {
+        List<Employee> byDateOfEmployment = _employeeService.findAllByDateOfEmployment(dateOfEmployment);
+        return byDateOfEmployment.isEmpty() ?
+                notFound() :
+                ok(byDateOfEmployment);
     }
 
     @PostMapping
-    public HttpEntity saveEmployee(@Validated @RequestBody Employee employee, BindingResult bindingResult) {
-
-        if(bindingResult.hasErrors())
-        {
+    public ResponseEntity<?> post(@Validated @RequestBody Employee employee, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
-        employeeService.saveEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-
+        _employeeService.saveEmployee(employee);
+        return created();
     }
 
     @PutMapping("/{id:\\d+}")
     @Transactional
-    public HttpEntity updateExistEmployee(@Validated @RequestBody Employee employee,BindingResult bindingResult, @PathVariable("id") long id) {
+    public ResponseEntity<?> put(@Validated @RequestBody Employee employee,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") long id) {
 
-        Employee employee1 = employeeService.findEmployeeById(id);
-
-        if(employee1==null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        else if (bindingResult.hasErrors())
-        {
+        Employee employeeById = _employeeService.findEmployeeById(id);
+        if (employeeById == null) {
+            return notFound();
+        } else if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
         employee.setId(id);
-        employeeService.saveEmployee(employee);
-
-        return ResponseEntity.noContent().build();
-
+        _employeeService.saveEmployee(employee);
+        return noContent();
     }
 
     @DeleteMapping("/{id:\\d+}")
-    public HttpEntity<Void> removeEmployee(@PathVariable("id") long id) {
-
-        Employee employee = employeeService.findEmployeeById(id);
-
-        if (employee != null) {
-            employeeService.removeEmployee(id);
-
-            return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .build();
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        Employee employeeById = _employeeService.findEmployeeById(id);
+        if (employeeById != null) {
+            _employeeService.removeEmployee(id);
+            return noContent();
         }
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build();
-
+        return notFound();
     }
 }
