@@ -1,19 +1,16 @@
 package info.sasinski.controller;
 
-
 import info.sasinski.entity.Customer;
 import info.sasinski.entity.Employee;
 import info.sasinski.entity.MotorcycleDetails;
 import info.sasinski.entity.Transaction;
-import info.sasinski.response.ActionResponse;
-import info.sasinski.service.impl.TransactionServiceImpl;
-import info.sasinski.validationResponse.ConstraintViolationsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
+import info.sasinski.service.TransactionService;
+import info.sasinski.transfer.response.ActionResponse;
+import info.sasinski.transfer.response.ConstraintViolationsResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,186 +18,131 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping(value = "/api/transaction", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-public class TransactionController {
-    private final TransactionServiceImpl transactionService;
+@AllArgsConstructor
 
-    @Autowired
-    public TransactionController(TransactionServiceImpl transactionService) {
-        this.transactionService = transactionService;
-    }
+@RestController
+@RequestMapping(
+        value = "/api/transaction",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+public class TransactionController extends ControllerBase {
+
+    final TransactionService _transactionService;
 
     @GetMapping
-    public HttpEntity<Iterable<Transaction>> getAll() {
-
-        Iterable<Transaction> findALL = transactionService.getAllT();
-
-        if(!(((List<Transaction>) findALL).isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(findALL);
-        }
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<Iterable<Transaction>> get() {
+        List<Transaction> list = _transactionService.getAll();
+        return list.isEmpty() ?
+                notFound() :
+                ok(list);
     }
 
     @GetMapping("/{id:\\d+}")
-    public HttpEntity<Transaction> getTransactionById(@PathVariable("id") long id) {
-        Transaction getOneById = transactionService.getAllT()
-                .stream().filter(t -> t.getId() == id).findAny().get();
-
-        if(getOneById != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(getOneById);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(null);
+    public ResponseEntity<Transaction> get(@PathVariable("id") long id) {
+        Transaction transaction = _transactionService.getById(id);
+        return transaction == null ?
+                notFound() :
+                ok(transaction);
     }
 
     @GetMapping("/{id:\\d+}/employee")
-    public HttpEntity<Employee> findEmployeeInTransaction(@PathVariable("id") long id) {
-        Employee employee = transactionService.getAllT()
-                .stream().filter(t -> t.getId() == id).findAny().get().getEmployee();
-
-        if (employee != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(employee);
+    public ResponseEntity<Employee> findEmployeeInTransaction(@PathVariable("id") long id) {
+        Transaction transaction = _transactionService.getById(id);
+        if (transaction == null) {
+            return notFound();
         }
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+        Employee employee = transaction.getEmployee();
+        if (employee == null) {
+            return notFound();
+        }
+
+        return ok(employee);
     }
 
     @GetMapping("/{id:\\d+}/customer")
-    public HttpEntity<Customer> findCustomerInTransaction(@PathVariable("id") long id) {
-        Customer customer = transactionService.getAllT()
-                .stream().filter(t -> t.getId() == id).findAny().get().getCustomer();
-
-        if(customer != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(customer);
+    public ResponseEntity<Customer> findCustomerInTransaction(@PathVariable("id") long id) {
+        Transaction transaction = _transactionService.getById(id);
+        if (transaction == null) {
+            return notFound();
         }
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+        Customer customer = transaction.getCustomer();
+        if (customer == null) {
+            return notFound();
+        }
+
+        return ok(customer);
     }
 
     @GetMapping("/{id:\\d+}/motorcycleDetails")
-    public HttpEntity<MotorcycleDetails> findMotorcycleDetailsInTransaction(@PathVariable("id") long id) {
-        MotorcycleDetails motorcycleDetails = transactionService.getAllT()
-                .stream().filter(t -> t.getId() == id).findAny().get().getMotorcycleDetails();
-
-        if(motorcycleDetails != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(motorcycleDetails);
+    public ResponseEntity<MotorcycleDetails> findMotorcycleDetailsInTransaction(@PathVariable("id") long id) {
+        Transaction transaction = _transactionService.getById(id);
+        if (transaction == null) {
+            return notFound();
         }
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+        MotorcycleDetails motorcycleDetails = transaction.getMotorcycleDetails();
+        if (motorcycleDetails == null) {
+            return notFound();
+        }
+
+        return ok(motorcycleDetails);
     }
 
     @GetMapping("/{id:\\d+}/details")
     @ResponseBody
-    public HttpEntity<ActionResponse> transactionDetails(@PathVariable("id") long id) {
-
-        Transaction transaction = transactionService.getAllT()
-                .stream().filter(t -> t.getId() == id).findAny().get();
+    public ResponseEntity<ActionResponse> transactionDetails(@PathVariable("id") long id) {
+        Transaction transaction = _transactionService.getById(id);
+        if (transaction == null) {
+            return notFound();
+        }
 
         MotorcycleDetails motorcycleDetails = transaction.getMotorcycleDetails();
         Customer customer = transaction.getCustomer();
         Employee employee = transaction.getEmployee();
 
-        ActionResponse actionResponse = new ActionResponse(motorcycleDetails, employee, customer);
-
-        if(transaction != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(actionResponse);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+        return ok(new ActionResponse(motorcycleDetails, employee, customer));
     }
 
     @PostMapping
-    public HttpEntity saveTransaction(@Validated @RequestBody Transaction transaction, BindingResult bindingResult) {
-
-
-        if(bindingResult.hasErrors())
-        {
+    public ResponseEntity<?> post(@Validated @RequestBody Transaction transaction, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
-        transactionService.saveTransaction(transaction);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        _transactionService.saveTransaction(transaction);
+        return created();
 
     }
 
     @PutMapping("/{id:\\d+}")
-    @Transactional
-    public HttpEntity updateExistTransaction(@Validated @RequestBody Transaction transaction,BindingResult bindingResult, @PathVariable("id") long id) {
-
-        Transaction transaction1 = transactionService.getAllT()
-                .stream().filter(t -> t.getId() == id).findAny().get();
-
-        if(transaction1==null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+    public ResponseEntity<?> put(@Validated @RequestBody Transaction transaction,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") long id) {
+        Transaction byId = _transactionService.getById(id);
+        if (byId == null) {
+            return notFound();
         }
-
-        else if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
         transaction.setId(id);
-        transactionService.saveTransaction(transaction);
+        _transactionService.saveTransaction(transaction);
 
-        return ResponseEntity.noContent().build();
-
+        return noContent();
     }
-
-
 }
