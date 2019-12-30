@@ -2,11 +2,10 @@ package info.sasinski.controller;
 
 import info.sasinski.entity.Motorcycle;
 import info.sasinski.entity.MotorcycleDetails;
-import info.sasinski.service.impl.MotorcycleDetailsServiceImpl;
-import info.sasinski.validationResponse.ConstraintViolationsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
+import info.sasinski.service.MotorcycleDetailsService;
+import info.sasinski.transfer.response.ConstraintViolationsResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -16,169 +15,99 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+
 @RestController
 @RequestMapping(value = "/api/motorcycleDetails")
-public class MotorcycleDetailsController {
-    private final MotorcycleDetailsServiceImpl motorcycleDetailsService;
+public class MotorcycleDetailsController extends ControllerBase {
 
-    @Autowired
-    public MotorcycleDetailsController(MotorcycleDetailsServiceImpl motorcycleDetailsService) {
-        this.motorcycleDetailsService = motorcycleDetailsService;
-    }
+    final MotorcycleDetailsService _motorcycleDetailsService;
 
     @GetMapping
-    public HttpEntity<List<MotorcycleDetails>> getAll() {
-
-        List<MotorcycleDetails> mDList = motorcycleDetailsService.allMotorcyclesInStock();
-
-        if(!(mDList.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(mDList);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<List<MotorcycleDetails>> get() {
+        List<MotorcycleDetails> motorcycleDetails = _motorcycleDetailsService.allMotorcyclesInStock();
+        return motorcycleDetails.isEmpty() ?
+                notFound() :
+                ok(motorcycleDetails);
     }
 
     @GetMapping(value = "/{id:\\d+}")
-    public HttpEntity<MotorcycleDetails> getMotorcycleDetailsById(@PathVariable("id") long id) {
-
-        MotorcycleDetails motorcycleDetails = motorcycleDetailsService.findMotorcycleDetailsById(id);
-
-        if(motorcycleDetails != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(motorcycleDetails);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<MotorcycleDetails> details(@PathVariable("id") long id) {
+        MotorcycleDetails motorcycleDetails = _motorcycleDetailsService.findMotorcycleDetailsById(id);
+        return motorcycleDetails == null ?
+                notFound() :
+                ok(motorcycleDetails);
     }
 
     @GetMapping("/{id:\\d+}/motorcycle")
-    public HttpEntity<Motorcycle> getMotorcycleFromMotorcycleDetails(@PathVariable("id") long id) {
-
-        Motorcycle motorcycle = motorcycleDetailsService.findMotorcycleDetailsById(id).getMotorcycle();
-
-
-        if(motorcycle != null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(motorcycle);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
+    public ResponseEntity<Motorcycle> get(@PathVariable("id") long id) {
+        Motorcycle motorcycle = _motorcycleDetailsService.findMotorcycleDetailsById(id).getMotorcycle();
+        return motorcycle == null ?
+                notFound() :
+                ok(motorcycle);
     }
 
     @GetMapping("/count")
-    public int countMotorcyclesInStock() {
-        return motorcycleDetailsService.countMotorcyclesInStock();
+    public ResponseEntity<Long> count() {
+        return ok(_motorcycleDetailsService.countMotorcyclesInStock());
     }
 
     @GetMapping("/highestPrice")
-    public HttpEntity<List<MotorcycleDetails>> findMotorcycleWithHighestPrice() {
-
-        List<MotorcycleDetails> byPrice = motorcycleDetailsService.findMotorcycleWithHighestPrice();
-
-        if(!(byPrice.isEmpty()))
-        {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(byPrice);
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
-
+    public ResponseEntity<List<MotorcycleDetails>> highestPrice() {
+        List<MotorcycleDetails> byPrice = _motorcycleDetailsService.findMotorcycleWithHighestPrice();
+        return byPrice.isEmpty() ?
+                notFound() :
+                ok(byPrice);
     }
 
     @PostMapping
-    public HttpEntity saveSimpleMotorcycle(@Validated @RequestBody MotorcycleDetails motorcycleDetails, BindingResult bindingResult) {
-
-        if(bindingResult.hasErrors())
-        {
+    public ResponseEntity<?> post(@Validated @RequestBody MotorcycleDetails motorcycleDetails, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
-        motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-
+        _motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
+        return created();
     }
 
     @PutMapping("/{id:\\d+}")
     @Transactional
-    public HttpEntity updateExistSimpleMotorcycle(@Validated @RequestBody MotorcycleDetails motorcycleDetails,BindingResult bindingResult, @PathVariable("id") long id) {
+    public ResponseEntity<?> put(@Validated @RequestBody MotorcycleDetails motorcycleDetails,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") long id) {
 
-        MotorcycleDetails motorcycleDetails1 = motorcycleDetailsService.findMotorcycleDetailsById(id);
-
-        if(motorcycleDetails1==null)
-        {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        else if (bindingResult.hasErrors())
-        {
+        MotorcycleDetails motorcycleDetailsById = _motorcycleDetailsService.findMotorcycleDetailsById(id);
+        if (motorcycleDetailsById == null) {
+            return notFound();
+        } else if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult
                     .getAllErrors()
                     .stream()
-                    .map(e -> e.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
 
-            ConstraintViolationsResponse responseValidateErrors = new ConstraintViolationsResponse("409","Validation failure",errors);
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(responseValidateErrors);
-
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
         motorcycleDetails.setId(id);
-        motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
+        _motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
 
-        return ResponseEntity.noContent().build();
-
+        return noContent();
     }
 
     @DeleteMapping("/{id:\\d+}")
-    public HttpEntity<Void> removeSimpleMotorcycle(@PathVariable("id") long id) {
-
-        MotorcycleDetails motorcycleDetails = motorcycleDetailsService.findMotorcycleDetailsById(id);
-
-        if (motorcycleDetails != null) {
-            motorcycleDetailsService.removeSimpleMotorcycle(id);
-
-            return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .build();
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        MotorcycleDetails motorcycleDetailsById = _motorcycleDetailsService.findMotorcycleDetailsById(id);
+        if (motorcycleDetailsById != null) {
+            _motorcycleDetailsService.removeSimpleMotorcycle(id);
+            return noContent();
         }
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build();
-
+        return notFound();
     }
-
-
 }
