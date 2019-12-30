@@ -1,17 +1,19 @@
 package info.sasinski.transfer.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-@Accessors(fluent = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 public class ConstraintViolationsResponse {
 
-    final String statusCode;
-    final String errorContent;
-    final List<String> errorMsg;
+    String statusCode;
+    String errorContent;
+    List<String> errorMsg;
 }

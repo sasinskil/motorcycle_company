@@ -1,16 +1,9 @@
 package info.sasinski.service;
 
-import info.sasinski.entity.Address;
-import info.sasinski.entity.Employee;
-import info.sasinski.entity.enumeration.Position;
 import info.sasinski.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @Slf4j
@@ -27,7 +20,7 @@ public class SeedDataService {
 
     //TODO: implement data seed
     public void seed() {
-
+//
 //        List<Address> aList = new ArrayList<>();
 //        List<Employee> eList = new ArrayList<>();
 //        List<Customer> cList = new ArrayList<>();
@@ -166,28 +159,28 @@ public class SeedDataService {
 
     }
 
-    private void printAll(List<Employee> unsorted) {
-//        unsorted.forEach(System.out::println);
-    }
-
-//    public List<String> findTop3StreamUse(Position position) {
-//        List<Employee> items = employeeRepository.findTop3ByPosition(position);
-//        return items.stream().map(Employee::getFirstName).collect(Collectors.toList());
+//    private void printAll(List<Employee> unsorted) {
+////        unsorted.forEach(System.out::println);
 //    }
-
-    private Employee createEmployee(
-            String firstName, String lastName, LocalDate birthDate,
-            BigDecimal salary, Position position, LocalDate dateOfEmployment,
-            LocalDate dateOfTermination, Address address) {
-        Employee employee = new Employee();
-        employee.setDateOfEmployment(dateOfEmployment);
-        employee.setDateOfTermination(dateOfTermination);
-        employee.setPosition(position);
-        employee.setSalary(salary);
-        employee.setAddress(address);
-        employee.setFirstName(firstName);
-        employee.setLastName(lastName);
-        employee.setBirthDate(birthDate);
-        return _employeeRepository.save(employee);
-    }
+//
+////    public List<String> findTop3StreamUse(Position position) {
+////        List<Employee> items = employeeRepository.findTop3ByPosition(position);
+////        return items.stream().map(Employee::getFirstName).collect(Collectors.toList());
+////    }
+//
+//    private Employee createEmployee(
+//            String firstName, String lastName, LocalDate birthDate,
+//            BigDecimal salary, Position position, LocalDate dateOfEmployment,
+//            LocalDate dateOfTermination, Address address) {
+//        Employee employee = new Employee();
+//        employee.setDateOfEmployment(dateOfEmployment);
+//        employee.setDateOfTermination(dateOfTermination);
+//        employee.setPosition(position);
+//        employee.setSalary(salary);
+//        employee.setAddress(address);
+//        employee.setFirstName(firstName);
+//        employee.setLastName(lastName);
+//        employee.setBirthDate(birthDate);
+//        return _employeeRepository.save(employee);
+//    }
 }

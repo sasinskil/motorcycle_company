@@ -1,29 +1,43 @@
 package info.sasinski.security.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.io.Serializable;
-
-@Getter
-@Setter
-@NoArgsConstructor
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role {
 
     @Id
-    @SequenceGenerator(name = "gen_roles", sequenceName = "seq_roles", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_roles")
+    @SequenceGenerator(name = "Role_generator", sequenceName = "Role_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Role_generator")
     @Column(updatable = false, nullable = false, unique = true)
-    Long id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 50)
-    RoleName name;
+    private RoleName name;
+
+    public Role() {}
+
+    public Role(RoleName name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public RoleName getName() {
+        return name;
+    }
+
+    public void setName(RoleName name) {
+        this.name = name;
+    }
 }

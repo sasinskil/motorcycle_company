@@ -3,16 +3,18 @@ package info.sasinski.transfer.response;
 import info.sasinski.entity.Customer;
 import info.sasinski.entity.Employee;
 import info.sasinski.entity.MotorcycleDetails;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
-@Accessors(fluent = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 public class ActionResponse {
 
-    final MotorcycleDetails motorcycleDetails;
-    final Employee employee;
-    final Customer customer;
+    MotorcycleDetails motorcycleDetails;
+    Employee employee;
+    Customer customer;
 }

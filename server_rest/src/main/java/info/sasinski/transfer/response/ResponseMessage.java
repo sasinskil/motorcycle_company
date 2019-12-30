@@ -1,13 +1,18 @@
 package info.sasinski.transfer.response;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
-
-@RequiredArgsConstructor
-@Accessors(fluent = true)
-@Getter
 public class ResponseMessage {
 
-    final String message;
+    private String message;
+
+    public ResponseMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

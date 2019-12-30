@@ -1,17 +1,16 @@
 package info.sasinski.security.controller;
 
-import info.sasinski.controller.ControllerBase;
 import info.sasinski.security.JwtConfig.JwtProvider;
+import info.sasinski.transfer.request.Login;
+import info.sasinski.transfer.request.SignUp;
+import info.sasinski.transfer.response.JwtResponse;
+import info.sasinski.transfer.response.ResponseMessage;
 import info.sasinski.security.model.Role;
 import info.sasinski.security.model.RoleName;
 import info.sasinski.security.model.User;
 import info.sasinski.security.repository.RoleRepository;
 import info.sasinski.security.repository.UserRepository;
-import info.sasinski.transfer.request.LoginRequest;
-import info.sasinski.transfer.request.RegisterRequest;
-import info.sasinski.transfer.response.LoginResponse;
-import info.sasinski.transfer.response.ResponseMessage;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,74 +25,78 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-public class AuthRestAPI extends ControllerBase {
+public class AuthRestAPI {
 
-    AuthenticationManager _authenticationManager;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-    UserRepository _userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-    RoleRepository _roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
-    PasswordEncoder _encoder;
+    @Autowired
+    PasswordEncoder encoder;
 
-    JwtProvider _jwtProvider;
+    @Autowired
+    JwtProvider jwtProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody Login loginRequest) {
 
-        Authentication authentication = _authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = _jwtProvider.generateJwtToken(authentication);
+        String jwt = jwtProvider.generateJwtToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        return ok(new LoginResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequestRequest) {
-        if (_userRepository.existsByUsername(registerRequestRequest.username())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUp signUpRequest) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if (_userRepository.existsByEmail(registerRequestRequest.email())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
         // Creating user's account
-        User user = new User();
-        user.setName(registerRequestRequest.name());
-        user.setUsername(registerRequestRequest.username());
-        user.setEmail(registerRequestRequest.email());
-        user.setPassword(_encoder.encode(registerRequestRequest.password()));
+        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = registerRequestRequest.role();
+        Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         strRoles.forEach(role -> {
-            if ("admin".equals(role)) {
-                Role adminRole = _roleRepository.findByName(RoleName.ROLE_ADMIN)
-                        .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-                roles.add(adminRole);
-            } else {
-                Role userRole = _roleRepository.findByName(RoleName.ROLE_USER)
-                        .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-                roles.add(userRole);
+            switch (role) {
+                case "admin":
+                    Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    roles.add(adminRole);
+
+                    break;
+                default:
+                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    roles.add(userRole);
             }
         });
 
         user.setRoles(roles);
-        _userRepository.save(user);
+        userRepository.save(user);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
+
 }

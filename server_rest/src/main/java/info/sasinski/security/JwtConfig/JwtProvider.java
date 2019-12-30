@@ -2,50 +2,51 @@ package info.sasinski.security.JwtConfig;
 
 import info.sasinski.security.service.UserPrinciple;
 import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Slf4j
 @Component
 public class JwtProvider {
 
-    private final String _jwtSecret;
-    private final int _jwtExpiration;
+    private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-    public JwtProvider(@Value("${info.sasinski.jwt-secret}") String jwtSecret, @Value("${info.sasinski.jwt-expiration}") int jwtExpiration) {
-        _jwtSecret = jwtSecret;
-        _jwtExpiration = jwtExpiration;
-    }
+    @Value("${info.sasinski.jwtSecret}")
+    private String jwtSecret;
+
+    @Value("${info.sasinski.jwtExpiration}")
+    private int jwtExpiration;
 
     public String generateJwtToken(Authentication authentication) {
+
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + _jwtExpiration*1000))
-                .signWith(SignatureAlgorithm.HS512, _jwtSecret)
+                .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(_jwtSecret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
-            log.error("Invalid JWT signature -> Message: {} ", e);
+            logger.error("Invalid JWT signature -> Message: {} ", e);
         } catch (MalformedJwtException e) {
-            log.error("Invalid JWT token -> Message: {}", e);
+            logger.error("Invalid JWT token -> Message: {}", e);
         } catch (ExpiredJwtException e) {
-            log.error("Expired JWT token -> Message: {}", e);
+            logger.error("Expired JWT token -> Message: {}", e);
         } catch (UnsupportedJwtException e) {
-            log.error("Unsupported JWT token -> Message: {}", e);
+            logger.error("Unsupported JWT token -> Message: {}", e);
         } catch (IllegalArgumentException e) {
-            log.error("JWT claims string is empty -> Message: {}", e);
+            logger.error("JWT claims string is empty -> Message: {}", e);
         }
 
         return false;
@@ -53,8 +54,9 @@ public class JwtProvider {
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser()
-                .setSigningKey(_jwtSecret)
+                .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
     }
+
 }
