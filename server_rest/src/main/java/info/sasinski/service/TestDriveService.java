@@ -1,12 +1,31 @@
 package info.sasinski.service;
 
 import info.sasinski.entity.TestDrive;
+import info.sasinski.repository.TestDriveRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface TestDriveService {
+@AllArgsConstructor
 
-    List<TestDrive> getAllTD();
+@Service
+public class TestDriveService {
 
-    void saveTestDrive(TestDrive testDrive);
+    final TestDriveRepository _testDriveRepository;
+
+    public List<TestDrive> getAll() {
+        return _testDriveRepository.findAll();
+    }
+
+    public void saveTestDrive(TestDrive testDrive) {
+        _testDriveRepository.save(testDrive);
+    }
+
+    public TestDrive getById(long id) {
+        return _testDriveRepository
+                .findById(id)
+                .orElse(null);
+    }
 }
+

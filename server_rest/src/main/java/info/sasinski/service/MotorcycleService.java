@@ -1,19 +1,40 @@
 package info.sasinski.service;
 
 import info.sasinski.entity.Motorcycle;
+import info.sasinski.repository.MotorcycleRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface MotorcycleService {
-    Motorcycle getMotorcycleById(long id);
+@AllArgsConstructor
 
-    List<Motorcycle> allMotorcyclesInStock();
+@Service
+public class MotorcycleService {
 
-    List<Motorcycle> findByBrand(String brand);
+    final MotorcycleRepository _motorcycleRepository;
 
-    List<Motorcycle> powerGreaterThan(int pow);
+    public Motorcycle getMotorcycleById(long id) {
+        return _motorcycleRepository.findById(id).orElse(null);
+    }
 
-    int countMotorcyclesInStock();
+    public List<Motorcycle> allMotorcyclesInStock() {
+        return _motorcycleRepository.findAll();
+    }
 
-    void saveMotorcycle(Motorcycle motorcycle);
+    public List<Motorcycle> findByBrand(String brand) {
+        return _motorcycleRepository.findAllByBrand(brand);
+    }
+
+    public List<Motorcycle> powerGreaterThan(int pow) {
+        return _motorcycleRepository.findAllByPowerGreaterThan(pow);
+    }
+
+    public long countMotorcyclesInStock() {
+        return _motorcycleRepository.count();
+    }
+
+    public void saveMotorcycle(Motorcycle motorcycle) {
+        _motorcycleRepository.save(motorcycle);
+    }
 }

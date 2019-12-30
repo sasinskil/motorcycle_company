@@ -1,14 +1,38 @@
 package info.sasinski.service;
 
 import info.sasinski.entity.Address;
+import info.sasinski.repository.AddressRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public interface AddressService {
+@AllArgsConstructor
 
-    List<Address> findAll();
+@Service
+public class AddressService {
 
-    Address findAddressById(long id);
+    final AddressRepository _addressRepository;
 
-    void saveAddress(Address address);
+    public List<Address> findAll() {
+        Iterable<Address> iterableAddress = _addressRepository.findAll();
+
+        List<Address> getAll = new ArrayList<>();
+
+        for (Address a : iterableAddress) {
+            getAll.add(a);
+        }
+
+        return getAll;
+    }
+
+    public Address findAddressById(long id) {
+        return _addressRepository.findById(id)
+                .orElse(null);
+    }
+
+    public void saveAddress(Address address) {
+        _addressRepository.save(address);
+    }
 }

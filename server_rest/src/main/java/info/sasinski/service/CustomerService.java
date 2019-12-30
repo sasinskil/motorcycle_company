@@ -1,18 +1,36 @@
 package info.sasinski.service;
 
 import info.sasinski.entity.Customer;
+import info.sasinski.repository.CustomerRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface CustomerService {
+@AllArgsConstructor
 
-    void setLastNameforCustomer( String newLastName,long id);
+@Service
+public class CustomerService {
 
-    Customer findCustomerById(long id);
+    final CustomerRepository _customerRepository;
 
-    List<Customer> findAll();
+    public void setLastNameForCustomer(String newLastName, long id) {
+        _customerRepository.setLastNameForCustomer(newLastName, id);
+    }
 
-    void removeCustomer(long id);
+    public Customer findCustomerById(long id) {
+        return _customerRepository.findById(id).orElse(null);
+    }
 
-    void saveCustomer(Customer customer);
+    public List<Customer> findAll() {
+        return _customerRepository.findAll();
+    }
+
+    public void removeCustomer(long id) {
+        _customerRepository.deleteById(id);
+    }
+
+    public void saveCustomer(Customer customer) {
+        _customerRepository.save(customer);
+    }
 }

@@ -1,12 +1,30 @@
 package info.sasinski.service;
 
 import info.sasinski.entity.Transaction;
+import info.sasinski.repository.TransactionRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface TransactionService {
+@AllArgsConstructor
 
-    List<Transaction> getAllT();
+@Service
+public class TransactionService {
 
-    void saveTransaction(Transaction transaction);
+    final TransactionRepository _transactionRepository;
+
+    public List<Transaction> getAll() {
+        return _transactionRepository.findAll();
+    }
+
+    public void saveTransaction(Transaction transaction) {
+        _transactionRepository.save(transaction);
+    }
+
+    public Transaction getById(long id) {
+        return _transactionRepository
+                .findById(id)
+                .orElse(null);
+    }
 }

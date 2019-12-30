@@ -1,21 +1,41 @@
 package info.sasinski.service;
 
 import info.sasinski.entity.Employee;
+import info.sasinski.repository.EmployeeRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface EmployeeService {
+@AllArgsConstructor
 
-    List<Employee> findAllByDateOfEmployment(LocalDate dateOfEmployment);
+@Service
+public class EmployeeService {
 
-    int countByFirstNameIgnoreCase(String firstName);
+    final EmployeeRepository _employeeRepository;
 
-    Employee findEmployeeById(long id);
+    public List<Employee> findAllByDateOfEmployment(LocalDate dateOfEmployment) {
+        return _employeeRepository.findAllByDateOfEmployment(dateOfEmployment);
+    }
 
-    List<Employee> findAll();
+    public int countByFirstNameIgnoreCase(String firstName) {
+        return _employeeRepository.countByFirstNameIgnoreCase(firstName);
+    }
 
-    void removeEmployee(long id);
+    public Employee findEmployeeById(long id) {
+        return _employeeRepository.findById(id).orElse(null);
+    }
 
-    void saveEmployee(Employee employee);
+    public List<Employee> findAll() {
+        return _employeeRepository.findAll();
+    }
+
+    public void removeEmployee(long id) {
+        _employeeRepository.deleteById(id);
+    }
+
+    public void saveEmployee(Employee employee) {
+        _employeeRepository.save(employee);
+    }
 }
