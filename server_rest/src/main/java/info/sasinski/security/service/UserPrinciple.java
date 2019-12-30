@@ -2,31 +2,30 @@ package info.sasinski.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import info.sasinski.security.model.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Getter
 public class UserPrinciple implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
+    Long id;
 
-    private Long id;
+    String name;
 
-    private String name;
+    String username;
 
-    private String username;
-
-    private String email;
+    String email;
 
     @JsonIgnore
-    private String password;
+    String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    Collection<? extends GrantedAuthority> authorities;
 
     public UserPrinciple(Long id, String name,
                          String username, String email, String password,
@@ -54,60 +53,11 @@ public class UserPrinciple implements UserDetails {
         );
     }
 
-    public Long getId() {
-        return id;
-    }
+    boolean isAccountNonExpired = true;
 
-    public String getName() {
-        return name;
-    }
+    boolean isAccountNonLocked = true;
 
-    public String getEmail() {
-        return email;
-    }
+    boolean isCredentialsNonExpired = true;
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserPrinciple user = (UserPrinciple) o;
-        return Objects.equals(id, user.id);
-    }
-
+    boolean isEnabled = true;
 }
