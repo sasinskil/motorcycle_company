@@ -30,7 +30,7 @@ public class MotorcycleDetails implements Serializable {
     @NotNull
     BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "motorcycle_id")
     @NotNull
     Motorcycle motorcycle;

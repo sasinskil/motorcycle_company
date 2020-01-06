@@ -1,5 +1,5 @@
 <template>
-  <div class="login container mt-2">
+  <div class="login">
     <h3>Sorry...something goes wrong :(</h3>
     <br/>
       <router-link v-if="isLogged" to="/home">Home</router-link>

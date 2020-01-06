@@ -61,6 +61,22 @@ public class MotorcycleController extends ControllerBase {
         return ok(_motorcycleService.countMotorcyclesInStock());
     }
 
+    @PostMapping
+    public ResponseEntity<?> post(@Validated @RequestBody Motorcycle motorcycle, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult
+                    .getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+
+            return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
+        }
+
+        _motorcycleService.saveMotorcycle(motorcycle);
+        return created();
+    }
+
     @PutMapping("/{id:\\d+}")
     @Transactional
     public ResponseEntity<?> put(@Validated @RequestBody Motorcycle motorcycle,

@@ -1,49 +1,43 @@
 <template>
-  <div id="app" class="container-fluid">
-    <nav v-if="isLogged" class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link to="/home" class="navbar-brand">DK Company</router-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <button @click="logout" class="btn btn-outline-danger ml-auto my-2 my-sm-0" type="submit"><font-awesome-icon icon="sign-out-alt" /></button>
-      </div>
-    </nav>
+  <div id="app" class="app">
+    <app-header></app-header>
     <router-view/>
   </div>
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+import header from '@/components/Header.vue';
 
 export default {
   name: 'app',
-  computed: mapGetters([
-    'isLogged'
-  ]),
-  
-  methods: {
-    logout() {
-      this.$store.dispatch('logout');
-    }
+  components: {
+    'app-header': header,
   },
 };
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-#app {
-  margin: 0 auto;
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
   padding: 0;
+}
+
+.app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+
+
+@media only screen and (max-width: 640px) {
+  body {
+    font-size: 12px;
+  }
 }
 </style>

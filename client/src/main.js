@@ -1,26 +1,20 @@
 import Vue from 'vue';
 import vueResource from 'vue-resource';
-import jQuery from 'jquery';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faEraser, faTrashAlt, faSignOutAlt, faPlus,
+  faEraser, faTrashAlt, faSignOutAlt, faPlus, faUser, faLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
-import 'bootstrap/dist/css/bootstrap.css';
-
 
 library.add(
-  faTrashAlt, faEraser, faSignOutAlt, faPlus,
+  faTrashAlt, faEraser, faSignOutAlt, faPlus, faUser, faLock,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
-global.jQuery = jQuery;
-require('bootstrap');
 
 Vue.use(vueResource);
 

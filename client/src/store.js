@@ -27,7 +27,8 @@ const actions = {
         localStorage.setItem('token', result.accessToken);
         commit(types.LOGIN);
         router.push({ path: '/home' });
-      });
+      })
+      .catch(err => console.log(err));
   },
 
   logout({ commit }) {
