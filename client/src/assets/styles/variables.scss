@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=latin-ext");
+
+// colors
+$dark-red: rgba(255, 0, 0, 0.582);
+$dark-blue: rgba(27, 27, 206, 0.767);
+$dark-green: rgba(67, 148, 67, 0.829);
+$dark-orange: rgba(247, 172, 5, 0.95);
+$dark-grey: rgba(107, 101, 101, 0.8);
+$navy-blue: #324960f5;
+$white: #ffffff;
+
+$bg-color: $white;
+$dot-color: $navy-blue;
+$dot-size: 1px;
+$dot-space: 30px;
+
+$font-family: "Open Sans", sans-serif;
+
+// effects
+$default-shadow: 0px 6px 12px rgba(24, 41, 67, 0.2);
+
+// mixins
+@mixin default-button($color) {
+  border: none;
+  background: $color;
+  box-shadow: $default-shadow;
+  padding: 0.8rem 1.5rem;
+  color: $white;
+  font-family: $font-family;
+  cursor: pointer;
+  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+
+  &:active {
+    background-color: darken($color, 10%);
+  }
+}
+
+@mixin bg-effect {
+  background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center, $dot-color;
+  background-size: $dot-space $dot-space;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

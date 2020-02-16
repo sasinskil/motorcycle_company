@@ -3,12 +3,45 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTrashAlt,
+  faEdit,
+  faEraser,
+  faPlus,
+  faDoorOpen,
+  faUser,
+  faIdCard,
+  faUserShield,
+  faEnvelope,
+  faAngleDoubleLeft,
+  faCheck,
+  faFileExport,
+  faArrowLeft,
+  faLock,
+  faUserTie
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.config.productionTip = false
 
-library.add(faSpinner)
+library.add(
+  faTrashAlt,
+  faEdit,
+  faEraser,
+  faPlus,
+  faDoorOpen,
+  faUser,
+  faIdCard,
+  faUserShield,
+  faEnvelope,
+  faAngleDoubleLeft,
+  faCheck,
+  faFileExport,
+  faArrowLeft,
+  faLock,
+  faUserTie
+);
+
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({

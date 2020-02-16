@@ -1,32 +1,53 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="myApp">
+    <app-header></app-header>
+    <div class="main-wrapper">
+      <router-view></router-view>
     </div>
-    <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import appHeader from "@/components/appHeader";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  name: "App",
+  components: {
+     "app-header": appHeader
   }
+};
+</script>
+
+<style lang="scss">
+@import "@/assets/styles/variables.scss";
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  @include bg-effect;
+  font-family: $font-family;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  @media only screen and (max-width: 640px) {
+    font-size: 12px;
+  }
+}
+.myApp {
+  text-align: center;
+  color: $navy-blue;
+}
+.main-wrapper {
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 10rem auto 3rem;
 }
 </style>
