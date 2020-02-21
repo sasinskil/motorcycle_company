@@ -300,7 +300,7 @@
           <!-- <a class="navigation__link" href="#">Customers</a> -->
         </li>
         <li class="navigation__item">
-          <router-link class="navigation__link" to="/ninjas"
+          <router-link class="navigation__link" to="/customers"
             >Customers</router-link
           >
           <!-- <a class="navigation__link" href="#">Customers</a> -->
@@ -336,13 +336,14 @@
               {{ user.username }}
             </li>
             <li class="current-user__about-item">
-              <strong>
-                <font-awesome-icon class="icon user-icon" icon="user-shield" />
-              </strong>
-              {{ user.authorities }}
+              <ul class="current-user__about-list--roles">
+                <li class="current-user__about-item--role" v-for="role in user.authorities" :key="role">
+                  <p class="role">{{role}}</p>
+                </li>
+              </ul>
             </li>
             <li v-if="checkIsAdmin" class="current-user__about-item current-user__about-item--admin">
-              <button class="current-user__about-item--btn">
+              <button @click="toRegister" class="current-user__about-item--btn">
                 Nowy użytkownik
               </button>
             </li>
@@ -365,7 +366,7 @@ export default {
   name: "appHeader",
   data() {
     return {
-      user: {}
+      user: {},
     };
   },
   computed: {
@@ -391,7 +392,10 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout");
-    }
+    },
+    toRegister() {
+      this.$router.push('/register');
+    },
   }
 };
 </script>
@@ -445,12 +449,12 @@ export default {
 
 .duos_kolos_logo--box:hover > .duos_kolos_logo--circle-right {
   transform-origin: 72% 76%;
-  animation: rotatingMe 2s linear infinite;
+  animation: rotatingMe 0.6s linear infinite;
 }
 
 .duos_kolos_logo--box:hover > .duos_kolos_logo--circle-left {
   transform-origin: 26% 76%;
-  animation: rotatingMe 2s linear infinite;
+  animation: rotatingMe 0.6s linear infinite;
 }
 
 .user {
@@ -483,11 +487,34 @@ export default {
     text-align: left;
     box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+    &--roles {
+      list-style-type: none;
+      padding: 0 0 0 1.5rem;
+      margin: 0;
+    }
+
+    &--roles p {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   &__about-item {
     border-bottom: 1px solid #ffffff26;
     padding-bottom: 0.3rem;
+
+    &--role {
+      position: relative;
+
+      &::before {
+        display: block;
+        content: "-";
+        position: absolute;
+        top: 0;
+        left: -17px;
+      }
+    }
 
     &--admin {
       border-bottom: none;

@@ -35,7 +35,7 @@
             />
           </div>
           <div class="form-group form-button">
-            <span class="form__errors" v-if="validErrors.length && !isVaild">
+            <span class="form__errors" v-if="validErrors.length">
               <span class="form__errors--info">Popraw następujące błędy:</span>
               <ul class="form__errors-list">
                 <li
@@ -54,22 +54,22 @@
         </form>
       </div>
     </div>
-     <InfoModal
-        v-if="showModal"
-        :headerText="modalHeaderContent"
-        :bodyText="modalBodyContent"
-        @confirm="close"
-      />
+    <InfoModal
+      v-if="showModal"
+      :headerText="modalHeaderContent"
+      :bodyText="modalBodyContent"
+      @confirm="close"
+    />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from "vuex";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
   name: "login",
-   components: {
+  components: {
     InfoModal
   },
   data() {
@@ -79,9 +79,8 @@ export default {
         password: ""
       },
       validErrors: [],
-      isVaild: false,
       modalHeaderContent: "Uwaga!",
-      modalBodyContent: "Coś poszło nie tak, sprawdź ponownie dane logowania!",
+      modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };
   },
@@ -90,18 +89,19 @@ export default {
       this.$store.dispatch("login", this.credential);
     },
     signin() {
-      this.isValid = this.checkForm();
-      if (this.isValid) {
-          this.login();
-          if(this.errors.length > 0 ) {
+      const isValid = this.checkForm();
+      if (isValid) {
+        this.login();
+        setTimeout(() => {
+          if (this.loginError) {
             this.showModal = true;
-          } else {
-            this.loginSuccessful = true;
+            this.validErrors.push("Niepoprawny użytkownik lub hasło!");
           }
-        } else {
-          this.showModal = true;
-        }
-      },
+        }, 100);
+      } else {
+        this.showModal = true;
+      }
+    },
     checkForm() {
       this.validErrors = [];
       if (this.credential.username && this.credential.password) {
@@ -119,10 +119,8 @@ export default {
     }
   },
   computed: {
-     ...mapState({
-      errors: state => state.errorList
-    }),
-  },
+    ...mapGetters(["loginError"])
+  }
 };
 </script>
 
@@ -155,7 +153,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 0.2rem;
   text-align: center;
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);

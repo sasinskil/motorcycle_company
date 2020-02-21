@@ -17,24 +17,25 @@ const state = {
   logged: localStorage.getItem('token'),
   authorised: localStorage.getItem('authorised'),
   currentUser: JSON.parse(localStorage.getItem('user')),
-  errorList: []
+  loginError: 0
 }
 
 
 const getters = {
   isLogged: state => state.logged,
   isAdmin: state => state.authorised,
-  getCurrentUser: state => state.currentUser
+  getCurrentUser: state => state.currentUser,
+  loginError: state => state.loginError
 }
 
 const actions = {
   login({ commit }, credential) {
+    commit('resetLoginError')
     Vue.http.post(loginUrl, credential)
       .then(function(response) { 
        return response.json()
       })
       .then(function(result) {
-
         const { username, authorities, accessToken} = result;
         const roles = [];
 
@@ -60,9 +61,9 @@ const actions = {
         router.push({ path: '/' });
         router.go(0);
       })
-      .catch(err => {
-        const errors = err.body.message;
-        commit('setErrorList', errors)
+      .catch((err) => {
+        console.log(err);
+        commit('setLoginError')
       });
   },
 
@@ -93,9 +94,13 @@ const mutations = {
     state.authorised = 0;
   },
 
-  setErrorList (state, errorList) {
-    state.errorList = errorList
+  setLoginError (state) {
+    state.loginError = 1
   },
+
+  resetLoginError (state) {
+    state.loginError = 0
+  }
 }
 
 export default new Vuex.Store({

@@ -2,6 +2,7 @@
 
 @mixin default-button($color) {
   border: none;
+  font-weight: bold;
   background-color: $color;
   box-shadow: $default-shadow;
   padding: 0.6rem 1.5rem;

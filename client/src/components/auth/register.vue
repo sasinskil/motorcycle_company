@@ -6,14 +6,14 @@
         method="POST"
         class="form"
         id="register-form"
-        @submit.prevent="signin"
+        @submit.prevent="signup"
       >
         <div class="form-group">
-          <label for="name">
+          <label class="form-group__label" for="name">
             <font-awesome-icon class="user-icon icon" icon="user-tie" />
           </label>
           <input
-            v-model="credential.firstName"
+            v-model="credential.name"
             type="text"
             class="form-input"
             id="name"
@@ -22,20 +22,8 @@
           />
         </div>
         <div class="form-group">
-          <label for="lastName">
+          <label class="form-group__label" for="username">
             <font-awesome-icon class="lock-icon icon" icon="user" />
-          </label>
-          <input
-            v-model="credential.lastName"
-            type="text"
-            class="form-input"
-            id="lastName"
-            placeholder="Nazwisko"
-          />
-        </div>
-        <div class="form-group">
-          <label for="username">
-            <font-awesome-icon class="lock-icon icon" icon="user-shield" />
           </label>
           <input
             v-model="credential.username"
@@ -46,7 +34,19 @@
           />
         </div>
         <div class="form-group">
-          <label for="password">
+          <label class="form-group__label" for="email">
+            <font-awesome-icon class="lock-icon icon" icon="envelope" />
+          </label>
+          <input
+            v-model="credential.email"
+            type="email"
+            class="form-input"
+            id="email"
+            placeholder="Email"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-group__label" for="password">
             <font-awesome-icon class="lock-icon icon" icon="lock" />
           </label>
           <input
@@ -57,8 +57,22 @@
             placeholder="Hasło"
           />
         </div>
+         <div class="form-group form-group__checkbox">
+          <div class="form-group__checkbox-wrapper">
+            <label class="form-group__checkbox--label" for="admin">Administrator</label>
+            <input
+              type="checkbox"
+              checked
+              class="form-input form-input--checkbox"
+              name="admin"
+              id="admin"
+              value="admin"
+              v-model="credential.role"
+            />
+          </div>
+        </div>
         <div class="form-group form-button">
-          <span class="form__errors" v-if="errors.length && !isVaild">
+          <span class="form__errors" v-if="errors.length">
             <span class="form__errors--info">Popraw następujące błędy:</span>
             <ul class="form__errors-list">
               <li
@@ -71,75 +85,98 @@
             </ul>
           </span>
           <button class="btn btn-dark registerBtn" @click.prevent="signup">
-            Rejestruj
+            Zarejestruj
           </button>
-          <span class="form-login"
-            >Masz już konto?
-            <router-link class="form-login--link" to="/login"
-              >Zaloguj się</router-link
-            >
-          </span>
         </div>
       </form>
     </div>
+    <InfoModal
+      v-if="showModal"
+      :headerText="modalHeaderContent"
+      :bodyText="modalBodyContent"
+      @confirm="close"
+    />
   </div>
 </template>
 
 <script>
 import { registerUrl } from "@/variables";
+import InfoModal from "@/components/modal/InfoModal";
+
 export default {
   name: "register",
+  components: {
+    InfoModal
+  },
   data() {
     return {
       credential: {
         name: "",
         username: "",
         email: "",
-        role: [],
+        role: ["user"],
         password: ""
       },
+      isChecked: true,
       errors: [],
-      isVaild: false
+      modalHeaderContent: "Uwaga!",
+      modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
+      showModal: false
     };
   },
   methods: {
     checkForm() {
       this.errors = [];
       if (
-        this.credential.firstName &&
-        this.credential.lastName &&
+        this.credential.name &&
         this.credential.username &&
+        this.credential.email &&
         this.credential.password
       ) {
         return true;
       }
-      if (!this.credential.firstName) {
+      if (!this.credential.name) {
         this.errors.push("Imię jest wymagane!");
-      }
-      if (!this.credential.lastName) {
-        this.errors.push("Nazwisko jest wymagane!");
       }
       if (!this.credential.username) {
         this.errors.push("Nazwa użytkownika jest wymagana!");
+      }
+      if (!this.credential.email) {
+        this.errors.push("Email jest wymagany!");
       }
       if (!this.credential.password) {
         this.errors.push("Hasło jest wymagane!");
       }
     },
     signup() {
-      this.isValid = this.checkForm();
-      if (this.isValid) {
+      const isValid = this.checkForm();
+      if (isValid) {
         this.$http
           .post(registerUrl, this.credential)
           .then(() => {
             setTimeout(() => {
-              this.$router.push("/login");
-            }, 1000);
+              if(this.checkIsLogged) {
+                this.$router.push("/");
+              } else {
+                this.$router.push("/login");
+              }
+            }, 500);
           })
-          .catch(err => {
-            alert(err.body.message);
+          .catch(() => {
+            this.showModal = true;
+            this.errors.push("Podałeś/aś niepoprawne dane, sprawdź ponownie!");
           });
+      } else {
+        this.showModal = true;
       }
+    },
+    close() {
+      this.showModal = false;
+    }
+  },
+  computed: {
+    checkIsLogged() {
+      return this.$store.getters.isLogged;
     },
   }
 };
@@ -163,7 +200,8 @@ export default {
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
   margin: 2rem auto 0;
-  width: 350px;
+  width: 100%;
+  max-width: 375px;
   padding: 1rem 3.5rem 2rem;
 }
 .header {
@@ -199,6 +237,23 @@ export default {
 .form-group {
   width: 100%;
   position: relative;
+
+  &__checkbox {
+    margin-top: 1rem;
+  }
+
+  &__checkbox-wrapper {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__label {
+    position: absolute;
+    top: 36px;
+    left: 0;
+  }
 }
 .form-button {
   display: flex;
@@ -207,11 +262,7 @@ export default {
 .form-login {
   margin-top: 1rem;
 }
-label {
-  position: absolute;
-  top: 36px;
-  left: 0;
-}
+
 .icon {
   font-size: 13px;
 }
@@ -220,6 +271,11 @@ label {
   font-size: 2rem;
   width: 100%;
 }
+
+label {
+  font-size: 0.9rem;
+}
+
 .form-input {
   margin-top: 2rem;
   width: 100%;
@@ -229,8 +285,13 @@ label {
   background: none;
   outline: none;
   transition: border-color 0.3s ease-in-out;
+
+  &--checkbox {
+    margin: 0.25rem 4rem 0 0;
+  }
+
   &:focus {
-    border-bottom-color: rgba(0, 0, 0, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.99);
   }
 }
 .registerBtn {
