@@ -1,8 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="login">
-      <p class="success-info" v-if="errors.length === 0">Logowanie przebiegło pomyślnie</p>
-      <div v-else class="loginPanel">
+      <div class="loginPanel">
         <h2 class="form-title">Logowanie</h2>
         <form
           method="POST"
@@ -55,14 +54,24 @@
         </form>
       </div>
     </div>
+     <InfoModal
+        v-if="showModal"
+        :headerText="modalHeaderContent"
+        :bodyText="modalBodyContent"
+        @confirm="close"
+      />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import InfoModal from "@/components/modal/InfoModal";
 
 export default {
   name: "login",
+   components: {
+    InfoModal
+  },
   data() {
     return {
       credential: {
@@ -70,7 +79,10 @@ export default {
         password: ""
       },
       validErrors: [],
-      isVaild: false
+      isVaild: false,
+      modalHeaderContent: "Uwaga!",
+      modalBodyContent: "Coś poszło nie tak, sprawdź ponownie dane logowania!",
+      showModal: false
     };
   },
   methods: {
@@ -80,14 +92,16 @@ export default {
     signin() {
       this.isValid = this.checkForm();
       if (this.isValid) {
-        try {
           this.login();
-        } catch (err) {
-          console.log(`${err} no i to by bylo na tyle`);
-          alert('error');
+          if(this.errors.length > 0 ) {
+            this.showModal = true;
+          } else {
+            this.loginSuccessful = true;
+          }
+        } else {
+          this.showModal = true;
         }
-      }
-    },
+      },
     checkForm() {
       this.validErrors = [];
       if (this.credential.username && this.credential.password) {
@@ -99,13 +113,16 @@ export default {
       if (!this.credential.password) {
         this.validErrors.push("Hasło jest wymagane!");
       }
+    },
+    close() {
+      this.showModal = false;
     }
   },
   computed: {
      ...mapState({
       errors: state => state.errorList
     }),
-  }
+  },
 };
 </script>
 
