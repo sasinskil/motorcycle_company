@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import appHeader from "@/components/appHeader";
+import appHeader from "@/components/others/appHeader";
 
 export default {
   name: "App",

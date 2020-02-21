@@ -1,15 +1,15 @@
 package info.sasinski.security.controller;
 
 import info.sasinski.security.JwtConfig.JwtProvider;
-import info.sasinski.transfer.request.Login;
-import info.sasinski.transfer.request.SignUp;
-import info.sasinski.transfer.response.JwtResponse;
-import info.sasinski.transfer.response.ResponseMessage;
 import info.sasinski.security.model.Role;
 import info.sasinski.security.model.RoleName;
 import info.sasinski.security.model.User;
 import info.sasinski.security.repository.RoleRepository;
 import info.sasinski.security.repository.UserRepository;
+import info.sasinski.transfer.request.Login;
+import info.sasinski.transfer.request.SignUp;
+import info.sasinski.transfer.response.JwtResponse;
+import info.sasinski.transfer.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

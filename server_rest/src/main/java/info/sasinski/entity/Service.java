@@ -27,7 +27,7 @@ public class Service implements Serializable {
 
     @Column
     @NotNull
-    @Size(min = 1, max = 20,message = "operation must be between {min} and {max}")
+    @Size(min = 1, max = 40,message = "operation must be between {min} and {max}")
     String operation;
 
     @Column(precision = 5, scale = 2)
