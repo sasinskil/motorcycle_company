@@ -147,7 +147,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/assets/styles/variables.scss";
+@import "@/assets/styles/main.scss";
 .register {
   display: flex;
   flex-direction: column;
@@ -234,20 +234,7 @@ label {
   }
 }
 .registerBtn {
-  font-weight: bold;
-  margin-top: 3rem;
-  padding: 0.7rem 2.5rem;
-  border: none;
-  border-radius: 0px 8px;
-  background-color: #324960f5;
-  color: #fff;
-  cursor: pointer;
-  transition: box-shadow 0.5s ease-in-out;
-  &:hover {
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-  }
-  &:active {
-    background-color: darken(#324960f5, 10%);
-  }
+  margin-top: 2rem;
+  @include default-button($navy-blue);
 }
 </style>

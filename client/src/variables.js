@@ -1,9 +1,9 @@
-const APIUrl = "https://localhost:9090/api";
+const APIUrl = "http://localhost:9090/api";
 
 // Auth
 
-const loginUrl = `${APIUrl}/user/signin`;
-const registerUrl = `${APIUrl}/user/signup`;
+const loginUrl = `${APIUrl}/auth/signin`;
+const registerUrl = `${APIUrl}/auth/signup`;
 
 
 // Customer
@@ -31,10 +31,23 @@ const transactionUrl = `${APIUrl}/transaction`;
 
 const serviceUrl = `${APIUrl}/service`;
 
+// Router links
+
+const navLinks = [
+     {
+          name: '',
+          to: '/'
+     },
+     {
+          name: '',
+          to: '/'
+     }
+]
+
 
 
 export {
      loginUrl, registerUrl, customerUrl, employeeUrl,
      motorcycleUrl, motorcycleDetailsUrl, testDriveUrl,
-     transactionUrl, serviceUrl 
+     transactionUrl, serviceUrl, navLinks
     };

@@ -10,7 +10,8 @@ const routes = [
   {
     path: '/',
     name: 'HelloWorld',
-    component: HelloWorld
+    component: HelloWorld,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
@@ -29,5 +30,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!localStorage.getItem('token')) {
+      next("/login");
+    } else next();
+  } else {
+    next();
+  }
+});
 
 export default router

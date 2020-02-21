@@ -1,51 +1,66 @@
 <template>
-  <div class="login">
-    <div class="loginPanel">
-      <h2 class="form-title">Logowanie</h2>
-      <form method="POST" class="form" id="login-form" @submit.prevent="signin">
-        <div class="form-group">
-          <label for="username">
-            <font-awesome-icon class="user-icon icon" icon="user"/>
-          </label>
-          <input
-            v-model="credential.username"
-            type="text"
-            class="form-input"
-            id="username"
-            placeholder="Nazwa użytkownika"
-            autofocus
-          >
-        </div>
-        <div class="form-group">
-          <label for="password">
-            <font-awesome-icon class="lock-icon icon" icon="lock"/>
-          </label>
-          <input
-            v-model="credential.password"
-            type="password"
-            class="form-input"
-            id="password"
-            placeholder="Hasło"
-          >
-        </div>
-        <div class="form-group form-button">
-          <span class="form__errors" v-if="errors.length && !isVaild">
-            <span class="form__errors--info">Popraw następujące błędy:</span>
-            <ul class="form__errors-list">
-              <li class="form__errors-item" v-for="error in errors" :key="error">{{error}}</li>
-            </ul>
-          </span>
-          <button class="btn btn-dark loginBtn" @click.prevent="signin">Zaloguj</button>
-          <span class="form-register">Nie masz jeszcze konta?
-            <router-link class="form-register--link" to="/register">Zarejstruj się</router-link>
-          </span>
-        </div>
-      </form>
+  <div class="wrapper">
+    <div class="login">
+      <p class="success-info" v-if="errors.length === 0">Logowanie przebiegło pomyślnie</p>
+      <div v-else class="loginPanel">
+        <h2 class="form-title">Logowanie</h2>
+        <form
+          method="POST"
+          class="form"
+          id="login-form"
+          @submit.prevent="signin"
+        >
+          <div class="form-group">
+            <label for="username">
+              <font-awesome-icon class="user-icon icon" icon="user" />
+            </label>
+            <input
+              v-model="credential.username"
+              type="text"
+              class="form-input"
+              id="username"
+              placeholder="Nazwa użytkownika"
+              autofocus
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">
+              <font-awesome-icon class="lock-icon icon" icon="lock" />
+            </label>
+            <input
+              v-model="credential.password"
+              type="password"
+              class="form-input"
+              id="password"
+              placeholder="Hasło"
+            />
+          </div>
+          <div class="form-group form-button">
+            <span class="form__errors" v-if="validErrors.length && !isVaild">
+              <span class="form__errors--info">Popraw następujące błędy:</span>
+              <ul class="form__errors-list">
+                <li
+                  class="form__errors-item"
+                  v-for="error in validErrors"
+                  :key="error"
+                >
+                  {{ error }}
+                </li>
+              </ul>
+            </span>
+            <button class="btn btn-dark loginBtn" @click.prevent="signin">
+              Zaloguj
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: "login",
   data() {
@@ -54,7 +69,7 @@ export default {
         username: "",
         password: ""
       },
-      errors: [],
+      validErrors: [],
       isVaild: false
     };
   },
@@ -65,29 +80,55 @@ export default {
     signin() {
       this.isValid = this.checkForm();
       if (this.isValid) {
-        this.login();
+        try {
+          this.login();
+        } catch (err) {
+          console.log(`${err} no i to by bylo na tyle`);
+          alert('error');
+        }
       }
     },
     checkForm() {
-      this.errors = [];
+      this.validErrors = [];
       if (this.credential.username && this.credential.password) {
         return true;
       }
       if (!this.credential.username) {
-        this.errors.push("Nazwa użytkownika jest wymagana!");
+        this.validErrors.push("Nazwa użytkownika jest wymagana!");
       }
       if (!this.credential.password) {
-        this.errors.push("Hasło jest wymagane!");
+        this.validErrors.push("Hasło jest wymagane!");
       }
     }
+  },
+  computed: {
+     ...mapState({
+      errors: state => state.errorList
+    }),
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/assets/styles/variables.scss";
+@import "@/assets/styles/main.scss";
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: url("../../assets/images/background-photo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
 .login {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,11 +140,12 @@ export default {
   justify-content: center;
   border-radius: 0.2rem;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgb(255, 255, 255);
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
   margin: 2rem auto 0;
-  width: 350px;
-  padding: 1rem 3.5rem 2rem;
+  width: 100%;
+  max-width: 375px;
+  padding: 2rem 3.5rem 3rem;
 }
 .header {
   background-color: rgba(105, 105, 105, 0.8);
@@ -169,25 +211,11 @@ label {
   outline: none;
   transition: border-color 0.3s ease-in-out;
   &:focus {
-    border-bottom-color: rgba(0, 0, 0, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.99);
   }
 }
 .loginBtn {
-   font-weight: bold;
-   margin-top: 3rem;
-//   padding: 0.7rem 2.5rem;
-//   border: none;
-//   border-radius: 0px 8px;
-//   background-color: #324960f5;
-//   color: #fff;
-//   cursor: pointer;
-//   transition: box-shadow 0.5s ease-in-out;
-//   &:hover {
-//     box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-//   }
-//   &:active {
-//     background-color: darken(#324960f5, 10%);
-//   }
-    @include default-button($navy-blue);
+  margin-top: 3rem;
+  @include default-button($navy-blue);
 }
 </style>

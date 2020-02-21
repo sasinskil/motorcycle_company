@@ -16,29 +16,5 @@ $dot-space: 30px;
 
 $font-family: "Open Sans", sans-serif;
 
-// effects
-$default-shadow: 0px 6px 12px rgba(24, 41, 67, 0.2);
-
-// mixins
-@mixin default-button($color) {
-  border: none;
-  background: $color;
-  box-shadow: $default-shadow;
-  padding: 0.8rem 1.5rem;
-  color: $white;
-  font-family: $font-family;
-  cursor: pointer;
-  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
-
-  &:active {
-    background-color: darken($color, 10%);
-  }
-}
-
-@mixin bg-effect {
-  background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
-    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center, $dot-color;
-  background-size: $dot-space $dot-space;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+$default-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+$default-shadow-hover: 0px 2px 8px rgba(0, 0, 0, 0.4);

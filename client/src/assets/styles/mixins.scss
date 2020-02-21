@@ -1,0 +1,29 @@
+@import "../styles/variables.scss";
+
+@mixin default-button($color) {
+  border: none;
+  background-color: $color;
+  box-shadow: $default-shadow;
+  padding: 0.6rem 1.5rem;
+  text-align: center;
+  color: $white;
+  font-family: $font-family;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: $default-shadow-hover;
+  }
+
+  &:active {
+    background-color: darken($color, 10%);
+  }
+}
+
+@mixin bg-effect {
+  background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center, $dot-color;
+  background-size: $dot-space $dot-space;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

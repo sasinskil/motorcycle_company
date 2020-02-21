@@ -1,5 +1,5 @@
 <template>
-  <header v-if="checkIsUserJanek" class="header">
+  <header v-if="checkIsLogged" class="header">
     <nav class="navigation">
       <span class="navigation__logo">
         <a class="navigation__link" href="#">
@@ -11,9 +11,7 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g 
-            class="duos_kolos_logo--box"
-            clip-path="url(#clip0)">
+            <g class="duos_kolos_logo--box" clip-path="url(#clip0)">
               <rect width="162" height="72" fill="white" />
               <rect width="162" height="72" fill="white" />
               <line
@@ -335,23 +333,22 @@
               <strong>
                 <font-awesome-icon class="icon user-icon" icon="id-card" />
               </strong>
-              {{ getCurrentUser.name }}
+              {{ user.username }}
             </li>
             <li class="current-user__about-item">
               <strong>
                 <font-awesome-icon class="icon user-icon" icon="user-shield" />
               </strong>
-              {{ getCurrentUser.role }}
+              {{ user.authorities }}
             </li>
-            <li class="current-user__about-item">
-              <strong>
-                <font-awesome-icon class="icon user-icon" icon="envelope" />
-              </strong>
-              {{ getCurrentUser.email }}
+            <li v-if="checkIsAdmin" class="current-user__about-item current-user__about-item--admin">
+              <button class="current-user__about-item--btn">
+                Nowy użytkownik
+              </button>
             </li>
           </ul>
         </li>
-        <button class="navigation__logout" @click="toLogin">
+        <button class="navigation__logout" @click="logout">
           Logout
           <font-awesome-icon class="icon" icon="door-open" />
         </button>
@@ -361,26 +358,29 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
+import { mapGetters } from "vuex";
+
 export default {
   name: "appHeader",
   data() {
     return {
-      title: "Logo here"
+      user: {}
     };
   },
-
   computed: {
+    checkIsLogged() {
+      return this.$store.getters.isLogged;
+    },
+    checkIsAdmin() {
+      return this.$store.getters.isAdmin;
+    },
     menuSelector() {
       return document.querySelector(".navigation__list");
-    },
-    getCurrentUser() {
-      return this.$store.getters.getCurrentUser;
-    },
-    checkIsUserJanek() {
-      const user = this.$store.getters.getCurrentUser.name;
-
-      return user === "Janek" ? true : false;
     }
+  },
+  created() {
+    this.user = this.$store.getters.getCurrentUser;
   },
   methods: {
     showMenu() {
@@ -389,8 +389,8 @@ export default {
     hideMenu() {
       this.menuSelector.classList.remove("navigation__list--visible");
     },
-    toLogin() {
-      this.$router.push("/login");
+    logout() {
+      this.$store.dispatch("logout");
     }
   }
 };
@@ -398,49 +398,49 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "@/assets/styles/variables.scss";
+@import "@/assets/styles/main.scss";
 
 @keyframes rotatingMe {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Logo animation*/
 
 .duos_kolos_logo {
-    width: 100px;
-    transition: transform .4s ease-in-out;
-    &:hover {
-        transform: rotate(-8deg);
-    }
+  width: 100px;
+  transition: transform 0.4s ease-in-out;
+  &:hover {
+    transform: rotate(-8deg);
+  }
 }
 
 .duos_kolos_logo--duos-text,
 .duos_kolos_logo--letter-K,
 .duos_kolos_logo--letter-S,
 .duos_kolos_logo--letter-L {
-    transition: opacity .4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
-.duos_kolos_logo--box:hover > .duos_kolos_logo--duos-text{
-    opacity: 0;
+.duos_kolos_logo--box:hover > .duos_kolos_logo--duos-text {
+  opacity: 0;
 }
 
-.duos_kolos_logo--box:hover > .duos_kolos_logo--letter-K{
-    opacity: 0;
+.duos_kolos_logo--box:hover > .duos_kolos_logo--letter-K {
+  opacity: 0;
 }
 
-.duos_kolos_logo--box:hover > .duos_kolos_logo--letter-S{
-    opacity: 0;
+.duos_kolos_logo--box:hover > .duos_kolos_logo--letter-S {
+  opacity: 0;
 }
 
-.duos_kolos_logo--box:hover > .duos_kolos_logo--letter-L{
-    opacity: 0;
+.duos_kolos_logo--box:hover > .duos_kolos_logo--letter-L {
+  opacity: 0;
 }
 
 .duos_kolos_logo--box:hover > .duos_kolos_logo--circle-right {
@@ -488,6 +488,15 @@ export default {
   &__about-item {
     border-bottom: 1px solid #ffffff26;
     padding-bottom: 0.3rem;
+
+    &--admin {
+      border-bottom: none;
+    }
+
+    &--btn {
+      @include default-button($dark-grey);
+      font-weight: bold;
+    }
   }
 
   &__about-item + &__about-item {
