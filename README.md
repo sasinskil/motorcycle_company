@@ -1,7 +1,7 @@
 This application helps employees with the management of a motorcycle company.
 
 Completed:
-- backend - > 60%
+- backend - > 100%
 - frontend - > 20%
 
 # How to start ?
