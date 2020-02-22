@@ -691,7 +691,6 @@ export default {
 
 .navigation__logout {
   @include default-button($navy-blue);
-  font-weight: bold;
   background: none;
   border: 2px solid $navy-blue;
   margin-left: 3rem;
@@ -699,12 +698,8 @@ export default {
   transition: background 0.3s ease-in-out, color 0.1s ease-in-out;
 
   &:hover {
-    background: #324960;
-    color: #fff;
-  }
-
-  &:active {
-    background: #324960de;
+    background: $navy-blue;
+    color: $white;
   }
 }
 

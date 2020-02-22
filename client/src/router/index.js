@@ -2,7 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '@/components/auth/login.vue'
 import register from '@/components/auth/register.vue'
+// Cutomers
 import customers from '@/components/customer/customers.vue'
+import singleCustomer from '@/components/customer/singleCustomer.vue'
+import editCustomer from '@/components/customer/editCustomer.vue'
+import addCustomer from '@/components/customer/addCustomer.vue'
+// Employees
 import HelloWorld from '@/components/others/HelloWorld.vue'
 import notFound404 from '@/components/others/notFound404.vue'
 
@@ -15,12 +20,32 @@ const routes = [
     component: HelloWorld,
     meta: { requiresAuth: true }
   },
+  // Customers
   {
     path: '/customers',
     name: 'customers',
     component: customers,
     meta: { requiresAuth: true }
   },
+  {
+    path: '/customer/:id',
+    name: 'singleCustomer',
+    component: singleCustomer,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/customer/:id/edit',
+    name: 'editCustomer',
+    component: editCustomer,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addCustomer",
+    name: 'addCustomer',
+    component: addCustomer,
+    meta: { requiresAuth: true }
+  },
+  // Auth
   {
     path: '/register',
     name: 'register',
@@ -33,6 +58,7 @@ const routes = [
     component: login,
     meta: { requiresAuth: false }
   },
+  // 404
   {
     path: "*",
     component: notFound404,

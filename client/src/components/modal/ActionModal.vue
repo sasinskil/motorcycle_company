@@ -17,8 +17,8 @@
           </div>
 
           <div class="modal-footer">
-            <button class="modal-default-button--cancel" @click="$emit('action')">Action</button>
-            <button class="modal-default-button--action" @click="$emit('cancel')">Cancel</button>
+            <button class="modal-default-button--cancel" @click="$emit('action')">Tak</button>
+            <button class="modal-default-button--action" @click="$emit('cancel')">Anuluj</button>
           </div>
         </div>
       </div>
@@ -95,6 +95,7 @@ export default {
     margin: 2rem 0 3rem 0;
     padding-bottom: 0.5rem;
     position: relative;
+    text-align: center;
 
     &::after {
       position: absolute;
@@ -187,7 +188,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   cursor: pointer;
-  padding: 0.4rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   border: none;
   background-color: #324960;
   transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;

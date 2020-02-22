@@ -27,16 +27,18 @@
         </button>
       </div>
     </div>
-     <div class="lds-ring" v-if="loading">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div class="loader-box" v-if="loading"> 
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
     <div class="action-buttons">
-      <button title="Add" class="my-button add">Dodaj
+      <router-link tag="button" title="Add" class="my-button add" to="/addCustomer">Dodaj
         <font-awesome-icon class="icon" icon="plus"/>
-      </button>
+      </router-link>
       <button title="Export" class="my-button export" @click="exportTableToExcel('customers')">Export
         <font-awesome-icon class="icon" icon="file-export"/>
       </button>
@@ -52,16 +54,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr
+          <router-link tag="tr"
             v-for="customer in filteredCustomers"
             :key="customer.id"
-            @click="true"
+            :to="`/customer/${customer.id}`"
           >
             <td>{{customer.firstName}}</td>
             <td>{{customer.lastName}}</td>
             <td>{{customer.birthDate}}</td>
             <td>{{customer.address.locality}}</td>
-          </tr>
+          </router-link>
         </tbody>
       </table>
     </div>
@@ -150,6 +152,9 @@ export default {
         });
     }
   },
+  singleCustomer(customerId) {
+    this.router.push({ name: 'singleCustomer', params: {id: customerId}});
+   },
   created() {
       this.getCustomers();
   },
@@ -411,6 +416,19 @@ label {
   }
 }
 
+.loader-box {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;
@@ -428,7 +446,7 @@ label {
   border: 8px solid #000;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #000 transparent transparent transparent;
+  border-color: $white transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;

@@ -91,6 +91,7 @@ export default {
     margin: 2rem 0 3rem 0;
     padding-bottom: 0.5rem;
     position: relative;
+    text-align: center;
 
     &::after {
       position: absolute;
