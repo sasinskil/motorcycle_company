@@ -58,6 +58,11 @@ public class ServiceController extends ControllerBase {
         return notFound();
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ok(_serviceMotService.countServices());
+    }
+
     @GetMapping("/{id:\\d+}/customer")
     public ResponseEntity<Customer> getCustomerByServiceId(@PathVariable("id") long id) {
         Service serviceById = _serviceMotService.getById(id);

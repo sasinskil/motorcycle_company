@@ -18,6 +18,8 @@ public class TestDriveService {
         return _testDriveRepository.findAll();
     }
 
+    public long countTestDrives() { return _testDriveRepository.count(); }
+
     public void saveTestDrive(TestDrive testDrive) {
         _testDriveRepository.save(testDrive);
     }

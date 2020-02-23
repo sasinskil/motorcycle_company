@@ -17,6 +17,8 @@ public class ServiceMotService {
         return _serviceRepository.findAll();
     }
 
+    public long countServices() { return _serviceRepository.count(); }
+
     public void saveService(info.sasinski.entity.Service service) {
         _serviceRepository.save(service);
     }

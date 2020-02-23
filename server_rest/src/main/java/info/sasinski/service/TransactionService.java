@@ -18,6 +18,8 @@ public class TransactionService {
         return _transactionRepository.findAll();
     }
 
+    public long countTransactions() { return _transactionRepository.count(); }
+
     public void saveTransaction(Transaction transaction) {
         _transactionRepository.save(transaction);
     }

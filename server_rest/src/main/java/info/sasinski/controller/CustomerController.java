@@ -49,6 +49,11 @@ public class CustomerController extends ControllerBase {
         return notFound();
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ok(_customerService.countCustomers());
+    }
+
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody Customer customer, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

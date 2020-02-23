@@ -23,6 +23,8 @@ public class EmployeeService {
         return _employeeRepository.countByFirstNameIgnoreCase(firstName);
     }
 
+    public long countEmployees() { return _employeeRepository.count(); }
+
     public Employee findEmployeeById(long id) {
         return _employeeRepository.findById(id).orElse(null);
     }

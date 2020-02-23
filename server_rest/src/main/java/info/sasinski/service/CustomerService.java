@@ -26,6 +26,8 @@ public class CustomerService {
         return _customerRepository.findAll();
     }
 
+    public long countCustomers() { return _customerRepository.count(); }
+
     public void removeCustomer(long id) {
         _customerRepository.deleteById(id);
     }

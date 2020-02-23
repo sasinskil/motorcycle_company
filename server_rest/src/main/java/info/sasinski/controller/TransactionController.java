@@ -105,6 +105,11 @@ public class TransactionController extends ControllerBase {
         return ok(new ActionResponse(motorcycleDetails, employee, customer));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ok(_transactionService.countTransactions());
+    }
+
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody Transaction transaction, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

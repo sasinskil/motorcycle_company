@@ -60,6 +60,11 @@ public class TestDriveController extends ControllerBase {
         return ok(employee);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ok(_testDriveService.countTestDrives());
+    }
+
     @GetMapping("/{id:\\d+}/customer")
     public ResponseEntity<Customer> findCustomerInTestDrive(@PathVariable("id") long id) {
         TestDrive byId = _testDriveService.getById(id);

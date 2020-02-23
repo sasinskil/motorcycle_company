@@ -46,6 +46,11 @@ public class EmployeeController extends ControllerBase {
         return ok(_employeeService.countByFirstNameIgnoreCase(firstName));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ok(_employeeService.countEmployees());
+    }
+
     @GetMapping("/allByDateOfEmployment/{date}")
     public ResponseEntity<List<Employee>> get(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("date") LocalDate dateOfEmployment) {
         List<Employee> byDateOfEmployment = _employeeService.findAllByDateOfEmployment(dateOfEmployment);
