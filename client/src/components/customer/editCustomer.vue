@@ -14,7 +14,7 @@
         <input class="form__input" name="desc" id="desc" required v-model.lazy="customer.lastName" />
       </p>
       <p>
-        <label class="form__label" for="date">Data:</label>
+        <label class="form__label" for="date">Data urodzin:</label>
         <input class="form__input" type="date" name="date" id="date" required v-model.lazy="customer.birthDate">
       </p>
       <h2 class="form__title--address">Adres zamieszkania</h2>
@@ -178,7 +178,7 @@ export default {
 }
 .single-customer__button {
   @include default-button($navy-blue);
-  margin: 1rem 18rem 2rem 0;
+  margin: 1rem 19rem 2rem 0;
   &:hover > svg {
           animation: moveYe .8s infinite;
       }

@@ -296,35 +296,37 @@
           </span>
         </button>
         <li class="navigation__item">
-          <router-link class="navigation__link" to="/">Home</router-link>
+          <router-link class="navigation__link" to="/">
+            <font-awesome-icon class="icon home-icon" icon="home" />
+          </router-link>
           <!-- <a class="navigation__link" href="#">Customers</a> -->
         </li>
         <li class="navigation__item">
           <router-link class="navigation__link" to="/customers"
-            >Customers</router-link
+            >Klienci</router-link
           >
           <!-- <a class="navigation__link" href="#">Customers</a> -->
         </li>
         <li class="navigation__item">
           <router-link class="navigation__link" to="/forms"
-            >Employees</router-link
+            >Pracownicy</router-link
           >
           <!-- <a class="navigation__link" href="#">Employees</a> -->
         </li>
         <li class="navigation__item">
           <router-link class="navigation__link" to="/buttons"
-            >Motorcycles</router-link
+            >Motocykle</router-link
           >
           <!-- <a class="navigation__link" href="#">Motorcycles</a> -->
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Test drive</a>
+          <a class="navigation__link" href="#">Jazdy próbne</a>
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Transactions</a>
+          <a class="navigation__link" href="#">Transakcje</a>
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Services</a>
+          <a class="navigation__link" href="#">Serwisy posprzedażowe</a>
         </li>
         <li class="current-user">
           <font-awesome-icon class="icon user" icon="user" />
@@ -535,6 +537,10 @@ export default {
   margin-right: 0.4rem;
 }
 
+.home-icon {
+  font-size: 1.1rem;
+}
+
 @mixin hamburger-line {
   width: 100%;
   height: 0.2rem;
@@ -703,14 +709,14 @@ export default {
   }
 }
 
-@media (min-width: 1101px) {
+@media (min-width: 1181px) {
   .burger-show,
   .burger-hide {
     display: none;
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1180px) {
   .burger-show,
   .burger-hide {
     display: block;

@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="action-buttons">
-      <router-link tag="button" title="Add" class="my-button add" to="/addCustomer">Dodaj
+      <router-link v-if=" checkIsAdmin" tag="button" title="Add" class="my-button add" to="/addCustomer">Dodaj
         <font-awesome-icon class="icon" icon="plus"/>
       </router-link>
       <button title="Export" class="my-button export" @click="exportTableToExcel('customers')">Export
@@ -176,6 +176,9 @@ export default {
               .includes(this.filteredLocality.toLowerCase()))
         );
       });
+    },
+    checkIsAdmin() {
+      return this.$store.getters.isAdmin;
     }
   }
 };

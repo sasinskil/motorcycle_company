@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1>Vue app ;)</h1>
-    <p>Hi there bro</p>
+    <h1>Duos Kołos</h1>
+    <p>Aktualne dane 🎯🏹</p>
   </div>
 </template>
 

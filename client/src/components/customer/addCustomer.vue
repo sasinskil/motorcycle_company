@@ -13,7 +13,7 @@
         <input class="form__input" name="desc" id="desc" required v-model.lazy="customer.lastName" />
       </p>
       <p>
-        <label class="form__label" for="date">Data:</label>
+        <label class="form__label" for="date">Data urodzin:</label>
         <input class="form__input" type="date" name="date" id="date" required v-model.lazy="customer.birthDate">
       </p>
       <h2 class="form__title--address">Adres zamieszkania</h2>
@@ -52,32 +52,32 @@
     <div class="preview">
       <h3 class="preview__header">Podgląd</h3>
       <h4 class="preview__header--main">Dane szczegółowe</h4>
-      <p class="preview__date">
+      <p class="preview__data">
         Imię:
         <span class="preview__value">{{customer.firstName}}</span>
       </p>
-      <p class="preview__title">
+      <p class="preview__data">
         Nazwisko:
         <span class="preview__value">{{customer.lastName}}</span>
       </p>
-      <p class="preview__content">
+      <p class="preview__data">
         Data urodzin:
         <span class="preview__value">{{customer.birthDate | format-date}}</span>
       </p>
       <h4 class="preview__header--address">Adres zamieszkania</h4>
-      <p class="preview__author">
+      <p class="preview__data">
         Mijescowość:
         <span class="preview__value">{{customer.address.locality}}</span>
       </p>
-      <p class="preview__author">
+      <p class="preview__data">
         Kod pocztowy:
         <span class="preview__value">{{customer.address.zipCode}}</span>
       </p>
-      <p class="preview__author">
+      <p class="preview__data">
         Ulica:
         <span class="preview__value">{{customer.address.street}}</span>
       </p>
-      <p class="preview__author">
+      <p class="preview__data">
         Numer:
         <span class="preview__value">{{customer.address.streetNumber}}</span>
       </p>
@@ -198,14 +198,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-@keyframes rotateYe {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(180deg);
-    }
-}
 .main-container--add {
   width: 100%;
   max-width: 950px;
@@ -254,9 +246,6 @@ export default {
   &__send-button {
     margin: 1rem 0;
    @include default-button($navy-blue);
-    &:hover > svg {
-      animation: rotateYe 1s infinite;
-    }
   }
   &__clear-button {
     margin: 1rem 0 0 0.5rem;

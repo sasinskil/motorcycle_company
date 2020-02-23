@@ -55,6 +55,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import "@/assets/styles/main.scss";
+
 .modal-mask {
   position: fixed;
   z-index: 9999;
@@ -113,7 +115,7 @@ export default {
 }
 
 .modal-body {
-  margin: 0 0 3.5rem 0;
+  margin: 0 0 4.5rem 0;
   &--text {
     font-size: 1.1rem;
     max-height: 160px;
@@ -130,40 +132,12 @@ export default {
 }
 
 .modal-default-button--action {
-  text-align: center;
-  border: none;
-  background-color: #324960f5;
-  color: #fff;
-  padding: 0.5rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 0.2rem;
-  transition: box-shadow 0.4s ease-in-out;
-
-  &:active {
-    background-color: darken(#324960f5, 10%);
-  }
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  }
+  @include default-button($navy-blue);
 }
 
 .modal-default-button--cancel {
-  text-align: center;
   margin-right: 0.5rem;
-  border: none;
-  background-color: rgba(255, 0, 0, 0.582);
-  color: #fff;
-  padding: 0.5rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 0.2rem;
-  transition: box-shadow 0.4s ease-in-out;
-
-  &:active {
-    background-color: darken(rgba(255, 0, 0, 0.582), 10%);
-  }
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  }
+  @include default-button($dark-red);
 }
 
 .modal-enter-active,
