@@ -31,7 +31,7 @@
       </p>
       <p>
         <label class="form__label" for="streetNumber">Numer:</label>
-        <input class="form__input" type="number" name="streetNumber" id="streetNumber" required v-model.lazy="customer.address.streetNumber">
+        <input class="form__input" type="number" placeholder="0" name="streetNumber" id="streetNumber" required v-model.lazy="customer.address.streetNumber">
       </p>
       <p class="form__errors" v-if="errors.length">
         <span>Popraw następujące błędy:</span>
@@ -115,7 +115,6 @@ export default {
             streetNumber: "",
         },
       },
-      customerId: this.$route.params.id,
       submitted: false,
       errors: [],
       visible: false,

@@ -56,7 +56,7 @@ html {
   box-sizing: inherit;
 }
 body {
-  @include bg-effect;
+  //@include bg-effect;
   font-family: $font-family;
   margin: 0;
   padding: 0;

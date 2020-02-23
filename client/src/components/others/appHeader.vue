@@ -308,7 +308,7 @@
           <!-- <a class="navigation__link" href="#">Customers</a> -->
         </li>
         <li class="navigation__item">
-          <router-link class="navigation__link" to="/forms"
+          <router-link class="navigation__link" to="/employees"
             >Pracownicy</router-link
           >
           <!-- <a class="navigation__link" href="#">Employees</a> -->

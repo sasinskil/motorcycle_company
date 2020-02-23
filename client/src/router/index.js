@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// Auth
 import login from '@/components/auth/login.vue'
 import register from '@/components/auth/register.vue'
 // Cutomers
@@ -8,12 +9,19 @@ import singleCustomer from '@/components/customer/singleCustomer.vue'
 import editCustomer from '@/components/customer/editCustomer.vue'
 import addCustomer from '@/components/customer/addCustomer.vue'
 // Employees
+import employees from '@/components/employee/employees.vue'
+import singleEmployee from '@/components/employee/singleEmployee.vue'
+import editEmployee from '@/components/employee/editEmployee.vue'
+import addEmployee from '@/components/employee/addEmployee.vue'
+// Home
 import HelloWorld from '@/components/others/HelloWorld.vue'
+// 404
 import notFound404 from '@/components/others/notFound404.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // Home
   {
     path: '/',
     name: 'HelloWorld',
@@ -43,6 +51,31 @@ const routes = [
     path: "/addCustomer",
     name: 'addCustomer',
     component: addCustomer,
+    meta: { requiresAuth: true }
+  },
+  // Employees
+  {
+    path: '/employees',
+    name: 'employees',
+    component: employees,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/employee/:id',
+    name: 'singleEmployee',
+    component: singleEmployee,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/employee/:id/edit',
+    name: 'editEmployee',
+    component: editEmployee,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addEmployee",
+    name: 'addEmployee',
+    component: addEmployee,
     meta: { requiresAuth: true }
   },
   // Auth

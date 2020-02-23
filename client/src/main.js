@@ -53,11 +53,23 @@ library.add(
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-// eslint-disable-next-line no-unused-vars
+
 Vue.http.interceptors.push((request, next) => {
   if (localStorage.getItem('token')) {
     request.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
   }
+
+  next(response => {
+
+    if(response.status === 400 || response.status === 401 || response.status === 403) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('authorised');
+        router.go(0);
+        router.push({path: '/login'});
+    }
+
+})
   
 });
 

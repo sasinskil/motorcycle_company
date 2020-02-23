@@ -9,14 +9,14 @@
           </label>
         </p>
         <p>
-          <input type="text" id="speciality" name="speciality" v-model="filteredLastName">
-          <label for="speciality">Nazwisko
+          <input type="text" id="lastName" name="lastName" v-model="filteredLastName">
+          <label for="lastName">Nazwisko
             <br>
           </label>
         </p>
         <p>
-          <input type="text" id="description" name="description" v-model="filteredLocality">
-          <label for="description">Miejsce zamieszkania
+          <input type="text" id="locality" name="locality" v-model="filteredLocality">
+          <label for="locality">Miejsce zamieszkania
             <br>
           </label>
         </p>
@@ -39,7 +39,7 @@
       <router-link v-if=" checkIsAdmin" tag="button" title="Add" class="my-button add" to="/addCustomer">Dodaj
         <font-awesome-icon class="icon" icon="plus"/>
       </router-link>
-      <button title="Export" class="my-button export" @click="exportTableToExcel('customers')">Export
+      <button title="Export" class="my-button export" @click="exportTableToExcel('klienci')">Export
         <font-awesome-icon class="icon" icon="file-export"/>
       </button>
     </div>
@@ -422,7 +422,7 @@ label {
 .loader-box {
   position: fixed;
   z-index: 9999;
-  top: 0;
+  top: 95px;
   left: 0;
   width: 100%;
   height: 100%;
