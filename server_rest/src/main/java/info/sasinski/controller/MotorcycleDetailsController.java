@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/api/motorcycleDetails")
 public class MotorcycleDetailsController extends ControllerBase {

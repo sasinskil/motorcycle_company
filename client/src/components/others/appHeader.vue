@@ -320,7 +320,7 @@
           <!-- <a class="navigation__link" href="#">Motorcycles</a> -->
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Jazdy próbne</a>
+          <a class="navigation__link" href="#">Jazdy testowe</a>
         </li>
         <li class="navigation__item">
           <a class="navigation__link" href="#">Transakcje</a>

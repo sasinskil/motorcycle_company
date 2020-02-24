@@ -31,6 +31,15 @@ const transactionUrl = `${APIUrl}/transaction`;
 
 const serviceUrl = `${APIUrl}/service`;
 
+// Count
+
+const countCustomers = `${customerUrl}/count`;
+const countEmployees = `${employeeUrl}/count`;
+const countMotorcycleDetails = `${motorcycleDetailsUrl}/count`;
+const countTestDrives = `${testDriveUrl}/count`;
+const countTransactions = `${transactionUrl}/count`;
+const countServices = `${serviceUrl}/count`;
+
 // Router links
 
 const navLinks = [
@@ -49,5 +58,7 @@ const navLinks = [
 export {
      loginUrl, registerUrl, customerUrl, employeeUrl,
      motorcycleUrl, motorcycleDetailsUrl, testDriveUrl,
-     transactionUrl, serviceUrl, navLinks
+     transactionUrl, serviceUrl, navLinks,
+     countCustomers, countEmployees, countMotorcycleDetails, countTestDrives,
+     countTransactions, countServices
     };

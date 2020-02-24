@@ -9,7 +9,6 @@ import info.sasinski.transfer.response.ActionResponse;
 import info.sasinski.transfer.response.ConstraintViolationsResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -20,11 +19,10 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(
-        value = "/api/transaction",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+        value = "/api/transaction")
 public class TransactionController extends ControllerBase {
 
     final TransactionService _transactionService;

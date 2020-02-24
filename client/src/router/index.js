@@ -14,7 +14,7 @@ import singleEmployee from '@/components/employee/singleEmployee.vue'
 import editEmployee from '@/components/employee/editEmployee.vue'
 import addEmployee from '@/components/employee/addEmployee.vue'
 // Home
-import HelloWorld from '@/components/others/HelloWorld.vue'
+import Home from '@/components/others/home/Home.vue'
 // 404
 import notFound404 from '@/components/others/notFound404.vue'
 
@@ -24,8 +24,8 @@ const routes = [
   // Home
   {
     path: '/',
-    name: 'HelloWorld',
-    component: HelloWorld,
+    name: 'Home',
+    component: Home,
     meta: { requiresAuth: true }
   },
   // Customers

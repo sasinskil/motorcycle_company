@@ -22,7 +22,14 @@ import {
   faArrowLeft,
   faLock,
   faUserTie,
-  faHome
+  faHome,
+  faChevronCircleRight,
+  faMotorcycle,
+  faRoad,
+  faHandshake,
+  faWrench,
+  faUsers,
+  faUserTag
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -48,7 +55,14 @@ library.add(
   faArrowLeft,
   faLock,
   faUserTie,
-  faHome
+  faHome,
+  faChevronCircleRight,
+  faMotorcycle,
+  faRoad,
+  faHandshake,
+  faWrench,
+  faUsers,
+  faUserTag
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
