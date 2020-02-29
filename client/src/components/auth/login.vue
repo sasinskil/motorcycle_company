@@ -231,5 +231,7 @@ label {
 .loginBtn {
   margin-top: 3rem;
   @include default-button($navy-blue);
+  background: $navy-blue;
+  color: $white;
 }
 </style>

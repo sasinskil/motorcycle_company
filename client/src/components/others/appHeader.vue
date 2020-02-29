@@ -305,28 +305,31 @@
           <router-link class="navigation__link" to="/customers"
             >Klienci</router-link
           >
-          <!-- <a class="navigation__link" href="#">Customers</a> -->
         </li>
         <li class="navigation__item">
           <router-link class="navigation__link" to="/employees"
             >Pracownicy</router-link
           >
-          <!-- <a class="navigation__link" href="#">Employees</a> -->
         </li>
         <li class="navigation__item">
-          <router-link class="navigation__link" to="/buttons"
+          <router-link class="navigation__link" to="/motorcycles"
             >Motocykle</router-link
           >
-          <!-- <a class="navigation__link" href="#">Motorcycles</a> -->
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Jazdy testowe</a>
+          <router-link class="navigation__link" to="/testDrives"
+            >Jazdy testowe</router-link
+          >
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Transakcje</a>
+          <router-link class="navigation__link" to="/transactions"
+            >Transakcje</router-link
+          >
         </li>
         <li class="navigation__item">
-          <a class="navigation__link" href="#">Serwisy posprzedażowe</a>
+          <router-link class="navigation__link" to="/services"
+            >Serwisy posprzedażowe</router-link
+          >
         </li>
         <li class="current-user">
           <font-awesome-icon class="icon user" icon="user" />
@@ -339,12 +342,19 @@
             </li>
             <li class="current-user__about-item">
               <ul class="current-user__about-list--roles">
-                <li class="current-user__about-item--role" v-for="role in user.authorities" :key="role">
-                  <p class="role">{{role}}</p>
+                <li
+                  class="current-user__about-item--role"
+                  v-for="role in user.authorities"
+                  :key="role"
+                >
+                  <p class="role">{{ role }}</p>
                 </li>
               </ul>
             </li>
-            <li v-if="checkIsAdmin" class="current-user__about-item current-user__about-item--admin">
+            <li
+              v-if="checkIsAdmin"
+              class="current-user__about-item current-user__about-item--admin"
+            >
               <button @click="toRegister" class="current-user__about-item--btn">
                 Nowy użytkownik
               </button>
@@ -368,7 +378,7 @@ export default {
   name: "appHeader",
   data() {
     return {
-      user: {},
+      user: {}
     };
   },
   computed: {
@@ -396,8 +406,8 @@ export default {
       this.$store.dispatch("logout");
     },
     toRegister() {
-      this.$router.push('/register');
-    },
+      this.$router.push("/register");
+    }
   }
 };
 </script>
@@ -451,12 +461,12 @@ export default {
 
 .duos_kolos_logo--box:hover > .duos_kolos_logo--circle-right {
   transform-origin: 72% 76%;
-  animation: rotatingMe 0.6s linear infinite;
+  animation: rotatingMe 0.4s linear 1;
 }
 
 .duos_kolos_logo--box:hover > .duos_kolos_logo--circle-left {
   transform-origin: 26% 76%;
-  animation: rotatingMe 0.6s linear infinite;
+  animation: rotatingMe 0.4s linear 1;
 }
 
 .user {
@@ -523,8 +533,11 @@ export default {
     }
 
     &--btn {
-      @include default-button($dark-grey);
-      font-weight: bold;
+      @include default-button($white);
+
+      &:hover {
+        color: $navy-blue;
+      }
     }
   }
 
@@ -538,7 +551,7 @@ export default {
 }
 
 .home-icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 @mixin hamburger-line {
@@ -697,16 +710,8 @@ export default {
 
 .navigation__logout {
   @include default-button($navy-blue);
-  background: none;
   border: 2px solid $navy-blue;
   margin-left: 3rem;
-  color: $navy-blue;
-  transition: background 0.3s ease-in-out, color 0.1s ease-in-out;
-
-  &:hover {
-    background: $navy-blue;
-    color: $white;
-  }
 }
 
 @media (min-width: 1181px) {

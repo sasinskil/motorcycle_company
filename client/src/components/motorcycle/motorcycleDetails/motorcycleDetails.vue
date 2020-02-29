@@ -1,26 +1,23 @@
 <template>
-  <div class="motorcycles">
+  <div class="motorcycleDetails">
     <div class="searchWrapper">
       <div class="searchWrapper__inputs">
         <p>
-          <input
-            type="text"
-            id="model"
-            name="model"
-            v-model="filteredModel"
-          />
+          <input type="text" id="price" name="price" v-model="filteredPrice" />
+          <label for="price"
+            >Cena
+            <br />
+          </label>
+        </p>
+        <p>
+          <input type="text" id="model" name="model" v-model="filteredModel" />
           <label for="model"
             >Model
             <br />
           </label>
         </p>
         <p>
-          <input
-            type="text"
-            id="brand"
-            name="brand"
-            v-model="filteredBrand"
-          />
+          <input type="text" id="brand" name="brand" v-model="filteredBrand" />
           <label for="brand"
             >Marka
             <br />
@@ -76,129 +73,144 @@
         tag="button"
         title="Add"
         class="my-button add"
-        to="/addMotorcycle"
+        to="/addMotorcycleDetails"
         >Dodaj
         <font-awesome-icon class="icon" icon="plus" />
       </router-link>
-      <router-link
-        tag="button"
-        title="Motorcycle details"
-        class="my-button details"
-        to="/motorcycleDetails"
-        >Motocykle na stanie
-      </router-link>
-    </div>
-
-    <ul class="motorcycles__list">
-      <li
-        v-for="motorcycle in filteredMotorcycles"
-        :key="motorcycle.id"
-        class="motorcycles__item"
+      <button
+        title="Export"
+        class="my-button export"
+        @click="exportTableToExcel('motocykle')"
       >
-        <div class="motorcycles__wrapper">
-          <h2 v-rainbow class="motorcycles__single-title">
-            {{ motorcycle.model }}
-          </h2>
-          <p class="motorcycles__paragraph"><strong>Marka</strong> {{ motorcycle.brand }}</p>
-          <p class="motorcycles__paragraph"><strong>Klasyfikacja</strong> {{ motorcycle.classification }}</p>
-          <p class="motorcycles__paragraph"><strong>Moc</strong> {{ motorcycle.power }} km</p>
-          <p class="motorcycles__paragraph"><strong>Pojemność (cm<span class="cubic-centimeters">3</span> )</strong> {{ motorcycle.capacity }}</p>
-        </div>
-        <div class="motorcycles__more-wrapper">
-          <router-link v-if="checkIsAdmin"
-            class="motorcycles__single-link"
-            :to="`/motorcycle/${motorcycle.id}/edit`"
-            >Dowiedz się więcej</router-link
+        Export
+        <font-awesome-icon class="icon" icon="file-export" />
+      </button>
+    </div>
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Cena(PLN)</th>
+            <th>Model</th>
+            <th>Marka</th>
+            <th>Klasyfikacja</th>
+            <th>Moc(km)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <router-link
+            tag="tr"
+            v-for="motorcycleDetail in filteredMotorcycleDetails"
+            :key="motorcycleDetail.id"
+            :to="`/motorcycleDetails/${motorcycleDetail.id}`"
           >
-          <span class="motorcycles__more">
-            <p class="motorcycles__more--engine">
-              {{ motorcycle.engineType }}
-              <font-awesome-icon class="icon" icon="car-battery"/>
-            </p>
-            <p class="motorcycles__more--weight">
-              {{ motorcycle.weight }} kg
-            <font-awesome-icon class="icon" icon="weight-hanging"/>
-            </p>
-          </span>
-        </div>
-      </li>
-    </ul>
+            <td>{{ motorcycleDetail.price }}</td>
+            <td>{{ motorcycleDetail.motorcycle.model }}</td>
+            <td>{{ motorcycleDetail.motorcycle.brand }}</td>
+            <td>{{ motorcycleDetail.motorcycle.classification }}</td>
+            <td>{{ motorcycleDetail.motorcycle.power }}</td>
+          </router-link>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-import { motorcycleUrl } from "@/variables";
+import { motorcycleDetailsUrl } from "@/variables";
 
 export default {
-  name: "motorcycles",
+  name: "motorcycleDetails",
   data() {
     return {
+      filteredPrice: "",
       filteredModel: "",
       filteredBrand: "",
       filteredClassification: "",
       filteredPower: "",
       loading: false,
-      motorcycles: []
+      motorcycleDetails: []
     };
-  },
-  directives: {
-    rainbow: {
-      bind(el) {
-        el.style.background = `linear-gradient(to right,
-        #${Math.random()
-          .toString()
-          .slice(3, 9)},
-        #${Math.random()
-          .toString()
-          .slice(6, 9)}`;
-      }
-    }
   },
   methods: {
     cleanFilteringCriteria() {
+      this.filteredPrice = "";
       this.filteredModel = "";
       this.filteredBrand = "";
       this.filteredClassification = "";
       this.filteredPower = "";
     },
-    getMotorcycles() {
+    exportTableToExcel(filename = "") {
+      let downloadLink;
+      const dataType = "application/vnd.ms-excel";
+      const tableSelect = document.querySelector(".table");
+      const tableHTML = tableSelect.outerHTML.replace(/ /g, "%20");
+
+      const currentDate = this.getFormattedDate();
+
+      // Specify file name
+      filename = filename
+        ? `${filename}_${currentDate}.xls`
+        : `some_data_${currentDate}.xls`;
+
+      // Create download link element
+      downloadLink = document.createElement("a");
+
+      document.body.appendChild(downloadLink);
+
+      if (navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(["\ufeff", tableHTML], {
+          type: dataType
+        });
+        navigator.msSaveOrOpenBlob(blob, filename);
+      } else {
+        // Create a link to the file
+        downloadLink.href = "data:" + dataType + ", " + tableHTML;
+
+        // Setting the file name
+        downloadLink.download = filename;
+
+        //triggering the function
+        downloadLink.click();
+      }
+    },
+    getMotorcycleDetails() {
       this.loading = true;
       this.$http
-        .get(`${motorcycleUrl}`)
+        .get(`${motorcycleDetailsUrl}`)
         .then(resp => resp.json())
         .then(data => {
           this.loading = false;
-          this.motorcycles = data;
+          this.motorcycleDetails = data;
         })
         .catch(err => {
           console.log(err);
         });
     }
   },
-  singleEmployee(employeeId) {
-    this.router.push({ name: "singleEmployee", params: { id: employeeId } });
-  },
   created() {
-    this.getMotorcycles();
+    this.getMotorcycleDetails();
   },
   computed: {
-    filteredMotorcycles() {
-      return this.motorcycles.filter(motorcycle => {
+    filteredMotorcycleDetails() {
+      return this.motorcycleDetails.filter(motDetail => {
         return (
+          (!this.filteredPrice ||
+            motDetail.price >= Number(this.filteredPrice))&&
           (!this.filteredModel ||
-            motorcycle.model
+            motDetail.motorcycle.model
               .toLowerCase()
               .includes(this.filteredModel.toLowerCase())) &&
           (!this.filteredBrand ||
-            motorcycle.brand
+            motDetail.motorcycle.brand
               .toLowerCase()
               .includes(this.filteredBrand.toLowerCase())) &&
           (!this.filteredClassification ||
-            motorcycle.classification
+            motDetail.motorcycle.classification
               .toLowerCase()
               .includes(this.filteredClassification.toLowerCase())) &&
           (!this.filteredPower ||
-            motorcycle.power >= Number(this.filteredPower))
+            motDetail.motorcycle.power >= Number(this.filteredPower))
         );
       });
     },
@@ -225,9 +237,13 @@ export default {
 .action-buttons {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   padding-bottom: 0.8rem;
+}
+
+.export {
+  @include default-button($dark-blue);
 }
 
 .clear {
@@ -244,11 +260,70 @@ export default {
 
 .add {
   @include default-button($dark-green);
-  margin-right: 0.5rem;
 }
 
-.details {
-    @include default-button($dark-orange);
+.table-wrapper {
+  width: 100%;
+  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+}
+
+table {
+  width: 100%;
+  display: block;
+  background: #fff;
+}
+thead {
+  display: inline-block;
+  width: 100%;
+}
+
+thead tr,
+tbody tr {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+tbody {
+  height: 100%;
+  max-height: 450px;
+  display: inline-block;
+  width: 100%;
+  overflow: auto;
+}
+
+table td,
+table th {
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+table td {
+  font-size: 0.9rem;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+table tbody tr {
+  cursor: pointer;
+}
+
+table tbody tr:hover {
+  background-color: #8e8b8b36;
+}
+
+table thead tr {
+  background: #324960;
+}
+
+table thead th {
+  padding: 1.3rem;
+  font-weight: bold;
+  font-size: 15px;
+  color: #ffffff;
 }
 
 .searchWrapper {
@@ -269,10 +344,6 @@ export default {
 
     p {
       padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
     }
   }
 
@@ -288,14 +359,51 @@ export default {
     justify-content: flex-start;
     align-content: flex-start;
     padding: 0.5rem;
+
+    &--search {
+      box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+      font-family: "Avenir", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      background: none;
+      border: 1px solid #4fc08d;
+      color: #2c3e50;
+      transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
+    }
+
+    &--clear {
+      box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+      font-family: "Avenir", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      background: none;
+      border: 1px solid #2c3e50;
+      color: #2c3e50;
+      //margin-left: 1rem;
+      transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
+
+      &:hover {
+        background: #2c3e50;
+        color: #fff;
+      }
+    }
   }
 }
 
-.motorcycles {
+.motorcycleDetails {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
   padding: 0.5rem;
+}
+
+p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 input {
@@ -340,124 +448,9 @@ label {
   text-transform: none;
 }
 
-.motorcycles__single-title {
-  color: $white;
-  margin: 0 0 1rem;
-  padding: 3rem 0 4rem;
-}
-
-.motorcycles__paragraph {
-  margin: 0;
-  text-align: left;
-  padding: .5rem 1.5rem;
-  position: relative;
-}
-
-strong {
-    display: block;
-}
-
-.cubic-centimeters {
-    position: absolute;
-    top: 4px;
-    right: 157px;
-    font-size: 0.7rem;
-}
-
-.motorcycles__single-link {
-  text-decoration: none;
-  color: transparent;
-  background: transparent;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.motorcycles__more-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  background: #fff;
-  &::before {
-    content: "";
-    display: block;
-    width: 90%;
-    height: 0.05rem;
-    margin: 0 auto;
-    background: #00000020;
-    position: absolute;
-    bottom: 43px;
-    left: 0;
-    right: 0;
-  }
-}
-.motorcycles__more {
-  width: 100%;
-  padding: 0.8rem 1.2rem;
-  color: #00000060;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  &--engine {
-    color: #00000060;
-    padding: 0 0.5rem 0 0;
-    margin: 0 .3rem 0 0;
-  }
-  &--weight {
-      margin: 0;
-      padding: 0;
-  }
-}
-.motorcycles__list {
-  list-style-type: none;
-  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-  padding: 0;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-.motorcycles__item {
-  position: relative;
-  width: 100%;
-  max-width: 305px;
-  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-  overflow: hidden;
-  margin: 0.7rem;
-  transition: transform 0.4s ease-in-out, background 0.4s ease-in-out,
-    color 0.4s ease-in-out;
-}
-.motorcycles__item:hover {
-  transform: translateY(-2px);
-}
-.motorcycles__counter {
-  position: absolute;
-  bottom: 12px;
-  left: 30px;
-  &--icon {
-    font-size: 20px;
-    color: #00000060;
-  }
-  &--count {
-    position: absolute;
-    z-index: 5;
-    top: -23px;
-    left: -19px;
-    color: $white;
-    text-align: center;
-    padding: 0.1rem;
-    border-radius: 25px;
-    background: #ce3333;
-    overflow: hidden;
-    line-height: 1.5rem;
-    width: 28px;
-    height: 28px;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.42);
+@media (max-width: 640px) {
+  .fl-table thead th {
+    padding: 1rem 0.5rem;
   }
 }
 

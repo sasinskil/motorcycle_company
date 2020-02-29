@@ -5,7 +5,6 @@ import info.sasinski.service.MotorcycleService;
 import info.sasinski.transfer.response.ConstraintViolationsResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -17,11 +16,10 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(
-        value = "/api/motorcycle",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+        value = "/api/motorcycle")
 public class MotorcycleController extends ControllerBase {
 
     final MotorcycleService _motorcycleService;

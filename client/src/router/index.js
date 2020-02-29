@@ -13,6 +13,12 @@ import employees from '@/components/employee/employees.vue'
 import singleEmployee from '@/components/employee/singleEmployee.vue'
 import editEmployee from '@/components/employee/editEmployee.vue'
 import addEmployee from '@/components/employee/addEmployee.vue'
+// Motorcycles
+import motorcycles from '@/components/motorcycle/motorcycles.vue'
+import editMotorcycle from '@/components/motorcycle/editMotorcycle.vue'
+import addMotorcycle from '@/components/motorcycle/addMotorcycle.vue'
+// Motorcycle details
+import motorcycleDetails from '@/components/motorcycle/motorcycleDetails/motorcycleDetails.vue'
 // Home
 import Home from '@/components/others/home/Home.vue'
 // 404
@@ -76,6 +82,32 @@ const routes = [
     path: "/addEmployee",
     name: 'addEmployee',
     component: addEmployee,
+    meta: { requiresAuth: true }
+  },
+  // Motorcycles
+  {
+    path: '/motorcycles',
+    name: 'motorcycles',
+    component: motorcycles,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/motorcycle/:id/edit',
+    name: 'editMotorcycle',
+    component: editMotorcycle,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addMotorcycle",
+    name: 'addMotorcycle',
+    component: addMotorcycle,
+    meta: { requiresAuth: true }
+  },
+  // Motorcycle details
+  {
+    path: '/motorcycleDetails',
+    name: 'motorcycleDetails',
+    component: motorcycleDetails,
     meta: { requiresAuth: true }
   },
   // Auth

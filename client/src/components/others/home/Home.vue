@@ -2,13 +2,13 @@
   <div class="home">
     <div class="statistics">
         <ul class="statistics__list">
-          <statisticCard v-for="(statistic, idx) in statistics" :key="idx"
+          <statistic-card v-for="(statistic, idx) in statistics" :key="idx"
             :title="`${statistic.title}`"
             :count="statistic.counter"
             :moveTo="`${statistic.moveto}`"
             :iconName="`${statistic.iconName}`"
           >
-          </statisticCard>
+          </statistic-card>
       </ul>
     </div>
   </div>
@@ -21,7 +21,7 @@ import statisticCard from "@/components/others/home/statisticCard.vue";
 export default {
   name: 'Home',
   components: {
-    statisticCard,
+    'statistic-card' : statisticCard,
   },
   data() {
     return {

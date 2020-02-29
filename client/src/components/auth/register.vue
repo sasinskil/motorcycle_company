@@ -297,5 +297,7 @@ label {
 .registerBtn {
   margin-top: 2rem;
   @include default-button($navy-blue);
+  background: $navy-blue;
+  color: $white;
 }
 </style>

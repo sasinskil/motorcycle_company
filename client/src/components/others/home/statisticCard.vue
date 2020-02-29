@@ -1,7 +1,7 @@
 <template>
   <li class="statistics__item card">
     <div class="card__body">
-      <div class="card__">
+      <div class="card__main-content">
         <h2 class="card__title">{{title}}</h2>
         <span :class="[{danger: count === 0}, 'card__count']">{{count | checkIsEmpty}}</span>
       </div>
@@ -59,10 +59,10 @@ export default {
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
   padding: 1rem 2rem 1.5rem;
   text-align: left;
-  transition: transform 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
-    transform: translateY(-2px);
+    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.4);
   }
 
   &__body {
@@ -73,6 +73,7 @@ export default {
 
   &__title {
     margin: 0 0 1rem 0;
+    font-size: 1.1rem;
 
     @media only screen and (max-width: 450px) {
         display: none;
@@ -86,6 +87,7 @@ export default {
     &.danger {
       color: #FF4D4D;
       font-weight: bold;
+      font-size: 1.3rem;
     }
   }
 
@@ -95,7 +97,7 @@ export default {
     background-color: #427C8F;
     border-radius: 50%;
     color: #fff;
-    font-size: 1.9rem;
+    font-size: 2rem;
 
     &--user {
       padding: 1rem 1.2rem;

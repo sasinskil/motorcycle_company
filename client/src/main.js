@@ -29,7 +29,9 @@ import {
   faHandshake,
   faWrench,
   faUsers,
-  faUserTag
+  faUserTag,
+  faCarBattery,
+  faWeightHanging
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -62,7 +64,9 @@ library.add(
   faHandshake,
   faWrench,
   faUsers,
-  faUserTag
+  faUserTag,
+  faCarBattery,
+  faWeightHanging
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
