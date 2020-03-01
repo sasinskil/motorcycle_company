@@ -35,18 +35,6 @@
             <br />
           </label>
         </p>
-        <p>
-          <input
-            type="number"
-            id="power"
-            name="power"
-            v-model="filteredPower"
-          />
-          <label for="power"
-            >Moc
-            <br />
-          </label>
-        </p>
       </div>
       <div class="searchWrapper__buttons">
         <button
@@ -73,7 +61,7 @@
         tag="button"
         title="Add"
         class="my-button add"
-        to="/addMotorcycleDetails"
+        to="/addMotDetails"
         >Dodaj
         <font-awesome-icon class="icon" icon="plus" />
       </router-link>
@@ -90,6 +78,7 @@
       <table class="table">
         <thead>
           <tr>
+            <th>Kod motocykla</th>
             <th>Cena(PLN)</th>
             <th>Model</th>
             <th>Marka</th>
@@ -104,6 +93,7 @@
             :key="motorcycleDetail.id"
             :to="`/motorcycleDetails/${motorcycleDetail.id}`"
           >
+            <td>{{ motorcycleDetail.motorcycleCode }}</td>
             <td>{{ motorcycleDetail.price }}</td>
             <td>{{ motorcycleDetail.motorcycle.model }}</td>
             <td>{{ motorcycleDetail.motorcycle.brand }}</td>
@@ -184,6 +174,7 @@ export default {
           this.motorcycleDetails = data;
         })
         .catch(err => {
+          this.loading = false;
           console.log(err);
         });
     }

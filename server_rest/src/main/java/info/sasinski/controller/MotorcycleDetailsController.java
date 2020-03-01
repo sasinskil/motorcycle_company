@@ -4,8 +4,10 @@ import info.sasinski.entity.Motorcycle;
 import info.sasinski.entity.MotorcycleDetails;
 import info.sasinski.service.MotorcycleDetailsService;
 import info.sasinski.transfer.response.ConstraintViolationsResponse;
+import info.sasinski.transfer.response.ResponseMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -71,6 +73,11 @@ public class MotorcycleDetailsController extends ControllerBase {
                     .collect(Collectors.toList());
 
             return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
+        }
+
+        if (_motorcycleDetailsService.existsByMotorcycleCode(motorcycleDetails.getMotorcycleCode())) {
+            return new ResponseEntity<>(new ResponseMessage("Fail -> motorcycle code is already taken!"),
+                    HttpStatus.CONFLICT);
         }
 
         _motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);

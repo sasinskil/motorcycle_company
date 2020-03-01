@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface MotorcycleDetailsRepository extends JpaRepository<MotorcycleDetails, Long> {
-
+    Boolean existsByMotorcycleCode(String motorcycleCode);
 }

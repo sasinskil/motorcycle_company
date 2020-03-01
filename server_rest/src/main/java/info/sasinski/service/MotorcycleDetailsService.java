@@ -30,6 +30,10 @@ public class MotorcycleDetailsService {
         return _motorcycleDetailsRepository.findById(id).orElse(null);
     }
 
+    public Boolean existsByMotorcycleCode(String motorcycleCode) {
+        return _motorcycleDetailsRepository.existsByMotorcycleCode(motorcycleCode);
+    }
+
     public void removeSimpleMotorcycle(long id) {
         _motorcycleDetailsRepository.deleteById(id);
     }

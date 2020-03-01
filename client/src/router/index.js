@@ -19,6 +19,12 @@ import editMotorcycle from '@/components/motorcycle/editMotorcycle.vue'
 import addMotorcycle from '@/components/motorcycle/addMotorcycle.vue'
 // Motorcycle details
 import motorcycleDetails from '@/components/motorcycle/motorcycleDetails/motorcycleDetails.vue'
+import singleMotDetails from '@/components/motorcycle/motorcycleDetails/singleMotDetails.vue'
+import editMotDetails from '@/components/motorcycle/motorcycleDetails/editMotDetails.vue'
+import addMotDetails from '@/components/motorcycle/motorcycleDetails/addMotDetails.vue'
+// Test drives
+// Transactions
+// Services
 // Home
 import Home from '@/components/others/home/Home.vue'
 // 404
@@ -108,6 +114,24 @@ const routes = [
     path: '/motorcycleDetails',
     name: 'motorcycleDetails',
     component: motorcycleDetails,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/motorcycleDetails/:id',
+    name: 'singleMotDetails',
+    component: singleMotDetails,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/motorcycleDetails/:id/edit',
+    name: 'editMotDetails',
+    component: editMotDetails,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addMotDetails",
+    name: 'addMotDetails',
+    component: addMotDetails,
     meta: { requiresAuth: true }
   },
   // Auth

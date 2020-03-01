@@ -101,7 +101,7 @@
           </h2>
           <p class="motorcycles__paragraph"><strong>Marka</strong> {{ motorcycle.brand }}</p>
           <p class="motorcycles__paragraph"><strong>Klasyfikacja</strong> {{ motorcycle.classification }}</p>
-          <p class="motorcycles__paragraph"><strong>Moc</strong> {{ motorcycle.power }} km</p>
+          <p class="motorcycles__paragraph"><strong>Moc (km)</strong> {{ motorcycle.power }}</p>
           <p class="motorcycles__paragraph"><strong>Pojemność (cm<span class="cubic-centimeters">3</span> )</strong> {{ motorcycle.capacity }}</p>
         </div>
         <div class="motorcycles__more-wrapper">
@@ -171,6 +171,7 @@ export default {
           this.motorcycles = data;
         })
         .catch(err => {
+          this.loading = false;
           console.log(err);
         });
     }

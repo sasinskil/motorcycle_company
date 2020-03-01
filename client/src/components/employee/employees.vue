@@ -26,12 +26,6 @@
             <br>
           </label>
         </p>
-        <p>
-          <input type="date" id="termDate" name="termDate" v-model="filteredTermDate">
-          <label for="termDate">Data zwolnienia
-            <br>
-          </label>
-        </p>
       </div>
       <div class="searchWrapper__buttons">
         <button title="Clear" class="my-button clear" @click="cleanFilteringCriteria">Wyczyść
@@ -166,6 +160,7 @@ export default {
           this.employees = data;
         })
         .catch(err => {
+          this.loading = false;
           console.log(err);
         });
     }

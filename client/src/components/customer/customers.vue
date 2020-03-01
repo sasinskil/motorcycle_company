@@ -148,6 +148,7 @@ export default {
           this.customers = data;
         })
         .catch(err => {
+          this.loading = false;
           console.log(err);
         });
     }

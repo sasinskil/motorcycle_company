@@ -530,6 +530,8 @@ export default {
 
     &--admin {
       border-bottom: none;
+      padding-bottom: 0;
+      padding-top: 0.5rem;
     }
 
     &--btn {

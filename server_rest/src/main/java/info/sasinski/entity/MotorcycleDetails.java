@@ -26,6 +26,9 @@ public class MotorcycleDetails implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
     Long id;
 
+    @NotNull
+    String motorcycleCode;
+
     @Column(precision = 10, scale = 3)
     @NotNull
     BigDecimal price;
