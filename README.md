@@ -2,7 +2,7 @@ This application helps employees with the management of a motorcycle company.
 
 Completed:
 - backend - > 100%
-- frontend - > 50%
+- frontend - > 70%
 
 # How to start ?
 
@@ -26,12 +26,10 @@ npm run build
 ## Server side
 
 - Spring Boot (Security -> JWT),
-- PostreSQL
+- PostgreSQL
 
 
 ## Client side
 
-- Vue.js,
-- Bootstrap
-
+- Vue.js/Vuex
 
