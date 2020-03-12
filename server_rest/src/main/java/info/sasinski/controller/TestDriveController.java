@@ -148,4 +148,15 @@ public class TestDriveController extends ControllerBase {
 
         return noContent();
     }
+
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        TestDrive testDriveId = _testDriveService.getById(id);
+        if (testDriveId != null) {
+            _testDriveService.removeTestDrive(id);
+            return noContent();
+        }
+
+        return notFound();
+    }
 }

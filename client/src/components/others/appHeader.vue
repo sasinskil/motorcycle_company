@@ -2,7 +2,7 @@
   <header v-if="checkIsLogged" class="header">
     <nav class="navigation">
       <span class="navigation__logo">
-        <a class="navigation__link" href="#">
+        <router-link tag="span" class="navigation__logo" to="/">
           <svg
             class="duos_kolos_logo"
             width="162"
@@ -282,7 +282,7 @@
               </clipPath>
             </defs>
           </svg>
-        </a>
+        </router-link>
       </span>
       <button @click="showMenu" class="burger-show">
         <span class="burger-show--box">
@@ -603,6 +603,10 @@ export default {
     align-items: center;
     transform: translateX(0px);
     transition: transform 0.3s ease-in-out;
+  }
+
+  &__logo {
+    cursor: pointer;
   }
 
   &__link {

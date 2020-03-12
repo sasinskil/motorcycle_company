@@ -26,11 +26,11 @@ public class TestDrive implements Serializable {
 
     @Column(name = "start_drive")
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime startDrive;
 
     @Column(name = "end_drive")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime endDrive;
 
     @ManyToOne(fetch = FetchType.EAGER)

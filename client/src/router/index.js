@@ -23,6 +23,10 @@ import singleMotDetails from '@/components/motorcycle/motorcycleDetails/singleMo
 import editMotDetails from '@/components/motorcycle/motorcycleDetails/editMotDetails.vue'
 import addMotDetails from '@/components/motorcycle/motorcycleDetails/addMotDetails.vue'
 // Test drives
+import testDrives from '@/components/testDrive/testDrives.vue'
+import singleTestDrive from '@/components/testDrive/singleTestDrive.vue'
+import editTestDrive from '@/components/testDrive/editTestDrive.vue'
+import addTestDrive from '@/components/testDrive/addTestDrive.vue'
 // Transactions
 // Services
 // Home
@@ -134,6 +138,33 @@ const routes = [
     component: addMotDetails,
     meta: { requiresAuth: true }
   },
+  // Test Drives
+  {
+    path: '/testDrives',
+    name: 'testDrives',
+    component: testDrives,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/testDrive/:id',
+    name: 'singleTestDrive',
+    component: singleTestDrive,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/testDrive/:id/edit',
+    name: 'editTestDrive',
+    component: editTestDrive,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addTestDrive",
+    name: 'addTestDrive',
+    component: addTestDrive,
+    meta: { requiresAuth: true }
+  },
+  // Transactions
+  // Services
   // Auth
   {
     path: '/register',

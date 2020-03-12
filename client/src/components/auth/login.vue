@@ -1,57 +1,63 @@
 <template>
   <div class="wrapper">
-    <div class="login">
-      <div class="loginPanel">
-        <h2 class="form-title">Logowanie</h2>
-        <form
-          method="POST"
-          class="form"
-          id="login-form"
-          @submit.prevent="signin"
-        >
-          <div class="form-group">
-            <label for="username">
-              <font-awesome-icon class="user-icon icon" icon="user" />
-            </label>
-            <input
-              v-model="credential.username"
-              type="text"
-              class="form-input"
-              id="username"
-              placeholder="Nazwa użytkownika"
-              autofocus
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">
-              <font-awesome-icon class="lock-icon icon" icon="lock" />
-            </label>
-            <input
-              v-model="credential.password"
-              type="password"
-              class="form-input"
-              id="password"
-              placeholder="Hasło"
-            />
-          </div>
-          <div class="form-group form-button">
-            <span class="form__errors" v-if="validErrors.length">
-              <span class="form__errors--info">Popraw następujące błędy:</span>
-              <ul class="form__errors-list">
-                <li
-                  class="form__errors-item"
-                  v-for="error in validErrors"
-                  :key="error"
-                >
-                  {{ error }}
-                </li>
-              </ul>
-            </span>
-            <button class="btn btn-dark loginBtn" @click.prevent="signin">
-              Zaloguj
-            </button>
-          </div>
-        </form>
+    <div class="login-box">
+      <div class="company">
+        <img class="company__logo" src="@/assets/images/logo_transparent.svg" alt="">
+        <h2 class="company__name">Duos Kołos Sp. z.o.o</h2>
+      </div>
+      <div class="login">
+        <div class="loginPanel">
+          <h2 class="form-title">Logowanie</h2>
+          <form
+            method="POST"
+            class="form"
+            id="login-form"
+            @submit.prevent="signin"
+          >
+            <div class="form-group">
+              <label for="username">
+                <font-awesome-icon class="user-icon icon" icon="user" />
+              </label>
+              <input
+                v-model="credential.username"
+                type="text"
+                class="form-input"
+                id="username"
+                placeholder="Nazwa użytkownika"
+                autofocus
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">
+                <font-awesome-icon class="lock-icon icon" icon="lock" />
+              </label>
+              <input
+                v-model="credential.password"
+                type="password"
+                class="form-input"
+                id="password"
+                placeholder="Hasło"
+              />
+            </div>
+            <div class="form-group form-button">
+              <span class="form__errors" v-if="validErrors.length">
+                <span class="form__errors--info">Popraw następujące błędy:</span>
+                <ul class="form__errors-list">
+                  <li
+                    class="form__errors-item"
+                    v-for="error in validErrors"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </li>
+                </ul>
+              </span>
+              <button class="btn btn-dark loginBtn" @click.prevent="signin">
+                Zaloguj
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <InfoModal
@@ -140,9 +146,50 @@ export default {
   background-position: center center;
 }
 
-.login {
+.login-box {
+  margin: 0 auto;
   width: 100%;
   height: 100%;
+  padding: 0 0.5rem;
+  max-width: 950px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and(max-width: 920px) {
+    align-items: center;
+  }
+}
+
+.company {
+  color: $white;
+  width: 100%;
+  margin-top: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media only screen and(max-width: 920px) {
+    display: none;
+  }
+
+  &__logo {
+    width: 230px;
+    transform: rotate(-10deg);
+  }
+
+  &__name {
+    margin: 1rem 0 0;
+    width: 100%;
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    text-align: left;
+  }
+}
+
+.login {
+  width: 100%;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -158,7 +205,7 @@ export default {
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
   margin: 2rem auto 0;
   width: 100%;
-  max-width: 375px;
+  max-width: 390px;
   padding: 2rem 3.5rem 3rem;
 }
 .header {
@@ -206,19 +253,24 @@ label {
   position: absolute;
   top: 36px;
   left: 0;
+
+  @media only screen and (max-width: 640px) {
+    top: 42px;
+  }
+
 }
 .icon {
   font-size: 13px;
 }
 .form-title {
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 0 2rem 0;
   font-size: 2rem;
   width: 100%;
 }
 .form-input {
   margin-top: 2rem;
   width: 100%;
-  padding: 0.5rem 1.5rem;
+  padding: 0.7rem 1.5rem;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.38);
   background: none;
@@ -229,7 +281,7 @@ label {
   }
 }
 .loginBtn {
-  margin-top: 3rem;
+  margin-top: 4rem;
   @include default-button($navy-blue);
   background: $navy-blue;
   color: $white;

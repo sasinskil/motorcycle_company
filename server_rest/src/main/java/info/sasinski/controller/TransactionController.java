@@ -148,4 +148,15 @@ public class TransactionController extends ControllerBase {
 
         return noContent();
     }
+
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        Transaction transaction = _transactionService.getById(id);
+        if (transaction != null) {
+            _transactionService.removeTransaction(id);
+            return noContent();
+        }
+
+        return notFound();
+    }
 }

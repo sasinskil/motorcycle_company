@@ -113,11 +113,11 @@
           <span class="motorcycles__more">
             <p class="motorcycles__more--engine">
               {{ motorcycle.engineType }}
-              <font-awesome-icon class="icon" icon="car-battery"/>
+              <img class="engine__icon" src="@/assets/images/enginefill.svg" alt="">
             </p>
             <p class="motorcycles__more--weight">
               {{ motorcycle.weight }} kg
-            <font-awesome-icon class="icon" icon="weight-hanging"/>
+            <img class="weight__icon" src="@/assets/images/weight.svg" alt="">
             </p>
           </span>
         </div>
@@ -404,15 +404,30 @@ strong {
   justify-content: flex-end;
   align-items: flex-end;
   &--engine {
+    position: relative;
     color: #00000060;
-    padding: 0 0.5rem 0 0;
-    margin: 0 .3rem 0 0;
+    padding: 0 2.5rem 0 0;
+    margin: 0 .5rem 0 0;
+    border-right: 1px solid #00000020;
   }
   &--weight {
+      position: relative;
       margin: 0;
-      padding: 0;
+      padding: 0 2.5rem 0 0;
   }
 }
+
+.engine__icon,
+.weight__icon {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.weight__icon {
+  top: 1px;
+}
+
 .motorcycles__list {
   list-style-type: none;
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);

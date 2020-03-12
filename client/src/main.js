@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueResource from "vue-resource";
 import App from './App.vue'
 import router from './router'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import store from './store'
 // eslint-disable-next-line no-unused-vars
 import moment from 'moment';
@@ -38,6 +40,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.config.productionTip = false
 
 Vue.use(require("moment"));
+
+Vue.component('v-date-picker', DatePicker)
 
 Vue.use(VueResource);
 

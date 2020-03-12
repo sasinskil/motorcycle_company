@@ -113,6 +113,7 @@ export default {
       text-decoration: none;
       color: #3a5066;
       position: relative;
+      padding: 0.5rem 2.5rem 0.5rem 0;
       transition: color 0.4s ease-in-out;
 
       &:hover {
@@ -129,8 +130,8 @@ export default {
       color: #86BBA3;
       font-size: 1.2rem;
       position: absolute;
-      top: 1px;
-      right: -35px;
+      top: 9px;
+      right: 4px;
       transition: transform 0.4s ease-in-out;
     }
   }

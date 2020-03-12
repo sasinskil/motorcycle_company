@@ -29,4 +29,8 @@ public class TransactionService {
                 .findById(id)
                 .orElse(null);
     }
+
+    public void removeTransaction(long id) {
+        _transactionRepository.deleteById(id);
+    }
 }

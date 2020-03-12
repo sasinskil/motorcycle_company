@@ -29,5 +29,9 @@ public class TestDriveService {
                 .findById(id)
                 .orElse(null);
     }
+
+    public void removeTestDrive(long id) {
+        _testDriveRepository.deleteById(id);
+    }
 }
 

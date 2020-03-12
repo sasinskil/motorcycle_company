@@ -1,17 +1,19 @@
 <template>
   <div id="editMotorcycleDetails" class="main-container--edit">
-     <h1 class="main-container--edit__title">Modyfikuj egzemplarz: {{motorcycleDetails.motorcycleCode}}</h1>
+     <h1 class="main-container--edit__title">Modyfikuj jazdę testową z dnia: {{testDrive.startDrive | format-date}}</h1>
      
      <button class="single-motorcycleDetails__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
     <form v-if="!submitted" class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
-        <label class="form__label" for="motDetCode">Kod motocykla:</label>
-        <input class="form__input date-input" type="text" disabled name="motDetCode" id="motDetCode" required v-model.lazy="motorcycleDetails.motorcycleCode" />
+        <label class="form__label" for="motDetCode">Data rozpoczęcia:</label>
+        <!-- <input class="form__input date-input" type="text" disabled name="motDetCode" id="motDetCode" required v-model.lazy="motorcycleDetails.motorcycleCode" /> -->
+        <v-date-picker v-model="testDrive.startDrive" lang="en" type="datetime" format="YYYY-MM-DD HH:mm" value-type="YYYY-MM-DD HH:mm"></v-date-picker>
       </p>
       <p class="form__wrapper">
-        <label class="form__label" for="price">Cena (PLN):</label>
-        <input class="form__input date-input" type="text" name="price" id="price" required v-model.lazy="motorcycleDetails.price" />
+        <label class="form__label" for="price">Data zakończenia:</label>
+        <!-- <input class="form__input date-input" type="text" name="price" id="price" required v-model.lazy="motorcycleDetails.price" /> -->
+        <v-date-picker v-model="testDrive.endDrive" lang="en" type="datetime" format="YYYY-MM-DD HH:mm" value-type="YYYY-MM-DD HH:mm"></v-date-picker>
       </p>
       <p class="form__errors" v-if="errors.length">
         <span>Popraw następujące błędy:</span>
@@ -25,7 +27,7 @@
     </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Egzemplarz został zmodyfikowany!</h2>
+      <h2 class="after-post__title">Jazda testowa została zmodyfikowana!</h2>
     </div>
     <InfoModal
       v-if="showModal"
@@ -37,22 +39,25 @@
 </template>
 
 <script>
-import { motorcycleDetailsUrl } from "@/variables";
+import { testDriveUrl } from "@/variables";
+import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
-  name: "editMotDetails",
+  name: "editTestDrive",
   components: {
     InfoModal
   },
   data() {
     return {
-       motorcycleDetails: {
-           motorcycleCode: '',
-           price: '',
-           motorcycle: {}
+       testDrive: {
+           startDrive: '',
+           endDrive: '',
+           customer: {},
+           employee: {},
+           motorcycleDetails: {}
       },
-      motorcycleDetailsId: this.$route.params.id,
+      testDriveId: this.$route.params.id,
       submitted: false,
       errors: [],
       visible: false,
@@ -71,21 +76,21 @@ export default {
     },
    checkForm() {
       this.errors = [];
-      if(this.motorcycleDetails.price) {
+      if(this.testDrive.startDrive) {
         return true;
       }
-      if(!this.motorcycleDetails.price) {
-        this.errors.push('Cena jest wymagana!');
+      if(!this.testDrive.startDrive) {
+        this.errors.push('Data rozpoczęcia jazdy jest wymagana!');
       }
     },
     put() {
       const isValid = this.checkForm();
       if(isValid) {
-        this.$http.put(`${motorcycleDetailsUrl}/${this.motorcycleDetailsId}`, this.motorcycleDetails)
+        this.$http.put(`${testDriveUrl}/${this.testDriveId}`, this.testDrive)
         .then(() => {
           this.submitted = true;
           setTimeout(() => {
-            this.$router.push('/motorcycleDetails');
+            this.$router.push('/testDrives');
           }, 1500);
         })
         .catch(() => {
@@ -97,13 +102,15 @@ export default {
       }
     },
     getMotorcycleDetails() {
-           this.$http.get(`${motorcycleDetailsUrl}/${this.motorcycleDetailsId}`)
+           this.$http.get(`${testDriveUrl}/${this.testDriveId}`)
           .then(response => response.json())
           .then(object => {
-              const {motorcycleCode, price, motorcycle} = object;
-              this.motorcycleDetails.motorcycleCode = motorcycleCode;
-              this.motorcycleDetails.price = price;
-              this.motorcycleDetails.motorcycle = motorcycle;
+              const {startDrive, endDrive, customer, employee, motorcycleDetails} = object;
+              this.testDrive.startDrive = startDrive;
+              this.testDrive.endDrive = endDrive;
+              this.testDrive.customer = customer;
+              this.testDrive.employee = employee;
+              this.testDrive.motorcycleDetails = motorcycleDetails;
           })
           .catch(err => {
             console.log(err)
@@ -111,6 +118,12 @@ export default {
         },
     close() {
       this.showModal = false;
+    }
+  },
+  filters: {
+    formatDate(value) {
+        if(value)
+        return moment(String(value)).format("YYYY-MM-DD HH:mm");
     }
   },
   created() {

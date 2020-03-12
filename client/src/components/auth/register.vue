@@ -63,7 +63,7 @@
             <input
               type="checkbox"
               checked
-              class="form-input form-input--checkbox"
+              class="form-input form-input--checkbox form-input__admin"
               name="admin"
               id="admin"
               value="admin"
@@ -199,7 +199,7 @@ export default {
   text-align: center;
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-  margin: 2rem auto 0;
+  margin: 0 auto;
   width: 100%;
   max-width: 375px;
   padding: 1rem 3.5rem 2rem;
@@ -245,7 +245,7 @@ export default {
   &__checkbox-wrapper {
     margin: 1rem 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
   }
 
@@ -285,6 +285,10 @@ label {
   background: none;
   outline: none;
   transition: border-color 0.3s ease-in-out;
+
+  &__admin {
+    width: 20%;
+  }
 
   &--checkbox {
     margin: 0.25rem 4rem 0 0;

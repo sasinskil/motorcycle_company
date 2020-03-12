@@ -28,5 +28,9 @@ public class ServiceMotService {
                 .findById(id)
                 .orElse(null);
     }
+
+    public void removeService(long id) {
+        _serviceRepository.deleteById(id);
+    }
 }
 

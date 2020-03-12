@@ -3,6 +3,13 @@
     <div class="searchWrapper">
       <div class="searchWrapper__inputs">
         <p>
+          <input type="text" id="motCode" name="motCode" v-model="filteredMotCode" />
+          <label for="motCode"
+            >Kod motocykla
+            <br />
+          </label>
+        </p>
+        <p>
           <input type="text" id="price" name="price" v-model="filteredPrice" />
           <label for="price"
             >Cena
@@ -113,6 +120,7 @@ export default {
   name: "motorcycleDetails",
   data() {
     return {
+      filteredMotCode: "",
       filteredPrice: "",
       filteredModel: "",
       filteredBrand: "",
@@ -124,6 +132,7 @@ export default {
   },
   methods: {
     cleanFilteringCriteria() {
+      this.filteredMotCode = "",
       this.filteredPrice = "";
       this.filteredModel = "";
       this.filteredBrand = "";
@@ -186,8 +195,12 @@ export default {
     filteredMotorcycleDetails() {
       return this.motorcycleDetails.filter(motDetail => {
         return (
+          (!this.filteredMotCode ||
+            motDetail.motorcycleCode
+              .toLowerCase()
+              .includes(this.filteredMotCode.toLowerCase())) &&
           (!this.filteredPrice ||
-            motDetail.price >= Number(this.filteredPrice))&&
+            motDetail.price >= Number(this.filteredPrice)) &&
           (!this.filteredModel ||
             motDetail.motorcycle.model
               .toLowerCase()

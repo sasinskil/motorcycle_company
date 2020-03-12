@@ -140,4 +140,15 @@ public class ServiceController extends ControllerBase {
         _serviceMotService.saveService(service);
         return noContent();
     }
+
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        Service service = _serviceMotService.getById(id);
+        if (service != null) {
+            _serviceMotService.removeService(id);
+            return noContent();
+        }
+
+        return notFound();
+    }
 }
