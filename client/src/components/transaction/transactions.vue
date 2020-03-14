@@ -1,33 +1,65 @@
 <template>
-  <div class="testDrive">
+  <div class="transaction">
     <div class="searchWrapper">
       <div class="searchWrapper__inputs">
         <p>
-          <input type="text" id="customer" name="customer" v-model="filteredCustomer">
-          <label for="customer">Klient
-            <br>
+          <input
+            type="text"
+            id="operation"
+            name="operation"
+            v-model="filteredOperation"
+          />
+          <label for="operation"
+            >Operacja
+            <br />
           </label>
         </p>
         <p>
-          <input type="text" id="empl" name="empl" v-model="filteredEmployee">
-          <label for="empl">Pracownik
-            <br>
+          <input type="text" id="price" name="price" v-model="filteredPrice" />
+          <label for="price"
+            >Cena
+            <br />
           </label>
         </p>
         <p>
-          <input type="text" id="mot" name="mot" v-model="filteredMotorcycle">
-          <label for="mot">Motocykl
-            <br>
+          <input
+            type="text"
+            id="customer"
+            name="customer"
+            v-model="filteredCustomer"
+          />
+          <label for="customer"
+            >Klient
+            <br />
+          </label>
+        </p>
+        <p>
+          <input type="text" id="empl" name="empl" v-model="filteredEmployee" />
+          <label for="empl"
+            >Pracownik
+            <br />
+          </label>
+        </p>
+        <p>
+          <input type="text" id="mot" name="mot" v-model="filteredMotorcycle" />
+          <label for="mot"
+            >Motocykl
+            <br />
           </label>
         </p>
       </div>
       <div class="searchWrapper__buttons">
-        <button title="Clear" class="my-button clear" @click="cleanFilteringCriteria">Wyczyść
-          <font-awesome-icon class="icon" icon="eraser"/>
+        <button
+          title="Clear"
+          class="my-button clear"
+          @click="cleanFilteringCriteria"
+        >
+          Wyczyść
+          <font-awesome-icon class="icon" icon="eraser" />
         </button>
       </div>
     </div>
-    <div class="loader-box" v-if="loading"> 
+    <div class="loader-box" v-if="loading">
       <div class="lds-ring">
         <div></div>
         <div></div>
@@ -36,35 +68,47 @@
       </div>
     </div>
     <div class="action-buttons">
-      <router-link v-if=" checkIsAdmin" tag="button" title="Add" class="my-button add" to="/addTestDrive">Dodaj
-        <font-awesome-icon class="icon" icon="plus"/>
+      <router-link
+        v-if="checkIsAdmin"
+        tag="button"
+        title="Add"
+        class="my-button add"
+        to="/addTransaction"
+        >Dodaj
+        <font-awesome-icon class="icon" icon="plus" />
       </router-link>
-      <button title="Export" class="my-button export" @click="exportTableToExcel('jazdy_testowe')">Export
-        <font-awesome-icon class="icon" icon="file-export"/>
+      <button
+        title="Export"
+        class="my-button export"
+        @click="exportTableToExcel('transakcje')"
+      >
+        Export
+        <font-awesome-icon class="icon" icon="file-export" />
       </button>
     </div>
     <div class="table-wrapper">
       <table class="table">
         <thead>
           <tr>
-            <th>Data rozpoczęcia</th>
-            <th>Data zakończenia</th>
+            <th>Operacja</th>
+            <th>Cena(PLN)</th>
             <th>Klient</th>
             <th>Pracownik</th>
             <th>Motocykl</th>
           </tr>
         </thead>
         <tbody>
-          <router-link tag="tr"
-            v-for="testDrive in filteredTestDrives"
-            :key="testDrive.id"
-            :to="`/testDrive/${testDrive.id}`"
+          <router-link
+            tag="tr"
+            v-for="transaction in filteredTransactions"
+            :key="transaction.id"
+            :to="`/transaction/${transaction.id}`"
           >
-            <td>{{testDrive.startDrive}}</td>
-            <td>{{testDrive.endDrive}}</td>
-            <td>{{testDrive.customer.firstName}}</td>
-            <td>{{testDrive.employee.firstName}}</td>
-            <td>{{testDrive.motorcycleDetails.motorcycleCode}}</td>
+            <td>{{ transaction.operation }}</td>
+            <td>{{ transaction.price }}</td>
+            <td>{{ transaction.customer.firstName }}</td>
+            <td>{{ transaction.employee.firstName }}</td>
+            <td>{{ transaction.motorcycleDetails.motorcycleCode }}</td>
           </router-link>
         </tbody>
       </table>
@@ -73,24 +117,28 @@
 </template>
 
 <script>
-import { testDriveUrl } from "@/variables";
+import { transactionUrl } from "@/variables";
 
 export default {
-  name: "testDrives",
+  name: "transactions",
   data() {
     return {
+      filteredOperation: "",
+      filteredPrice: "",
       filteredCustomer: "",
       filteredEmployee: "",
       filteredMotorcycle: "",
       loading: false,
-      testDrives: []
+      transactions: []
     };
   },
   methods: {
     cleanFilteringCriteria() {
-      this.filteredCustomer = "",
-      this.filteredEmployee =  "",
-      this.filteredMotorcycle =  ""
+      (this.filteredOperation = ""),
+        (this.filteredPrice = ""),
+        (this.filteredCustomer = ""),
+        (this.filteredEmployee = ""),
+        (this.filteredMotorcycle = "");
     },
     getFormattedDate() {
       const today = new Date();
@@ -140,14 +188,14 @@ export default {
         downloadLink.click();
       }
     },
-    getTestDrives() {
+    getTransactions() {
       this.loading = true;
       this.$http
-        .get(`${testDriveUrl}`)
+        .get(`${transactionUrl}`)
         .then(resp => resp.json())
         .then(data => {
           this.loading = false;
-          this.testDrives = data;
+          this.transactions = data;
         })
         .catch(err => {
           this.loading = false;
@@ -156,22 +204,28 @@ export default {
     }
   },
   created() {
-      this.getTestDrives();
+    this.getTransactions();
   },
   computed: {
-    filteredTestDrives() {
-      return this.testDrives.filter(testDrive => {
+    filteredTransactions() {
+      return this.transactions.filter(transaction => {
         return (
+          (!this.filteredOperation ||
+            transaction.operation
+              .toLowerCase()
+              .includes(this.filteredOperation.toLowerCase())) &&
+          (!this.filteredPrice ||
+            transaction.price >= Number(this.filteredPrice)) &&
           (!this.filteredCustomer ||
-            testDrive.customer.firstName
+            transaction.customer.firstName
               .toLowerCase()
               .includes(this.filteredCustomer.toLowerCase())) &&
           (!this.filteredEmployee ||
-            testDrive.employee.firstName
+            transaction.employee.firstName
               .toLowerCase()
               .includes(this.filteredEmployee.toLowerCase())) &&
           (!this.filteredMotorcycle ||
-            testDrive.motorcycleDetails.motorcycleCode
+            transaction.motorcycleDetails.motorcycleCode
               .toLowerCase()
               .includes(this.filteredMotorcycle.toLowerCase()))
         );
@@ -187,7 +241,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
-
 
 @keyframes lds-ring {
   0% {
@@ -207,11 +260,11 @@ export default {
 }
 
 .export {
-    @include default-button($dark-blue);
+  @include default-button($dark-blue);
 }
 
 .clear {
-    @include default-button($navy-blue);
+  @include default-button($navy-blue);
 }
 
 .back-icon {
@@ -223,9 +276,8 @@ export default {
 }
 
 .add {
-    @include default-button($dark-green);
+  @include default-button($dark-green);
 }
-
 
 .table-wrapper {
   width: 100%;
@@ -357,7 +409,7 @@ table thead th {
   }
 }
 
-.testDrive {
+.transaction {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;

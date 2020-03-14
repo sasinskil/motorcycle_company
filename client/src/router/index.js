@@ -28,6 +28,10 @@ import singleTestDrive from '@/components/testDrive/singleTestDrive.vue'
 import editTestDrive from '@/components/testDrive/editTestDrive.vue'
 import addTestDrive from '@/components/testDrive/addTestDrive.vue'
 // Transactions
+import transactions from '@/components/transaction/transactions.vue'
+import singleTransaction from '@/components/transaction/singleTransaction.vue'
+import editTransaction from '@/components/transaction/editTransaction.vue'
+import addTransaction from '@/components/transaction/addTransaction.vue'
 // Services
 // Home
 import Home from '@/components/others/home/Home.vue'
@@ -164,6 +168,30 @@ const routes = [
     meta: { requiresAuth: true }
   },
   // Transactions
+  {
+    path: '/transactions',
+    name: 'transactions',
+    component: transactions,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/transaction/:id',
+    name: 'singleTransaction',
+    component: singleTransaction,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/transaction/:id/edit',
+    name: 'editTransaction',
+    component: editTransaction,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addTransaction",
+    name: 'addTransaction',
+    component: addTransaction,
+    meta: { requiresAuth: true }
+  },
   // Services
   // Auth
   {

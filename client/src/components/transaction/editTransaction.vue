@@ -1,17 +1,17 @@
 <template>
   <div id="editMotorcycleDetails" class="main-container--edit">
-     <h1 class="main-container--edit__title">Modyfikuj egzemplarz: {{motorcycleDetails.motorcycleCode}}</h1>
+     <h1 class="main-container--edit__title">Modyfikuj transakcję z dnia: {{transaction.transactionTime | format-date}}</h1>
      
      <button class="single-motorcycleDetails__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
     <form v-if="!submitted" class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
-        <label class="form__label" for="motDetCode">Kod motocykla:</label>
-        <input class="form__input date-input" type="text" disabled name="motDetCode" id="motDetCode" required v-model.lazy="motorcycleDetails.motorcycleCode" />
+        <label class="form__label" for="operation">Operacja:</label>
+        <input class="form__input date-input" type="text" name="operation" id="operation" required v-model.lazy="transaction.operation" />
       </p>
       <p class="form__wrapper">
-        <label class="form__label" for="price">Cena (PLN):</label>
-        <input class="form__input date-input" type="number" name="price" id="price" required v-model.lazy="motorcycleDetails.price" />
+        <label class="form__label" for="price">Cena:</label>
+        <input class="form__input date-input" type="number" name="price" id="price" required v-model.lazy="transaction.price" />
       </p>
       <p class="form__errors" v-if="errors.length">
         <span>Popraw następujące błędy:</span>
@@ -25,7 +25,7 @@
     </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Egzemplarz został zmodyfikowany!</h2>
+      <h2 class="after-post__title">Transakcja została zmodyfikowana!</h2>
     </div>
     <InfoModal
       v-if="showModal"
@@ -37,22 +37,26 @@
 </template>
 
 <script>
-import { motorcycleDetailsUrl } from "@/variables";
+import { transactionUrl } from "@/variables";
+import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
-  name: "editMotDetails",
+  name: "editTransaction",
   components: {
     InfoModal
   },
   data() {
     return {
-       motorcycleDetails: {
-           motorcycleCode: '',
+       transaction: {
+           operation: '',
            price: '',
-           motorcycle: {}
+           transactionTime: '',
+           customer: {},
+           employee: {},
+           motorcycleDetails: {}
       },
-      motorcycleDetailsId: this.$route.params.id,
+      transactionId: this.$route.params.id,
       submitted: false,
       errors: [],
       visible: false,
@@ -71,21 +75,21 @@ export default {
     },
    checkForm() {
       this.errors = [];
-      if(this.motorcycleDetails.price) {
+      if(this.testDrive.startDrive) {
         return true;
       }
-      if(!this.motorcycleDetails.price) {
-        this.errors.push('Cena jest wymagana!');
+      if(!this.testDrive.startDrive) {
+        this.errors.push('Data rozpoczęcia jazdy jest wymagana!');
       }
     },
     put() {
-      const isValid = this.checkForm();
+      const isValid = true;
       if(isValid) {
-        this.$http.put(`${motorcycleDetailsUrl}/${this.motorcycleDetailsId}`, this.motorcycleDetails)
+        this.$http.put(`${transactionUrl}/${this.transactionId}`, this.transaction)
         .then(() => {
           this.submitted = true;
           setTimeout(() => {
-            this.$router.push('/motorcycleDetails');
+            this.$router.push('/transactions');
           }, 1500);
         })
         .catch(() => {
@@ -96,14 +100,17 @@ export default {
         this.showModal = true;
       }
     },
-    getMotorcycleDetails() {
-           this.$http.get(`${motorcycleDetailsUrl}/${this.motorcycleDetailsId}`)
+    getTransaction() {
+           this.$http.get(`${transactionUrl}/${this.transactionId}`)
           .then(response => response.json())
           .then(object => {
-              const {motorcycleCode, price, motorcycle} = object;
-              this.motorcycleDetails.motorcycleCode = motorcycleCode;
-              this.motorcycleDetails.price = price;
-              this.motorcycleDetails.motorcycle = motorcycle;
+              const {operation, price, transactionTime, employee, customer, motorcycleDetails} = object;
+              this.transaction.operation = operation;
+              this.transaction.price = price;
+              this.transaction.transactionTime = transactionTime;
+              this.transaction.employee = employee;
+              this.transaction.customer = customer;
+              this.transaction.motorcycleDetails = motorcycleDetails;
           })
           .catch(err => {
             console.log(err)
@@ -113,8 +120,14 @@ export default {
       this.showModal = false;
     }
   },
+  filters: {
+    formatDate(value) {
+        if(value)
+        return moment(String(value)).format("YYYY-MM-DD HH:mm");
+    }
+  },
   created() {
-      this.getMotorcycleDetails();
+      this.getTransaction();
   }
 };
 </script>

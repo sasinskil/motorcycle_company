@@ -37,7 +37,7 @@ public class Transaction implements Serializable {
 
     @Column(name = "transaction_time")
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime transactionTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
