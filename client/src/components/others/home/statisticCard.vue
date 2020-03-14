@@ -60,9 +60,13 @@ export default {
   padding: 1rem 2rem 1.5rem;
   text-align: left;
   transition: box-shadow 0.3s ease-in-out;
+  @media only screen and (max-width: 1040px) {
+      margin: 0 1rem 2rem;
+      max-width: 370px;
+    }
 
   &:hover {
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.4);
+    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.5);
   }
 
   &__body {
@@ -82,6 +86,9 @@ export default {
 
   &__count {
     font-size: 1.7rem;
+    @media only screen and (max-width: 450px) {
+        font-size: 2.5rem;
+    }
     font-weight: bold;
     color: #FF8310;
     &.danger {

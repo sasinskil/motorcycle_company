@@ -33,6 +33,10 @@ import singleTransaction from '@/components/transaction/singleTransaction.vue'
 import editTransaction from '@/components/transaction/editTransaction.vue'
 import addTransaction from '@/components/transaction/addTransaction.vue'
 // Services
+import services from '@/components/motorcycle_services/services.vue'
+import singleService from '@/components/motorcycle_services/singleService.vue'
+import editService from '@/components/motorcycle_services/editService.vue'
+import addService from '@/components/motorcycle_services/addService.vue'
 // Home
 import Home from '@/components/others/home/Home.vue'
 // 404
@@ -193,6 +197,30 @@ const routes = [
     meta: { requiresAuth: true }
   },
   // Services
+  {
+    path: '/services',
+    name: 'services',
+    component: services,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/service/:id',
+    name: 'singleService',
+    component: singleService,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/service/:id/edit',
+    name: 'editService',
+    component: editService,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/addService",
+    name: 'addService',
+    component: addService,
+    meta: { requiresAuth: true }
+  },
   // Auth
   {
     path: '/register',

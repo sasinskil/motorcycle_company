@@ -42,7 +42,7 @@
           </li>
         </ul>
       </p>
-        <button class="form__send-button" @click.prevent="post"><font-awesome-icon class="plus-icon icon" icon="plus" />Dodaj motocykl</button>
+        <button class="form__send-button" @click.prevent="post"><font-awesome-icon class="plus-icon icon" icon="plus" />Dodaj transakcje</button>
         <button class="form__clear-button" @click.prevent="clear"><font-awesome-icon class="plus-icon icon" icon="eraser" />Wyczyść</button>
       </form>
 
@@ -141,22 +141,32 @@ export default {
     },
    checkForm() {
       this.errors = [];
-      if(this.motorcycleDetails.motorcycleCode && this.motorcycleDetails.price && this.motorcycleDetails.motorcycle) {
+      if(this.transaction.operation && this.transaction.price && this.transaction.transactionTime &&
+        this.transaction.customer && this.transaction.employee && this.transaction.motorcycleDetails) {
         return true;
       }
 
-      if(!this.motorcycleDetails.motorcycleCode) {
-        this.errors.push('Unikalny kod motocykla jest wymagany!');
+      if(!this.transaction.operation) {
+        this.errors.push('Operacja jest wymagana!');
       }
-      if(!this.motorcycleDetails.price) {
+      if(!this.transaction.price) {
         this.errors.push('Cena jest wymagana!');
       }
-      if(!this.motorcycleDetails.motorcycle || Object.keys(this.motorcycleDetails.motorcycle).length === 0) {
+      if(!this.transaction.transactionTime) {
+        this.errors.push('Data transakcji jest wymagana!');
+      }
+      if(!this.transaction.customer || Object.keys(this.transaction.customer).length === 0) {
+        this.errors.push('Klient jest wymagany!');
+      }
+      if(!this.transaction.employee || Object.keys(this.transaction.employee).length === 0) {
+        this.errors.push('Pracownik jest wymagany!');
+      }
+      if(!this.transaction.motorcycleDetails || Object.keys(this.transaction.motorcycleDetails).length === 0) {
         this.errors.push('Motocykl jest wymagany!');
       }
     },
     post() {
-      const isValid = true;
+      const isValid = this.checkForm();
       if(isValid) {
         this.transaction.transactionTime = moment(String(this.transaction.transactionTime)).format('YYYY-MM-DD HH:mm')
         this.$http.post(`${transactionUrl}`, this.transaction)

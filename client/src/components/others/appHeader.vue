@@ -313,7 +313,7 @@
         </li>
         <li class="navigation__item">
           <router-link class="navigation__link" to="/motorcycles"
-            >Motocykle</router-link
+            >Katalog motocykli</router-link
           >
         </li>
         <li class="navigation__item">
@@ -720,14 +720,14 @@ export default {
   margin-left: 3rem;
 }
 
-@media (min-width: 1181px) {
+@media (min-width: 1261px) {
   .burger-show,
   .burger-hide {
     display: none;
   }
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1260px) {
   .burger-show,
   .burger-hide {
     display: block;
