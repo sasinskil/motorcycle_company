@@ -18,6 +18,10 @@ public class MotorcycleDetailsService {
         return _motorcycleDetailsRepository.findAll();
     }
 
+    public List<MotorcycleDetails> findAllByIsSoldTrue() {return _motorcycleDetailsRepository.findAllByIsSoldTrue();}
+
+    public List<MotorcycleDetails> findAllByIsSoldFalse() {return _motorcycleDetailsRepository.findAllByIsSoldFalse();}
+
     public long countMotorcyclesInStock() {
         return _motorcycleDetailsRepository.count();
     }

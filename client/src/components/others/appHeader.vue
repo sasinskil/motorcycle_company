@@ -362,7 +362,7 @@
           </ul>
         </li>
         <button class="navigation__logout" @click="logout">
-          Logout
+          Wyloguj
           <font-awesome-icon class="icon" icon="door-open" />
         </button>
       </ul>
@@ -768,7 +768,7 @@ export default {
   }
 
   .navigation__item {
-    padding: 3rem 0 0 0;
+    padding: 2rem 0 0 0;
   }
 
   .navigation__logout {

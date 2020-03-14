@@ -85,12 +85,13 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Kod motocykla</th>
+            <th>Kod</th>
             <th>Cena(PLN)</th>
             <th>Model</th>
             <th>Marka</th>
             <th>Klasyfikacja</th>
             <th>Moc(km)</th>
+            <th>Sprzedany</th>
           </tr>
         </thead>
         <tbody>
@@ -106,6 +107,7 @@
             <td>{{ motorcycleDetail.motorcycle.brand }}</td>
             <td>{{ motorcycleDetail.motorcycle.classification }}</td>
             <td>{{ motorcycleDetail.motorcycle.power }}</td>
+            <td>{{ motorcycleDetail.isSold | checkIsSold}}</td>
           </router-link>
         </tbody>
       </table>
@@ -130,6 +132,15 @@ export default {
       motorcycleDetails: []
     };
   },
+  filters: {
+    checkIsSold(value) {
+      if (value === false) {
+        return `Nie`;
+      } else {
+        return 'Tak'
+      }
+    }
+  },
   methods: {
     cleanFilteringCriteria() {
       this.filteredMotCode = "",
@@ -138,6 +149,20 @@ export default {
       this.filteredBrand = "";
       this.filteredClassification = "";
       this.filteredPower = "";
+    },
+     getFormattedDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month =
+        today.getMonth() + 1 < 10
+          ? `0${today.getMonth() + 1}`
+          : `${today.getMonth() + 1}`;
+      const day =
+        today.getDate() < 10 ? `0${today.getDate()}` : `${today.getDate()}`;
+
+      let myDateString = `${year}-${month}-${day}`;
+
+      return myDateString;
     },
     exportTableToExcel(filename = "") {
       let downloadLink;

@@ -34,6 +34,22 @@ public class MotorcycleDetailsController extends ControllerBase {
                 ok(motorcycleDetails);
     }
 
+    @GetMapping("/soldTrue")
+    public ResponseEntity<List<MotorcycleDetails>> getSoldTrue() {
+        List<MotorcycleDetails> motorcycleDetails = _motorcycleDetailsService.findAllByIsSoldTrue();
+        return motorcycleDetails.isEmpty() ?
+                notFound() :
+                ok(motorcycleDetails);
+    }
+
+    @GetMapping("/soldFalse")
+    public ResponseEntity<List<MotorcycleDetails>> getSoldTFalse() {
+        List<MotorcycleDetails> motorcycleDetails = _motorcycleDetailsService.findAllByIsSoldFalse();
+        return motorcycleDetails.isEmpty() ?
+                notFound() :
+                ok(motorcycleDetails);
+    }
+
     @GetMapping(value = "/{id:\\d+}")
     public ResponseEntity<MotorcycleDetails> details(@PathVariable("id") long id) {
         MotorcycleDetails motorcycleDetails = _motorcycleDetailsService.findMotorcycleDetailsById(id);

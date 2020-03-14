@@ -6,13 +6,11 @@
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
         <label class="form__label" for="startDate">Data rozpoczęcia:</label>
-        <!-- <input class="form__input date-input" type="datetime-local" name="startDate" id="startDate" required v-model.lazy="testDrive.startDrive" /> -->
-        <v-date-picker v-model="testDrive.startDrive" lang="en" type="datetime" format="YYYY-MM-DD HH:mm" value-type="YYYY-MM-DD HH:mm"></v-date-picker>
+        <input class="form__input date-input" type="datetime-local" name="startDate" id="startDate" required v-model.lazy="testDrive.startDrive" />
       </p>
       <p class="form__wrapper">
         <label class="form__label" for="endDate">Data zakończenia:</label>
-        <!-- <input class="form__input date-input" type="datetime-local" name="endDate" id="endDate" required v-model.lazy="testDrive.endDrive" /> -->
-        <v-date-picker v-model="testDrive.endDrive" lang="en" type="datetime" format="YYYY-MM-DD HH:mm" value-type="YYYY-MM-DD HH:mm"></v-date-picker>
+        <input class="form__input date-input" type="datetime-local" name="endDate" id="endDate" required v-model.lazy="testDrive.endDrive" />
       </p>
       <p class="form__wrapper">
         <label class="form__label" for="customer">Klient:</label> 
@@ -85,7 +83,7 @@
 </template>
 
 <script>
-import { testDriveUrl, motorcycleDetailsUrl, customerUrl, employeeUrl } from "@/variables";
+import { testDriveUrl, motorcycleDetailsSoldFalseUrl, customerUrl, employeeUrl } from "@/variables";
 import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
@@ -153,9 +151,9 @@ export default {
     },
     post() {
       const isValid = this.checkForm();
-
-      console.log(`${this.testDrive.startDrive} i ${this.testDrive.endDrive}`)
       if(isValid) {
+        this.testDrive.startDrive = moment(String(this.testDrive.startDrive)).format('YYYY-MM-DD HH:mm');
+        this.testDrive.endDrive = moment(String(this.testDrive.endDrive)).format('YYYY-MM-DD HH:mm');
         this.$http.post(`${testDriveUrl}`, this.testDrive)
         .then(() => {
           this.submitted = true;
@@ -183,7 +181,7 @@ export default {
     },
     getMotorcycles() {
       this.$http
-        .get(`${motorcycleDetailsUrl}`)
+        .get(`${motorcycleDetailsSoldFalseUrl}`)
         .then(resp => resp.json())
         .then(data => {
           this.motorcycles = data;
@@ -273,12 +271,13 @@ export default {
   &__input {
     display: block;
     width: 100%;
-    padding: 7px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: text;
-    &:hover {
-      border-color: rgb(0, 153, 255);
+    padding: 0.6rem;
+    border: none;
+    border-radius: 0.2rem;
+    background: #fff;
+    box-shadow: $default-shadow;
+    &--text-area {
+      min-height: 80px;
     }
   }
   &__send-button {
@@ -301,10 +300,11 @@ svg {
 .preview {
   width: 100%;
   max-width: 400px;
+  margin-top: 2.5rem;
   padding: 0.4rem 1rem;
   background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  box-shadow: $default-shadow;
+  border-radius: 0.2rem;
   text-align: left;
   overflow-wrap: break-word;
   &__data {

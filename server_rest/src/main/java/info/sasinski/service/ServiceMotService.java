@@ -12,6 +12,7 @@ import java.util.List;
 public class ServiceMotService {
 
     final ServiceRepository _serviceRepository;
+    final MotorcycleDetailsService _motorcycleDetailsService;
 
     public List<info.sasinski.entity.Service> getAll() {
         return _serviceRepository.findAll();
@@ -20,7 +21,11 @@ public class ServiceMotService {
     public long countServices() { return _serviceRepository.count(); }
 
     public void saveService(info.sasinski.entity.Service service) {
-        _serviceRepository.save(service);
+        boolean checkIsSold = service.getMotorcycleDetails().getIsSold();
+
+        if(checkIsSold) {
+            _serviceRepository.save(service);
+        }
     }
 
     public info.sasinski.entity.Service getById(long id) {

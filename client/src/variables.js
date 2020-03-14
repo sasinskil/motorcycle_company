@@ -18,6 +18,9 @@ const employeeUrl = `${APIUrl}/employee`;
 
 const motorcycleUrl = `${APIUrl}/motorcycle`;
 const motorcycleDetailsUrl = `${APIUrl}/motorcycleDetails`;
+     // sold
+const motorcycleDetailsSoldTrueUrl = `${motorcycleDetailsUrl}/soldTrue`;
+const motorcycleDetailsSoldFalseUrl = `${motorcycleDetailsUrl}/soldFalse`;
 
 //Test drive
 
@@ -57,7 +60,7 @@ const navLinks = [
 
 export {
      loginUrl, registerUrl, customerUrl, employeeUrl,
-     motorcycleUrl, motorcycleDetailsUrl, testDriveUrl,
+     motorcycleUrl, motorcycleDetailsUrl, motorcycleDetailsSoldTrueUrl, motorcycleDetailsSoldFalseUrl, testDriveUrl,
      transactionUrl, serviceUrl, navLinks,
      countCustomers, countEmployees, countMotorcycleDetails, countTestDrives,
      countTransactions, countServices

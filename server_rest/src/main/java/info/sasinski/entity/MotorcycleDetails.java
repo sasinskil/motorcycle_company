@@ -33,6 +33,9 @@ public class MotorcycleDetails implements Serializable {
     @NotNull
     BigDecimal price;
 
+    @NotNull
+    Boolean isSold = Boolean.FALSE;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "motorcycle_id")
     @NotNull

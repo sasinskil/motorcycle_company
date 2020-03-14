@@ -1,5 +1,6 @@
 package info.sasinski.service;
 
+import info.sasinski.entity.MotorcycleDetails;
 import info.sasinski.entity.Transaction;
 import info.sasinski.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 public class TransactionService {
 
     final TransactionRepository _transactionRepository;
+    final MotorcycleDetailsService _motorcycleDetailsService;
 
     public List<Transaction> getAll() {
         return _transactionRepository.findAll();
@@ -21,7 +23,15 @@ public class TransactionService {
     public long countTransactions() { return _transactionRepository.count(); }
 
     public void saveTransaction(Transaction transaction) {
-        _transactionRepository.save(transaction);
+
+        boolean checkIsSold = transaction.getMotorcycleDetails().getIsSold();
+        MotorcycleDetails motorcycleDetails = transaction.getMotorcycleDetails();
+
+        if(!checkIsSold) {
+            motorcycleDetails.setIsSold(Boolean.TRUE);
+            _motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
+            _transactionRepository.save(transaction);
+        }
     }
 
     public Transaction getById(long id) {
@@ -31,6 +41,12 @@ public class TransactionService {
     }
 
     public void removeTransaction(long id) {
+        Transaction transaction = getById(id);
+        MotorcycleDetails motorcycleDetails = transaction.getMotorcycleDetails();
+
+        motorcycleDetails.setIsSold(Boolean.FALSE);
+        _motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
+
         _transactionRepository.deleteById(id);
     }
 }

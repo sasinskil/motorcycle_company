@@ -13,6 +13,7 @@ import java.util.List;
 public class TestDriveService {
 
     final TestDriveRepository _testDriveRepository;
+    final MotorcycleDetailsService _motorcycleDetailsService;
 
     public List<TestDrive> getAll() {
         return _testDriveRepository.findAll();
@@ -21,7 +22,12 @@ public class TestDriveService {
     public long countTestDrives() { return _testDriveRepository.count(); }
 
     public void saveTestDrive(TestDrive testDrive) {
-        _testDriveRepository.save(testDrive);
+
+        boolean checkIsSold = testDrive.getMotorcycleDetails().getIsSold();
+
+        if(!checkIsSold) {
+            _testDriveRepository.save(testDrive);
+        }
     }
 
     public TestDrive getById(long id) {

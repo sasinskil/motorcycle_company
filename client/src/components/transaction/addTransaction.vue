@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { transactionUrl, motorcycleDetailsUrl, customerUrl, employeeUrl } from "@/variables";
+import { transactionUrl, motorcycleDetailsSoldFalseUrl, customerUrl, employeeUrl } from "@/variables";
 import InfoModal from "@/components/modal/InfoModal";
 import * as moment from "moment/moment";
 
@@ -183,7 +183,7 @@ export default {
     },
     getMotorcycles() {
       this.$http
-        .get(`${motorcycleDetailsUrl}`)
+        .get(`${motorcycleDetailsSoldFalseUrl}`)
         .then(resp => resp.json())
         .then(data => {
           this.motorcycles = data;
