@@ -56,8 +56,8 @@
             <th>Imię</th>
             <th>Nazwisko</th>
             <th>Stanowisko</th>
-            <th>Data zatrudnienia</th>
-            <th>Data zwolnienia</th>
+            <th>Data zatr.</th>
+            <th>Data zwol.</th>
           </tr>
         </thead>
         <tbody>

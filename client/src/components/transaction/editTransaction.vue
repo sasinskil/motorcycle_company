@@ -75,15 +75,18 @@ export default {
     },
    checkForm() {
       this.errors = [];
-      if(this.testDrive.startDrive) {
+      if(this.transaction.operation && this.transaction.price) {
         return true;
       }
-      if(!this.testDrive.startDrive) {
-        this.errors.push('Data rozpoczęcia jazdy jest wymagana!');
+      if(!this.transaction.operation) {
+        this.errors.push('Operacja jest wymagana!');
+      }
+      if(!this.transaction.price) {
+        this.errors.push('Cena jest wymagana!');
       }
     },
     put() {
-      const isValid = true;
+      const isValid = this.checkForm();
       if(isValid) {
         this.$http.put(`${transactionUrl}/${this.transactionId}`, this.transaction)
         .then(() => {

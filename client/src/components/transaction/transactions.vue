@@ -92,6 +92,7 @@
           <tr>
             <th>Operacja</th>
             <th>Cena(PLN)</th>
+            <th>Data tran.</th>
             <th>Klient</th>
             <th>Pracownik</th>
             <th>Motocykl</th>
@@ -106,6 +107,7 @@
           >
             <td>{{ transaction.operation }}</td>
             <td>{{ transaction.price }}</td>
+            <td>{{ transaction.transactionTime }}</td>
             <td>{{ transaction.customer.firstName }}</td>
             <td>{{ transaction.employee.firstName }}</td>
             <td>{{ transaction.motorcycleDetails.motorcycleCode }}</td>
@@ -240,7 +242,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
+//@import "@/assets/styles/main.scss";
 
 @keyframes lds-ring {
   0% {

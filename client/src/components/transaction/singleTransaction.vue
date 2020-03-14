@@ -74,7 +74,7 @@ import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 import ActionModal from "@/components/modal/ActionModal";
 export default {
-  name: "singleTestDrive",
+  name: "singleTransaction",
   components: {
       InfoModal,
       ActionModal
@@ -86,7 +86,8 @@ export default {
           id: null,
           operation: '',
           price: '',
-          transactionTime: {
+          transactionTime: '',
+          customer: {
             id: null,
             firstName: '',
             lastName: '',

@@ -6,14 +6,12 @@
     <form v-if="!submitted" class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
-        <label class="form__label" for="motDetCode">Data rozpoczęcia:</label>
-        <!-- <input class="form__input date-input" type="text" disabled name="motDetCode" id="motDetCode" required v-model.lazy="motorcycleDetails.motorcycleCode" /> -->
-        <v-date-picker v-model="testDrive.startDrive" lang="en" type="datetime" format="YYYY-MM-DD HH:mm" value-type="YYYY-MM-DD HH:mm"></v-date-picker>
+        <label class="form__label" for="startDrive">Data rozpoczęcia:</label>
+        <input class="form__input date-input" type="datetime-local" name="startDrive" id="startDrive" required v-model.lazy="testDrive.startDrive" />
       </p>
       <p class="form__wrapper">
-        <label class="form__label" for="price">Data zakończenia:</label>
-        <!-- <input class="form__input date-input" type="text" name="price" id="price" required v-model.lazy="motorcycleDetails.price" /> -->
-        <v-date-picker v-model="testDrive.endDrive" lang="en" type="datetime" format="YYYY-MM-DD HH:mm" value-type="YYYY-MM-DD HH:mm"></v-date-picker>
+        <label class="form__label" for="endDrive">Data zakończenia:</label>
+        <input class="form__input date-input" type="datetime-local" name="endDrive" id="endDrive" required v-model.lazy="testDrive.endDrive" />
       </p>
       <p class="form__errors" v-if="errors.length">
         <span>Popraw następujące błędy:</span>
@@ -86,6 +84,8 @@ export default {
     put() {
       const isValid = this.checkForm();
       if(isValid) {
+        this.testDrive.startDrive = moment(String(this.testDrive.startDrive)).format('YYYY-MM-DD HH:mm');
+        this.testDrive.endDrive = moment(String(this.testDrive.endDrive)).format('YYYY-MM-DD HH:mm');
         this.$http.put(`${testDriveUrl}/${this.testDriveId}`, this.testDrive)
         .then(() => {
           this.submitted = true;
@@ -106,8 +106,8 @@ export default {
           .then(response => response.json())
           .then(object => {
               const {startDrive, endDrive, customer, employee, motorcycleDetails} = object;
-              this.testDrive.startDrive = startDrive;
-              this.testDrive.endDrive = endDrive;
+              this.testDrive.startDrive = moment(String(startDrive)).format('YYYY-MM-DDTHH:mm');
+              this.testDrive.endDrive = moment(String(endDrive)).format('YYYY-MM-DDTHH:mm');
               this.testDrive.customer = customer;
               this.testDrive.employee = employee;
               this.testDrive.motorcycleDetails = motorcycleDetails;

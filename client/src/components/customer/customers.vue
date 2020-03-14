@@ -49,7 +49,7 @@
           <tr>
             <th>Imię</th>
             <th>Nazwisko</th>
-            <th>Data urodzin</th>
+            <th>Data ur.</th>
             <th>Miejsca zamieszkania</th>
           </tr>
         </thead>

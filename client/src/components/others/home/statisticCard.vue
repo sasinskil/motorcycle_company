@@ -90,7 +90,7 @@ export default {
         font-size: 2.5rem;
     }
     font-weight: bold;
-    color: #FF8310;
+    color: $orange;
     &.danger {
       color: #FF4D4D;
       font-weight: bold;

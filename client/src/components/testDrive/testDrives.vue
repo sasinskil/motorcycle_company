@@ -47,8 +47,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Data rozpoczęcia</th>
-            <th>Data zakończenia</th>
+            <th>Data rozp.</th>
+            <th>Data zak.</th>
             <th>Klient</th>
             <th>Pracownik</th>
             <th>Motocykl</th>
