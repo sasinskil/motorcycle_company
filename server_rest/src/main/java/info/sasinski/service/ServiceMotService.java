@@ -24,7 +24,13 @@ public class ServiceMotService {
         boolean checkIsSold = service.getMotorcycleDetails().getIsSold();
 
         if(checkIsSold) {
-            _serviceRepository.save(service);
+            if(service.getEndWorkingDate() != null) {
+                if(service.getStartWorkingDate().isBefore(service.getEndWorkingDate())) {
+                    _serviceRepository.save(service);
+                }
+            } else {
+                _serviceRepository.save(service);
+            }
         }
     }
 

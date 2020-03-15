@@ -179,7 +179,7 @@ export default {
               this.employee.salary = salary;
               this.employee.dateOfEmployment = moment(dateOfEmployment).format("YYYY-MM-DD");
               this.employee.dateOfTermination = moment(dateOfTermination).format("YYYY-MM-DD") == null
-               ? moment(dateOfTermination).format("YYYY-MM-DD") : "";
+               ? "" : moment(dateOfTermination).format("YYYY-MM-DD");
               this.employee.address = address;
           })
           .catch(err => {

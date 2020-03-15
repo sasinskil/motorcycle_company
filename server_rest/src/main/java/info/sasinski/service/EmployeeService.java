@@ -38,6 +38,13 @@ public class EmployeeService {
     }
 
     public void saveEmployee(Employee employee) {
-        _employeeRepository.save(employee);
+
+        if(employee.getDateOfTermination() != null) {
+            if(employee.getDateOfEmployment().isBefore(employee.getDateOfTermination())) {
+                _employeeRepository.save(employee);
+            }
+        } else {
+            _employeeRepository.save(employee);
+        }
     }
 }

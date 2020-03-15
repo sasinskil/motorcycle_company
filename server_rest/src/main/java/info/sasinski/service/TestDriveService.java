@@ -26,7 +26,13 @@ public class TestDriveService {
         boolean checkIsSold = testDrive.getMotorcycleDetails().getIsSold();
 
         if(!checkIsSold) {
-            _testDriveRepository.save(testDrive);
+            if(testDrive.getEndDrive() != null) {
+                if(testDrive.getStartDrive().isBefore(testDrive.getEndDrive())) {
+                    _testDriveRepository.save(testDrive);
+                }
+            } else {
+                _testDriveRepository.save(testDrive);
+            }
         }
     }
 
