@@ -1,31 +1,31 @@
 <template>
-  <div id="singleEmployee" class="main-container--employee single-employee">
-    <button class="single-employee__button" @click="backToList">
+  <div id="singleTestDrive" class="main-container--testDrive single-testDrive">
+    <button class="single-testDrive__button" @click="backToList">
       <font-awesome-icon
         class="arrow-left-icon icon-arrow"
         icon="arrow-left"
       />Powrót
     </button>
-    <div class="single-employee--box">
-      <h1 class="single-employee__title">
+    <div class="single-testDrive--box">
+      <h1 class="single-testDrive__title">
         Dane szczegółowe
       </h1>
-      <p class="single-employee__paragraph">
+      <p class="single-testDrive__paragraph">
         <strong>Data rozpoczęcia:</strong> {{ testDrive.startDrive }}
       </p>
-      <p class="single-employee__paragraph">
+      <p class="single-testDrive__paragraph">
         <strong>Data zakończenia:</strong> {{ testDrive.endDrive }}
       </p>
       <h2>Klient</h2>
-        <p class="single-employee__paragraph">
+        <p class="single-testDrive__paragraph">
             <strong>Dane podstawowe:</strong> {{ testDrive.customer.firstName }} {{ testDrive.customer.lastName }}
         </p>
       <h2>Pracownik</h2>
-        <p class="single-employee__paragraph">
+        <p class="single-testDrive__paragraph">
             <strong>Dane podstawowe:</strong> {{ testDrive.employee.firstName }} {{ testDrive.employee.firstName }}: {{ testDrive.employee.position }} 
         </p>
       <h2>Motocykl</h2>
-        <p class="single-employee__paragraph">
+        <p class="single-testDrive__paragraph">
             <strong>Dane podstawowe:</strong> {{ testDrive.motorcycleDetails.motorcycleCode }}: {{ testDrive.motorcycleDetails.motorcycle.model }}
         </p>
     </div>
@@ -196,72 +196,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-@keyframes moveYe {
-  0% {
-    transform: translateX(0px);
-  }
-  50% {
-    transform: translateX(-3px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
-.single-employee {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: left;
-  &__title--address {
-      margin-top: 2.5rem;
-  }
-
-  &__paragraph {
-    margin: 2rem 0 0;
-    &--info {
-      text-align: right;
-    }
-  }
-  &__strong {
-    margin: 2rem 0;
-    font-size: 1.1rem;
-  }
-  &--box {
-    padding: 1rem;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-    border-radius: 0.2rem;
-    background: #fff;
-  }
-  &__button {
-    @include default-button($navy-blue);
-    margin: 0 0 1.5rem 0;
-    &:hover > svg {
-      animation: moveYe 0.8s infinite;
-    }
-  }
-}
-.icon {
-  width: 15px;
-  height: 15px;
-  margin-left: 0.5rem;
-}
-.icon-arrow {
-  width: 15px;
-  height: 15px;
-  margin-right: 0.5rem;
-  animation: moveYe 0.8s;
-}
-.my-button {
-  margin-top: 0.5rem;
-}
-.my-button + .my-button {
-  margin-left: 0.5rem;
-}
-.edit {
-  @include default-button($dark-blue);
-}
-.delete {
-  @include default-button($dark-red);
-}
 </style>

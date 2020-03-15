@@ -1,6 +1,9 @@
 <template>
   <div id="addEmployee" class="main-container--add">
      <h1 class="main-container--add__title">Dodaj nowego pracownika</h1>
+     <button class="main-container--add__arrow" @click="stepBack">
+      <font-awesome-icon class="plus-icon icon" icon="arrow-left" />
+    </button>
      
      <form v-if="!submitted" class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
@@ -161,6 +164,9 @@ export default {
     },
   },
   methods: {
+    stepBack() {
+      this.$router.go(-1);
+    },
     back(){
         this.$router.push('/employees');
     },
@@ -237,85 +243,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-
-.main-container--add {
-  width: 100%;
-  max-width: 950px;
-  padding: 0 1rem 1rem;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
-  &__title {
-    margin: 0 0 4rem 0;
-    flex-basis: 100%;
-    text-align: center;
-  }
-}
-.form {
-  width: 100%;
-  max-width: 400px;
-  text-align: left;
-  &__wrapper {
-    margin: 1rem 0;
-    &--checkbox {
-      display: inline-block;
-    }
-    &--checkbox + &--checkbox {
-      margin-left: 1rem;
-    }
-  }
-  &__label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-weight: bold;
-  }
-  &__input {
-    display: block;
-    width: 100%;
-    padding: 0.6rem;
-    border: none;
-    border-radius: 0.2rem;
-    background: #fff;
-    box-shadow: $default-shadow;
-    &--text-area {
-      min-height: 80px;
-    }
-  }
-  &__send-button {
-    margin: 1rem 0;
-   @include default-button($navy-blue);
-  }
-  &__clear-button {
-    margin: 1rem 0 0 0.5rem;
-   @include default-button($dark-grey);
-  }
-  &__errors {
-    margin-top: 2rem;
-    color: #dc6868;
-  }
-}
-svg {
-    margin-right: 0.5rem;
-    animation: rotateYe 1s;
-}
-.preview {
-  width: 100%;
-  max-width: 400px;
-  margin-top: 2.5rem;
-  padding: 0.4rem 1rem;
-  background: #fff;
-  box-shadow: $default-shadow;
-  border-radius: 0.2rem;
-  text-align: left;
-  overflow-wrap: break-word;
-  &__content {
-    display: block;
-  }
-  &__value {
-    color: #2c3e508e;
-  }
-}
 </style>

@@ -414,7 +414,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
 
 @keyframes rotatingMe {
   from {
@@ -479,7 +478,7 @@ export default {
   position: relative;
 
   &:hover > &__about-list {
-    transform: translateX(0px);
+    transform: translateX(9px);
     opacity: 1;
     visibility: visible;
   }
@@ -515,6 +514,10 @@ export default {
   &__about-item {
     border-bottom: 1px solid #ffffff26;
     padding-bottom: 0.3rem;
+
+    strong {
+      display: inline-block;
+    }
 
     &--role {
       position: relative;
@@ -554,6 +557,8 @@ export default {
 
 .home-icon {
   font-size: 1.2rem;
+  width: 23px;
+  height: 20px;
 }
 
 @mixin hamburger-line {

@@ -16,7 +16,7 @@
 <script>
 import { countCustomers, countEmployees, countMotorcycleDetails, countTestDrives,
      countTransactions, countServices } from '@/variables';
-import statisticCard from "@/components/others/home/statisticCard.vue";
+import statisticCard from "@/components/components_others/home/statisticCard.vue";
 
 export default {
   name: 'Home',

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // Auth
-import login from '@/components/auth/login.vue'
-import register from '@/components/auth/register.vue'
+import login from '@/components/components_auth/login.vue'
+import register from '@/components/components_auth/register.vue'
 // Cutomers
 import customers from '@/components/customer/customers.vue'
 import singleCustomer from '@/components/customer/singleCustomer.vue'
@@ -38,9 +38,9 @@ import singleService from '@/components/motorcycle_services/singleService.vue'
 import editService from '@/components/motorcycle_services/editService.vue'
 import addService from '@/components/motorcycle_services/addService.vue'
 // Home
-import Home from '@/components/others/home/Home.vue'
+import Home from '@/components/components_others/home/Home.vue'
 // 404
-import notFound404 from '@/components/others/notFound404.vue'
+import notFound404 from '@/components/components_others/notFound404.vue'
 
 Vue.use(VueRouter)
 

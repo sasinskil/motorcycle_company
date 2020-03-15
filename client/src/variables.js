@@ -43,25 +43,11 @@ const countTestDrives = `${testDriveUrl}/count`;
 const countTransactions = `${transactionUrl}/count`;
 const countServices = `${serviceUrl}/count`;
 
-// Router links
-
-const navLinks = [
-     {
-          name: '',
-          to: '/'
-     },
-     {
-          name: '',
-          to: '/'
-     }
-]
-
-
 
 export {
      loginUrl, registerUrl, customerUrl, employeeUrl,
      motorcycleUrl, motorcycleDetailsUrl, motorcycleDetailsSoldTrueUrl, motorcycleDetailsSoldFalseUrl, testDriveUrl,
-     transactionUrl, serviceUrl, navLinks,
+     transactionUrl, serviceUrl,
      countCustomers, countEmployees, countMotorcycleDetails, countTestDrives,
      countTransactions, countServices
     };

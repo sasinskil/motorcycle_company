@@ -24,7 +24,7 @@
         <input class="form__input" type="number" name="power" id="power" required v-model.lazy="motorcycle.power" />
       </p>
       <p class="form__wrapper">
-        <label class="form__label" for="capacity">Pojemność silnika (cm <span class="cubic-centimeters">3</span> ):</label>
+        <label class="form__label" for="capacity">Pojemność silnika (cm <span class="cubic-centimeters--edit">3</span> ):</label>
         <input class="form__input" type="number" placeholder="0.00" step="0.01" name="capacity" id="capacity" required v-model.lazy="motorcycle.capacity" />
       </p>
       <p class="form__wrapper">
@@ -170,91 +170,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-@keyframes moveYe {
-    0% {
-        transform: translateX(0px);
-    }
-    50% {
-        transform: translateX(-3px);
-    }
-    100% {
-        transform: translateX(0px);
-    }
-    
-}
-.single-motorcycle__button {
-  @include default-button($navy-blue);
-  margin: 1rem 19rem 2rem 0;
-  &:hover > svg {
-          animation: moveYe .8s infinite;
-      }
-}
-.main-container--edit {
-  width: 100%;
-  max-width: 950px;
-  padding: 0 1rem 1rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  &__title {
-    margin: 0 0 4rem 0;
-    flex-basis: 100%;
-    text-align: center;
-  }
-}
-
-.cubic-centimeters {
-    position: absolute;
-    top: -5px;
-    left: 175px;
-    font-size: 0.7rem;
-}
-
-.form {
-  width: 100%;
-  max-width: 420px;
-  text-align: left;
-  &__title--address {
-      margin-top: 2rem;
-  }
-
-  &__wrapper {
-    margin: 1rem 0;
-    &--checkbox {
-      display: inline-block;
-    }
-    &--checkbox + &--checkbox {
-      margin-left: 1rem;
-    }
-  }
-  &__label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-weight: bold;
-    position: relative;
-  }
-  &__input {
-    display: block;
-    width: 100%;
-    padding: 0.6rem;
-    border: none;
-    border-radius: 0.2rem;
-    background: #fff;
-    box-shadow: $default-shadow;
-  }
-  &__errors {
-    margin-top: 2rem;
-    color: #dc6868;
-  }
-}
-svg {
-    margin-right: 0.5rem;
-    animation: rotateYe 1s;
-}
-.join {
- @include default-button($dark-green);
-}
 </style>

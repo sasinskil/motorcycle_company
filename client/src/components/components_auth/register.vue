@@ -251,8 +251,8 @@ export default {
 
   &__label {
     position: absolute;
-    top: 36px;
-    left: 0;
+    top: 38px;
+    left: -6px;
   }
 }
 .form-button {

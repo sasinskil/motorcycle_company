@@ -1,0 +1,92 @@
+.searchWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto 4rem;
+    padding: 1rem;
+    border: 1px solid #324960;
+  
+    &__inputs {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-content: flex-start;
+      flex-wrap: wrap;
+  
+      p {
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        label {
+            width: 100%;
+            text-align: left;
+            color: #324960f5;
+          }
+      }
+    }
+  
+    &__inputs input {
+      font-family: "Avenir", Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      color: #324960;
+      order: 1;
+      margin-top: 0.5rem;
+      padding: 0.3rem;
+      border: none;
+      background: none;
+      text-align: left;
+      border-bottom: 1px solid #324960f5;
+
+      &:focus {
+        outline: none;
+        border-bottom-color: #000000f5;
+      }
+      
+      &:focus ~ label {
+        color: darken(#324960f5, 80%);
+      }
+    }
+  
+    &__buttons {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-content: flex-start;
+      padding: 0.5rem;
+  
+      &--search {
+        box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+        background: none;
+        border: 1px solid #4fc08d;
+        color: #2c3e50;
+        transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
+      }
+  
+      &--clear {
+        box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+        background: none;
+        border: 1px solid #2c3e50;
+        color: #2c3e50;
+        //margin-left: 1rem;
+        transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
+  
+        &:hover {
+          background: #2c3e50;
+          color: #fff;
+        }
+      }
+    }
+  }
+  

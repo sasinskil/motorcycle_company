@@ -1,0 +1,85 @@
+.form {
+    width: 100%;
+    max-width: 410px;
+    text-align: left;
+    &__wrapper {
+      margin: 1rem 0;
+      &--checkbox {
+        display: inline-block;
+      }
+      &--checkbox + &--checkbox {
+        margin-left: 1rem;
+      }
+    }
+    &__label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+      position: relative;
+    }
+    &__input {
+      display: block;
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 0.2rem;
+      background: #fff;
+      box-shadow: $default-shadow;
+      &--text-area {
+        min-height: 80px;
+      }
+    }
+    button {
+      display: inline-block;
+    }
+    &__send-button {
+      margin: 1rem 0;
+     @include default-button($navy-blue);
+    }
+    &__clear-button {
+      margin: 1rem 0 0 0.5rem;
+     @include default-button($dark-grey);
+    }
+    &__errors {
+      margin-top: 2rem;
+      color: #dc6868;
+    }
+  }
+
+  svg {
+    margin-right: 0.5rem;
+}
+
+  //preview
+  .preview {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 2.5rem;
+    padding: 0.4rem 1rem;
+    background: #fff;
+    box-shadow: $default-shadow;
+    border-radius: 0.2rem;
+    text-align: left;
+    overflow-wrap: break-word;
+    &__content {
+      display: block;
+    }
+    &__value {
+      color: #2c3e508e;
+    }
+
+    &__data {
+      position: relative;
+    }
+
+    .cubic-centimeters {
+      position: absolute;
+      top: -4px;
+      left: 162px;
+      font-size: 0.7rem;
+    }
+
+    @media only screen and(max-width: 910px) {
+      display: none;
+    }
+  }

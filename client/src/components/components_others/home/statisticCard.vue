@@ -106,8 +106,8 @@ export default {
     color: #fff;
     font-size: 2rem;
 
-    &--user {
-      padding: 1rem 1.2rem;
+    svg {
+      margin: 0;
     }
   }
 
@@ -133,11 +133,13 @@ export default {
     }
 
     &--icon {
+      width: 17px;
+      height: 17px;
       margin-left: 1rem;
       color: #86BBA3;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       position: absolute;
-      top: 9px;
+      top: 10px;
       right: 4px;
       transition: transform 0.4s ease-in-out;
     }

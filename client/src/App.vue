@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import appHeader from "@/components/others/appHeader";
+import appHeader from "@/components/components_others/appHeader";
 
 export default {
   name: "App",
@@ -21,68 +21,65 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/main.scss";
-
 @keyframes going {
-  from {
-    transform: translateX(0px);
+    from {
+      transform: translateX(0px);
+    }
+  
+    to {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
   }
-
-  to {
-    transform: translateX(-50px);
+  
+  @keyframes coming {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+  
+    to {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
+  
+  html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  body {
+    font-family: $font-family;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    @media only screen and (max-width: 640px) {
+      font-size: 12px;
+    }
+  }
+  .myApp {
+    text-align: center;
+    color: $navy-blue;
+  }
+  .main-wrapper {
+    padding: 0 1rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 12rem auto 3rem;
+  }
+  
+  .router-anim-enter-active {
+    animation: coming 0.5s;
+    animation-delay: 0.5s;
     opacity: 0;
   }
-}
-
-@keyframes coming {
-  from {
-    transform: translateX(-50px);
-    opacity: 0;
+  
+  .router-anim-leave-active {
+    animation: going 0.3s;
   }
-
-  to {
-    transform: translateX(0px);
-    opacity: 1;
-  }
-}
-
-html {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-body {
-  //@include bg-effect;
-  font-family: $font-family;
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-  @media only screen and (max-width: 640px) {
-    font-size: 12px;
-  }
-}
-.myApp {
-  text-align: center;
-  color: $navy-blue;
-}
-.main-wrapper {
-  padding: 0 1rem;
-  width: 100%;
-  max-width: 1400px;
-  margin: 12rem auto 3rem;
-}
-
-.router-anim-enter-active {
-  animation: coming 0.5s;
-  animation-delay: 0.5s;
-  opacity: 0;
-}
-
-.router-anim-leave-active {
-  animation: going 0.3s;
-}
 </style>

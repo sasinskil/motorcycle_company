@@ -251,8 +251,8 @@ export default {
 }
 label {
   position: absolute;
-  top: 36px;
-  left: 0;
+  top: 39px;
+  left: -5px;
 
   @media only screen and (max-width: 640px) {
     top: 42px;

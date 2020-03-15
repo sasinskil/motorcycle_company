@@ -1,34 +1,34 @@
 <template>
-  <div id="singleEmployee" class="main-container--employee single-employee">
-    <button class="single-employee__button" @click="backToList">
+  <div id="singleTransaction" class="main-container--transaction single-transaction">
+    <button class="single-transaction__button" @click="backToList">
       <font-awesome-icon
         class="arrow-left-icon icon-arrow"
         icon="arrow-left"
       />Powrót
     </button>
-    <div class="single-employee--box">
-      <h1 class="single-employee__title">
+    <div class="single-transaction--box">
+      <h1 class="single-transaction__title">
         Dane szczegółowe
       </h1>
-      <p class="single-employee__paragraph">
+      <p class="single-transaction__paragraph">
         <strong>Operacja:</strong> {{ transaction.operation }}
       </p>
-      <p class="single-employee__paragraph">
+      <p class="single-transaction__paragraph">
         <strong>Cena (PLN):</strong> {{ transaction.price }}
       </p>
-      <p class="single-employee__paragraph">
+      <p class="single-transaction__paragraph">
         <strong>Data operacji:</strong> {{ transaction.transactionTime }}
       </p>
       <h2>Klient</h2>
-        <p class="single-employee__paragraph">
+        <p class="single-transaction__paragraph">
             <strong>Dane podstawowe:</strong> {{ transaction.customer.firstName }} {{ transaction.customer.lastName }}
         </p>
       <h2>Pracownik</h2>
-        <p class="single-employee__paragraph">
+        <p class="single-transaction__paragraph">
             <strong>Dane podstawowe:</strong> {{ transaction.employee.firstName }} {{ transaction.employee.firstName }}: {{ transaction.employee.position }} 
         </p>
       <h2>Motocykl</h2>
-        <p class="single-employee__paragraph">
+        <p class="single-transaction__paragraph">
             <strong>Dane podstawowe:</strong> {{ transaction.motorcycleDetails.motorcycleCode }}: {{ transaction.motorcycleDetails.motorcycle.model }}
         </p>
     </div>
@@ -200,72 +200,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-@keyframes moveYe {
-  0% {
-    transform: translateX(0px);
-  }
-  50% {
-    transform: translateX(-3px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
-.single-employee {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: left;
-  &__title--address {
-      margin-top: 2.5rem;
-  }
-
-  &__paragraph {
-    margin: 2rem 0 0;
-    &--info {
-      text-align: right;
-    }
-  }
-  &__strong {
-    margin: 2rem 0;
-    font-size: 1.1rem;
-  }
-  &--box {
-    padding: 1rem;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-    border-radius: 0.2rem;
-    background: #fff;
-  }
-  &__button {
-    @include default-button($navy-blue);
-    margin: 0 0 1.5rem 0;
-    &:hover > svg {
-      animation: moveYe 0.8s infinite;
-    }
-  }
-}
-.icon {
-  width: 15px;
-  height: 15px;
-  margin-left: 0.5rem;
-}
-.icon-arrow {
-  width: 15px;
-  height: 15px;
-  margin-right: 0.5rem;
-  animation: moveYe 0.8s;
-}
-.my-button {
-  margin-top: 0.5rem;
-}
-.my-button + .my-button {
-  margin-left: 0.5rem;
-}
-.edit {
-  @include default-button($dark-blue);
-}
-.delete {
-  @include default-button($dark-red);
-}
 </style>
