@@ -26,6 +26,9 @@
     &__paragraph {
       margin: 1rem 0 0;
       position: relative;
+      strong {
+        display: inline-block;
+      }
       &--info {
         text-align: right;
       }
