@@ -198,11 +198,14 @@ export default {
   justify-content: center;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+  box-shadow: $default-shadow-hover;
   margin: 0 auto;
   width: 100%;
   max-width: 375px;
   padding: 1rem 3.5rem 2rem;
+  @media only screen and(max-width: 420px) {
+    padding: 1rem 3rem 2rem;
+  }
 }
 .header {
   background-color: rgba(105, 105, 105, 0.8);
@@ -303,5 +306,9 @@ label {
   @include default-button($navy-blue);
   background: $navy-blue;
   color: $white;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: $default-shadow-hover;
+  }
 }
 </style>

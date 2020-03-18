@@ -725,14 +725,14 @@ export default {
   margin-left: 3rem;
 }
 
-@media (min-width: 1261px) {
+@media (min-width: 1301px) {
   .burger-show,
   .burger-hide {
     display: none;
   }
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1300px) {
   .burger-show,
   .burger-hide {
     display: block;
