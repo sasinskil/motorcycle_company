@@ -1,6 +1,6 @@
 <template>
   <div id="editTestDrive" class="main-container--edit">
-     <h1 class="main-container--edit__title">Modyfikuj jazdę testową z dnia: {{testDrive.startDrive | format-date}}</h1>
+     <h1 class="main-container--edit__title">Modyfikuj jazdę testową z dnia: {{testDrive.startDrive | format-date-long}}</h1>
      
      <button class="single-testDrive__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
     <form v-if="!submitted" class="form">
@@ -118,12 +118,6 @@ export default {
         },
     close() {
       this.showModal = false;
-    }
-  },
-  filters: {
-    formatDate(value) {
-        if(value)
-        return moment(String(value)).format("YYYY-MM-DD HH:mm");
     }
   },
   created() {

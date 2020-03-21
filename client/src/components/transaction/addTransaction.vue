@@ -66,7 +66,7 @@
       </p>
       <p class="preview__data">
         Data wykonania operacji:
-        <span class="preview__value">{{transaction.transactionTime | format-date}}</span>
+        <span class="preview__value">{{transaction.transactionTime | format-date-long}}</span>
       </p>
       <h4 class="preview__header">Klient</h4>
       <p class="preview__data">
@@ -125,12 +125,6 @@ export default {
         modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
         showModal: false
     };
-  },
-   filters: {
-    formatDate(value) {
-      if(value)
-      return moment(String(value)).format('YYYY-MM-DD HH:mm')
-    },
   },
   methods: {
     stepBack() {

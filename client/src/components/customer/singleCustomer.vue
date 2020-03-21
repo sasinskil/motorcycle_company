@@ -17,7 +17,7 @@
         <strong>Nazwisko:</strong> {{ customer.lastName }}
       </p>
       <p class="single-customer__paragraph">
-        <strong>Data urodzin:</strong> {{ customer.birthDate | format-date }}
+        <strong>Data urodzin:</strong> {{ customer.birthDate | format-date-short }}
       </p>
       <h2 class="single-customer__title--address">Adres zamieszkania</h2>
       <p class="single-customer__paragraph">
@@ -65,7 +65,6 @@
 
 <script>
 import { customerUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 import ActionModal from "@/components/modal/ActionModal";
 export default {
@@ -144,11 +143,6 @@ export default {
   computed: {
     checkIsAdmin() {
       return this.$store.getters.isAdmin;
-    }
-  },
-  filters: {
-    formatDate(value) {
-      return moment(String(value)).format("YYYY-MM-DD");
     }
   },
   created() {

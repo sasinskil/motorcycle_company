@@ -26,7 +26,7 @@
         <strong>Data zwolnienia:</strong> {{ employee.dateOfTermination }}
       </p>
       <p class="single-employee__paragraph">
-        <strong>Data urodzin:</strong> {{ employee.birthDate | format-date }}
+        <strong>Data urodzin:</strong> {{ employee.birthDate | format-date-short }}
       </p>
       <h2 class="single-employee__title--address">Adres zamieszkania</h2>
       <p class="single-employee__paragraph">
@@ -74,7 +74,6 @@
 
 <script>
 import { employeeUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 import ActionModal from "@/components/modal/ActionModal";
 export default {
@@ -156,11 +155,6 @@ export default {
   computed: {
     checkIsAdmin() {
       return this.$store.getters.isAdmin;
-    }
-  },
-  filters: {
-    formatDate(value) {
-      return moment(String(value)).format("YYYY-MM-DD");
     }
   },
   created() {

@@ -91,7 +91,7 @@
       </p>
       <p class="preview__data">
         Data urodzin:
-        <span class="preview__value">{{employee.birthDate | format-date}}</span>
+        <span class="preview__value">{{employee.birthDate | format-date-short}}</span>
       </p>
       <h4 class="preview__header--address">Adres zamieszkania</h4>
       <p class="preview__data">
@@ -123,7 +123,6 @@
 
 <script>
 import { employeeUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
@@ -156,12 +155,6 @@ export default {
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };
-  },
-  filters: {
-    formatDate(value) {
-      if(value)
-      return moment(String(value)).format('YYYY-MM-DD')
-    },
   },
   methods: {
     stepBack() {

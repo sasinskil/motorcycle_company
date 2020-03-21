@@ -66,7 +66,7 @@
       </p>
       <p class="preview__data">
         Data urodzin:
-        <span class="preview__value">{{customer.birthDate | format-date}}</span>
+        <span class="preview__value">{{customer.birthDate | format-date-short}}</span>
       </p>
       <h4 class="preview__header--address">Adres zamieszkania</h4>
       <p class="preview__data">
@@ -98,7 +98,6 @@
 
 <script>
 import { customerUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
@@ -128,12 +127,7 @@ export default {
       showModal: false
     };
   },
-  filters: {
-    formatDate(value) {
-      if(value)
-      return moment(String(value)).format('YYYY-MM-DD')
-    },
-  },
+
   methods: {
     stepBack() {
       this.$router.go(-1);

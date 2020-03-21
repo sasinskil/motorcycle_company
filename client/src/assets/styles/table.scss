@@ -1,12 +1,12 @@
 .table-wrapper {
     width: 100%;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+    box-shadow: $default-shadow;
   }
   
   table {
     width: 100%;
     display: block;
-    background: #fff;
+    background: $white;
   }
   thead {
     display: inline-block;
@@ -40,7 +40,7 @@
   }
   
   table tbody tr:nth-child(odd) {
-    background-color: #f5f5f5;
+    background-color: $light-grey;
   }
   
   table tbody tr {
@@ -48,18 +48,18 @@
   }
   
   table tbody tr:hover {
-    background-color: #8e8b8b36;
+    background-color: $darken-grey;
   }
   
   table thead tr {
-    background: #324960;
+    background: $navy-blue;
   }
   
   table thead th {
     padding: 1.3rem;
     font-weight: bold;
     font-size: 15px;
-    color: #ffffff;
+    color: $white;
   }
 
   // action buttons
@@ -98,7 +98,7 @@
 // motorcycles
 .motorcycles__list {
   list-style-type: none;
-  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+  box-shadow: $default-shadow;
   padding: 0;
   width: 100%;
   display: flex;
@@ -110,7 +110,7 @@
   position: relative;
   width: 100%;
   max-width: 305px;
-  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+  box-shadow: $default-shadow;
   overflow: hidden;
   margin: 0.7rem;
   transition: transform 0.4s ease-in-out, background 0.4s ease-in-out,
@@ -165,14 +165,14 @@ strong {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  background: #fff;
+  background: $white;
   &::before {
     content: "";
     display: block;
     width: 90%;
     height: 0.05rem;
     margin: 0 auto;
-    background: #00000020;
+    background: $lighten-black;
     position: absolute;
     bottom: 43px;
     left: 0;
@@ -182,16 +182,16 @@ strong {
 .motorcycles__more {
   width: 100%;
   padding: 0.8rem 1.2rem;
-  color: #00000060;
+  color: $light-black;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
   &--engine {
     position: relative;
-    color: #00000060;
+    color: $light-black;
     padding: 0 2.5rem 0 0;
     margin: 0 .5rem 0 0;
-    border-right: 1px solid #00000020;
+    border-right: 1px solid $lighten-black;
   }
   &--weight {
       position: relative;
@@ -213,29 +213,4 @@ strong {
 
 .motorcycles__item:hover {
   transform: translateY(-2px);
-}
-.motorcycles__counter {
-  position: absolute;
-  bottom: 12px;
-  left: 30px;
-  &--icon {
-    font-size: 20px;
-    color: #00000060;
-  }
-  &--count {
-    position: absolute;
-    z-index: 5;
-    top: -23px;
-    left: -19px;
-    color: $white;
-    text-align: center;
-    padding: 0.1rem;
-    border-radius: 25px;
-    background: #ce3333;
-    overflow: hidden;
-    line-height: 1.5rem;
-    width: 28px;
-    height: 28px;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.42);
-  }
 }

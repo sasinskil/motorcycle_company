@@ -22,8 +22,7 @@
       width: 100%;
       padding: 0.6rem;
       border: none;
-      border-radius: 0.2rem;
-      background: #fff;
+      background: $white;
       box-shadow: $default-shadow;
       &--text-area {
         min-height: 80px;
@@ -42,7 +41,7 @@
     }
     &__errors {
       margin-top: 2rem;
-      color: #dc6868;
+      color: $bright-red;
     }
   }
 
@@ -56,16 +55,15 @@
     max-width: 400px;
     margin-top: 2.5rem;
     padding: 0.4rem 1rem;
-    background: #fff;
+    background: $white;
     box-shadow: $default-shadow;
-    border-radius: 0.2rem;
     text-align: left;
     overflow-wrap: break-word;
     &__content {
       display: block;
     }
     &__value {
-      color: #2c3e508e;
+      color: $deep-blue;
     }
 
     &__data {

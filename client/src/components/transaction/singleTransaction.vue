@@ -70,7 +70,6 @@
 
 <script>
 import { transactionUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 import ActionModal from "@/components/modal/ActionModal";
 export default {
@@ -186,11 +185,6 @@ export default {
   computed: {
     checkIsAdmin() {
       return this.$store.getters.isAdmin;
-    }
-  },
-  filters: {
-    formatDate(value) {
-      return moment(String(value)).format("YYYY-MM-DD HH:mm");
     }
   },
   created() {

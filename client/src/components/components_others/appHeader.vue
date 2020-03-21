@@ -481,11 +481,14 @@ export default {
     transform: translateX(9px);
     opacity: 1;
     visibility: visible;
+     @media only screen and(max-width: 1300px) {
+      transform: translateX(80px);
+    }
   }
 
   &__about-list {
-    background: #324960;
-    color: #fff;
+    background: $navy-blue;
+    color: $white;
     padding: 1.5rem 1rem;
     position: absolute;
     left: -200px;
@@ -496,8 +499,12 @@ export default {
     transform: translateX(-50px);
     opacity: 0;
     text-align: left;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+    box-shadow: $default-shadow-hover;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+    @media only screen and(max-width: 1300px) {
+      top: -80px;
+    }
 
     &--roles {
       list-style-type: none;
@@ -512,7 +519,7 @@ export default {
   }
 
   &__about-item {
-    border-bottom: 1px solid #ffffff26;
+    border-bottom: 1px solid $darken-grey;
     padding-bottom: 0.3rem;
 
     strong {
@@ -564,7 +571,7 @@ export default {
 @mixin hamburger-line {
   width: 100%;
   height: 0.2rem;
-  background-color: #324960;
+  background-color: $navy-blue;
   position: absolute;
 }
 .header {
@@ -574,8 +581,8 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  background: #ffffff;
-  box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.2);
+  background: $white;
+  box-shadow: $default-shadow;
 }
 
 .header::before {
@@ -586,7 +593,7 @@ export default {
   display: block;
   width: 100%;
   height: 0.1rem;
-  background-color: #324960;
+  background-color: $navy-blue;
 }
 
 .navigation {
@@ -616,7 +623,7 @@ export default {
 
   &__link {
     text-decoration: none;
-    color: #324960;
+    color: $navy-blue;
     font-weight: bold;
     position: relative;
 
@@ -625,7 +632,7 @@ export default {
       content: "";
       width: 0%;
       height: 0.1rem;
-      background: #324960;
+      background: $navy-blue;
       bottom: -10px;
       left: 0;
       transition: width 0.4s ease-in-out;
@@ -749,7 +756,7 @@ export default {
   }
 
   .navigation__list {
-    background: #ffffff;
+    background: $white;
     padding: 1rem 0;
     margin: 0;
     position: fixed;
@@ -761,7 +768,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.2);
+    box-shadow: $default-shadow;
   }
 
   .navigation__list--visible {

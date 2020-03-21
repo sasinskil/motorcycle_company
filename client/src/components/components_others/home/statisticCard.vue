@@ -56,7 +56,7 @@ export default {
   width: 100%;
   margin: 0 2rem 3rem;
   max-width: 440px;
-  box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+  box-shadow: $default-shadow;
   padding: 1rem 2rem 1.5rem;
   text-align: left;
   transition: box-shadow 0.3s ease-in-out;
@@ -66,7 +66,7 @@ export default {
     }
 
   &:hover {
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.5);
+    box-shadow: $default-shadow-hover;
   }
 
   &__body {
@@ -92,7 +92,7 @@ export default {
     font-weight: bold;
     color: $orange;
     &.danger {
-      color: #FF4D4D;
+      color: $dark-red;
       font-weight: bold;
       font-size: 1.3rem;
     }
@@ -101,9 +101,9 @@ export default {
   &__icon-wrapper {
     padding: 1rem 1.2rem;
     margin: 0.5rem 0 0;
-    background-color: #427C8F;
+    background-color: $lazur;
     border-radius: 50%;
-    color: #fff;
+    color: $white;
     font-size: 2rem;
 
     svg {
@@ -118,13 +118,13 @@ export default {
 
     &--link {
       text-decoration: none;
-      color: #3a5066;
+      color: $navy-blue;
       position: relative;
       padding: 0.5rem 2.5rem 0.5rem 0;
       transition: color 0.4s ease-in-out;
 
       &:hover {
-          color: #86BBA3;
+          color: $bright-green;
       }
 
       &:hover > .card__footer--icon {
@@ -136,7 +136,7 @@ export default {
       width: 17px;
       height: 17px;
       margin-left: 1rem;
-      color: #86BBA3;
+      color: $bright-green;
       font-size: 1.3rem;
       position: absolute;
       top: 10px;

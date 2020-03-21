@@ -1,6 +1,6 @@
 <template>
   <div id="editTransaction" class="main-container--edit">
-     <h1 class="main-container--edit__title">Modyfikuj transakcję z dnia: {{transaction.transactionTime | format-date}}</h1>
+     <h1 class="main-container--edit__title">Modyfikuj transakcję z dnia: {{transaction.transactionTime | format-date-long}}</h1>
      
      <button class="single-transaction__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
     <form v-if="!submitted" class="form">
@@ -38,7 +38,6 @@
 
 <script>
 import { transactionUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
@@ -121,12 +120,6 @@ export default {
         },
     close() {
       this.showModal = false;
-    }
-  },
-  filters: {
-    formatDate(value) {
-        if(value)
-        return moment(String(value)).format("YYYY-MM-DD HH:mm");
     }
   },
   created() {

@@ -4,8 +4,7 @@ import App from './App.vue'
 import router from './router'
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
-import store from './store'
-// eslint-disable-next-line no-unused-vars
+import store from './store';
 import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -44,6 +43,17 @@ Vue.use(require("moment"));
 Vue.component('v-date-picker', DatePicker)
 
 Vue.use(VueResource);
+
+// Filters
+Vue.filter("format-date-short", (value) => {
+  if(value)
+    return moment(String(value)).format('YYYY-MM-DD');
+});
+
+Vue.filter("format-date-long", (value) => {
+  if(value)
+    return moment(String(value)).format('YYYY-MM-DD HH:mm');
+});
 
 library.add(
   faTrashAlt,

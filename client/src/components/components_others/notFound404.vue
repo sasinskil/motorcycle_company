@@ -69,9 +69,9 @@ export default {
   &__box {
     width: 100%;
     height: 100%;
-    background: #fff;
-    color: #324960f5;
-    box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
+    background: $white;
+    color: $navy-blue;
+    box-shadow: $default-shadow;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -88,7 +88,7 @@ export default {
     }
   }
   &__span {
-    color: #00000094;
+    color: $deep-blue;
     text-transform: uppercase;
     font-weight: bold;
     width: 100%;
@@ -104,7 +104,7 @@ export default {
       }
   }
   &__path {
-    color: #d86060;
+    color: $dark-red;
     text-transform: none;
     display: block;
     margin-bottom: 1rem;

@@ -1,6 +1,6 @@
 <template>
   <div id="editService" class="main-container--edit">
-     <h1 class="main-container--edit__title">Modyfikuj serwis z dnia: {{service.startWorkingDate | format-date}}</h1>
+     <h1 class="main-container--edit__title">Modyfikuj serwis z dnia: {{service.startWorkingDate | format-date-long}}</h1>
      
      <button class="single-service__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
     <form v-if="!submitted" class="form">
@@ -46,7 +46,6 @@
 
 <script>
 import { serviceUrl } from "@/variables";
-import * as moment from "moment/moment";
 import InfoModal from "@/components/modal/InfoModal";
 
 export default {
@@ -134,12 +133,6 @@ export default {
         },
     close() {
       this.showModal = false;
-    }
-  },
-  filters: {
-    formatDate(value) {
-        if(value)
-        return moment(String(value)).format("YYYY-MM-DD");
     }
   },
   created() {

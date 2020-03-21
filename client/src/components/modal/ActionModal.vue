@@ -84,9 +84,8 @@ export default {
   width: 100%;
   margin: 0px auto;
   padding: 15px 15px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  background-color: $white;
+  box-shadow: $default-shadow;
   transition: all 0.3s ease;
 }
 
@@ -109,7 +108,7 @@ export default {
       margin: 0 auto;
       width: 65%;
       height: 0.05rem;
-      background-color: #32496036;
+      background-color: $navy-blue;
     }
   }
 }
@@ -122,6 +121,7 @@ export default {
     overflow-y: auto;
     text-align: center;
     padding: 0 2rem;
+    color: $navy-blue;
   }
 }
 
@@ -151,7 +151,7 @@ export default {
 @mixin hamburger-line {
   width: 100%;
   height: 2px;
-  background-color: #fff;
+  background-color: $white;
   position: absolute;
 }
 
@@ -159,17 +159,16 @@ export default {
   position: absolute;
   top: 8px;
   right: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: $default-shadow;
   border-radius: 50%;
   cursor: pointer;
   padding: 0.5rem 0.5rem;
   border: none;
-  background-color: #324960;
+  background-color: $navy-blue;
   transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
 
   &:hover {
-    //transform: scale(1.05);
-    background-color: rgb(230, 72, 72);
+    background-color: $bright-red;
   }
 
   &--box {

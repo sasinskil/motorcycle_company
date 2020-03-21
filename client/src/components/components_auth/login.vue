@@ -201,7 +201,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background-color: rgb(255, 255, 255);
+  background-color: $white;
   box-shadow: $default-shadow-hover;
   margin: 2rem auto 0;
   width: 100%;
@@ -212,19 +212,7 @@ export default {
     padding: 1rem 3rem 2rem;
   }
 }
-.header {
-  background-color: rgba(105, 105, 105, 0.8);
-  height: 100px;
-  width: 100%;
-}
-.formLayout {
-  height: 450px;
-  width: 100%;
-  background-color: rgba(220, 220, 220, 0.9);
-  display: flex;
-  flex-direction: column;
-  border: 2px solid lightslategray;
-}
+
 .form {
   margin: 1rem 0;
   width: 100%;
@@ -235,7 +223,7 @@ export default {
     font-size: 0.9rem;
     text-align: left;
     margin-top: 2rem;
-    color: #dc6868;
+    color: $bright-red;
     &-list {
       margin: 0;
       padding: 0.5rem 0 0 1.3rem;
@@ -276,12 +264,12 @@ label {
   width: 100%;
   padding: 0.7rem 1.5rem;
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.38);
+  border-bottom: 1px solid $light-black;
   background: none;
   outline: none;
   transition: border-color 0.3s ease-in-out;
   &:focus {
-    border-bottom-color: rgba(0, 0, 0, 0.99);
+    border-bottom-color: $black;
   }
 }
 .loginBtn {

@@ -5,7 +5,7 @@
     width: 100%;
     margin: 0 auto 4rem;
     padding: 1rem;
-    border: 1px solid #324960;
+    border: 1px solid $navy-blue;
   
     &__inputs {
       width: 100%;
@@ -24,7 +24,7 @@
         label {
             width: 100%;
             text-align: left;
-            color: #324960f5;
+            color: $navy-blue;
           }
       }
     }
@@ -32,22 +32,22 @@
     &__inputs input {
       font-family: "Avenir", Helvetica, Arial, sans-serif;
       font-size: 1rem;
-      color: #324960;
+      color: $navy-blue;
       order: 1;
       margin-top: 0.5rem;
       padding: 0.3rem;
       border: none;
       background: none;
       text-align: left;
-      border-bottom: 1px solid #324960f5;
+      border-bottom: 1px solid $navy-blue;
 
       &:focus {
         outline: none;
-        border-bottom-color: #000000f5;
+        border-bottom-color: $bright-black;
       }
       
       &:focus ~ label {
-        color: darken(#324960f5, 80%);
+        color: darken($navy-blue, 80%);
       }
     }
   
@@ -58,34 +58,8 @@
       align-content: flex-start;
       padding: 0.5rem;
   
-      &--search {
-        box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
-        font-size: 15px;
-        padding: 0.5rem 2rem;
-        cursor: pointer;
-        background: none;
-        border: 1px solid #4fc08d;
-        color: #2c3e50;
-        transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
-      }
-  
       &--clear {
-        box-shadow: 0px 6px 16px rgba(24, 41, 67, 0.2);
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
-        font-size: 15px;
-        padding: 0.5rem 2rem;
-        cursor: pointer;
-        background: none;
-        border: 1px solid #2c3e50;
-        color: #2c3e50;
-        //margin-left: 1rem;
-        transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
-  
-        &:hover {
-          background: #2c3e50;
-          color: #fff;
-        }
+        @include default-button($navy-blue);
       }
     }
   }
