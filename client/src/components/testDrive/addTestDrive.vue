@@ -54,7 +54,7 @@
       <h3 class="preview__header">Podgląd</h3>
       <p class="preview__data">
         Data rozpoczęcia:
-        <span class="preview__value">{{testDrive.startDrive}}</span>
+        <span class="preview__value">{{testDrive.startDrive | format-date-long}}</span>
       </p>
       <p class="preview__data">
         Data zakończenia:

@@ -3,10 +3,10 @@
     <div class="not-found__box">
       <h1 class="not-found__title">404</h1>
       <span class="not-found__span">
-        <em class="not-found__path">{{currentPath}}</em> there's nothing here.
+        <em class="not-found__path">{{currentPath}}</em> nic tutaj nie ma.
       </span>
       <router-link class="not-found__link" to="/">
-        <font-awesome-icon class="icon not-found__icon-arrow" icon="arrow-left"/>Back to home
+        <font-awesome-icon class="icon not-found__icon-arrow" icon="arrow-left"/>Zabierz mnie stąd
       </router-link>
     </div>
   </div>
