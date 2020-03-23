@@ -55,8 +55,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/assets/styles/main.scss";
-
 .modal-mask {
   position: fixed;
   z-index: 9999;

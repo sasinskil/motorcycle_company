@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="login-box">
       <div class="company">
-        <img class="company__logo" src="@/assets/images/logo_transparent.svg" alt="">
-        <h2 class="company__name">Duos Kołos Sp. z.o.o</h2>
+        <DuosKolosLogoTrans />
+        <h2 ref="companyName" class="company__name">Duos Kołos Sp. z.o.o</h2>
       </div>
       <div class="login">
         <div class="loginPanel">
@@ -41,7 +41,9 @@
             </div>
             <div class="form-group form-button">
               <span class="form__errors" v-if="validErrors.length">
-                <span class="form__errors--info">Popraw następujące błędy:</span>
+                <span class="form__errors--info"
+                  >Popraw następujące błędy:</span
+                >
                 <ul class="form__errors-list">
                   <li
                     class="form__errors-item"
@@ -72,11 +74,14 @@
 <script>
 import { mapGetters } from "vuex";
 import InfoModal from "@/components/modal/InfoModal";
+import DuosKolosLogoTrans from "@/components/components_others/home/DuosKolosLogoTrans.vue";
+import { gsap } from "gsap";
 
 export default {
   name: "login",
   components: {
-    InfoModal
+    InfoModal,
+    DuosKolosLogoTrans
   },
   data() {
     return {
@@ -126,13 +131,20 @@ export default {
   },
   computed: {
     ...mapGetters(["loginError"])
+  },
+  mounted() {
+    const { companyName } = this.$refs;
+    const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+    tl.from(companyName, 2, {
+      opacity: 0,
+      y: 100
+    });
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/assets/styles/main.scss";
 
 .wrapper {
   position: fixed;
@@ -174,11 +186,6 @@ export default {
     display: none;
   }
 
-  &__logo {
-    width: 230px;
-    transform: rotate(-10deg);
-  }
-
   &__name {
     margin: 1rem 0 0;
     width: 100%;
@@ -186,6 +193,14 @@ export default {
     letter-spacing: 0.2rem;
     text-align: left;
   }
+}
+
+path.circle-left {
+  transform-origin: 22% 78%;
+}
+
+path.circle-right {
+  transform-origin: 86% 78%;
 }
 
 .login {
@@ -249,7 +264,6 @@ label {
   @media only screen and (max-width: 640px) {
     top: 42px;
   }
-
 }
 .icon {
   font-size: 13px;
