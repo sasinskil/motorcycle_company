@@ -299,12 +299,12 @@ export default {
         rotation: 0
       })
       .addLabel("driveBack")
-      .to(logo, 2, {
+      .to(logo, 3, {
         x: 0
       })
       .to(
         circleLeft,
-        2,
+        3,
         {
           rotation: -360
         },
@@ -312,7 +312,7 @@ export default {
       )
       .to(
         circleRight,
-        2,
+        3,
         {
           rotation: -360
         },

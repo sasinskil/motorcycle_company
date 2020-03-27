@@ -16,7 +16,7 @@ export default {
   name: "App",
   components: {
      "app-header": appHeader
-  }
+  },
 };
 </script>
 

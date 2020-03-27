@@ -99,7 +99,7 @@ import DuosKolosLogo from "@/components/components_others/home/DuosKolosLogo.vue
 export default {
   name: "appHeader",
   components: {
-    DuosKolosLogo,
+    DuosKolosLogo
   },
   data() {
     return {
@@ -115,11 +115,30 @@ export default {
     },
     menuSelector() {
       return document.querySelector(".navigation__list");
+    },
+    linkSelector() {
+      return document.querySelector(".navigation__link"); 
     }
   },
   created() {
     this.user = this.$store.getters.getCurrentUser;
+
+    document.addEventListener("keyup", e => {
+      if (
+        e.keyCode === 27 &&
+        this.menuSelector.classList.contains("navigation__list--visible")
+      ) {
+        this.hideMenu();
+      }
+    });
   },
+   watch: {
+    '$route' () {
+      if(this.menuSelector.classList.contains("navigation__list--visible")) {
+        this.hideMenu();
+      }
+    },
+   },
   methods: {
     showMenu() {
       this.menuSelector.classList.add("navigation__list--visible");
@@ -139,7 +158,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
 .user {
   width: 23px;
   height: 23px;
@@ -153,7 +171,7 @@ export default {
     transform: translateX(9px);
     opacity: 1;
     visibility: visible;
-     @media only screen and(max-width: 1300px) {
+    @media only screen and(max-width: 1300px) {
       transform: translateX(80px);
     }
   }

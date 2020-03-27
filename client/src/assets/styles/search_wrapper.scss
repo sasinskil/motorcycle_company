@@ -43,11 +43,11 @@
 
       &:focus {
         outline: none;
-        border-bottom-color: $bright-black;
+        border-bottom-color: darken($navy-blue, 90%);
       }
       
       &:focus ~ label {
-        color: darken($navy-blue, 80%);
+        color: darken($navy-blue, 90%);
       }
     }
   
