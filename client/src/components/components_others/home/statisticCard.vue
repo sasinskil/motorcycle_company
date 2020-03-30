@@ -105,6 +105,10 @@ export default {
     border-radius: 50%;
     color: $white;
     font-size: 2rem;
+    @media only screen and (max-width: 450px) {
+        padding: 0.5rem 0.7rem;
+        font-size: 1.8rem;
+    }
 
     svg {
       margin: 0;

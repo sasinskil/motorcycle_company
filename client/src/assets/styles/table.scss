@@ -1,98 +1,111 @@
 .table-wrapper {
-    width: 100%;
-    box-shadow: $default-shadow;
+  width: 100%;
+  box-shadow: $default-shadow;
+  @media screen and (max-width: 768px) {
+    box-shadow: none;
   }
-  
-  table {
-    width: 100%;
-    display: block;
-    background: $white;
-  }
-  thead {
-    display: inline-block;
-    width: 100%;
-  }
-  
-  thead tr,
-  tbody tr {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  tbody {
-    height: 100%;
-    max-height: 450px;
-    display: inline-block;
-    width: 100%;
-    overflow: auto;
-  }
-  
-  table td,
-  table th {
-    text-align: center;
-    padding: 1rem;
-    width: 100%;
-  }
-  
-  table td {
-    font-size: 0.9rem;
-  }
-  
-  table tbody tr:nth-child(odd) {
-    background-color: $light-grey;
-  }
-  
-  table tbody tr {
-    cursor: pointer;
-  }
-  
-  table tbody tr:hover {
-    background-color: $darken-grey;
-  }
-  
-  table thead tr {
-    background: $navy-blue;
-  }
-  
-  table thead th {
-    padding: 1.3rem;
-    font-weight: bold;
-    font-size: 15px;
-    color: $white;
-  }
+}
 
-  // action buttons
-  .action-buttons {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0.8rem;
+table {
+  width: 100%;
+  display: block;
+  background: $white;
+}
+thead {
+  display: inline-block;
+  width: 100%;
+}
 
-    &__motorcycles {
-      justify-content: flex-start;
-    }
+thead tr,
+tbody tr {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+    margin: 0.5em 0;
+    border: 1px solid $darken-grey;
+    align-items: stretch;
   }
-  
-  .export {
-      @include default-button($dark-blue);
-  }
-  
-  .clear {
-      @include default-button($navy-blue);
-  }
-  
-  .icon {
-    margin-left: 0.3rem;
-  }
-  
-  .add {
-      @include default-button($dark-green);
-  }
+}
 
-  .details {
-    @include default-button($dark-orange);
+tbody {
+  height: 100%;
+  max-height: 450px;
+  display: inline-block;
+  width: 100%;
+  overflow: auto;
+}
+
+table td,
+table th {
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    flex: 1 1 150px;
+    border: 0.5px solid $darken-grey;
+  }
+}
+
+table td {
+  font-size: 0.9rem;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: $light-grey;
+}
+
+table tbody tr {
+  cursor: pointer;
+}
+
+table tbody tr:hover {
+  background-color: $darken-grey;
+}
+
+table thead tr {
+  background: $navy-blue;
+}
+
+table thead th {
+  padding: 1.3rem;
+  font-weight: bold;
+  font-size: 15px;
+  color: $white;
+}
+
+// action buttons
+.action-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.8rem;
+
+  &__motorcycles {
+    justify-content: flex-start;
+  }
+}
+
+.export {
+  @include default-button($dark-blue);
+}
+
+.clear {
+  @include default-button($navy-blue);
+}
+
+.icon {
+  margin-left: 0.3rem;
+}
+
+.add {
+  @include default-button($dark-green);
+}
+
+.details {
+  @include default-button($dark-orange);
 }
 
 // motorcycles
@@ -113,8 +126,7 @@
   box-shadow: $default-shadow;
   overflow: hidden;
   margin: 0.7rem;
-  transition: transform 0.4s ease-in-out, background 0.4s ease-in-out,
-    color 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out, background 0.4s ease-in-out, color 0.4s ease-in-out;
 }
 
 .motorcycles__single-title {
@@ -126,19 +138,19 @@
 .motorcycles__paragraph {
   margin: 0;
   text-align: left;
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   position: relative;
 }
 
 strong {
-    display: block;
+  display: block;
 }
 
 .cubic-centimeters {
-    position: absolute;
-    top: 3px;
-    left: 142px;
-    font-size: 0.7rem;
+  position: absolute;
+  top: 3px;
+  left: 142px;
+  font-size: 0.7rem;
 }
 
 .cubic-centimeters--edit {
@@ -190,13 +202,13 @@ strong {
     position: relative;
     color: $light-black;
     padding: 0 2.5rem 0 0;
-    margin: 0 .5rem 0 0;
+    margin: 0 0.5rem 0 0;
     border-right: 1px solid $lighten-black;
   }
   &--weight {
-      position: relative;
-      margin: 0;
-      padding: 0 2.5rem 0 0;
+    position: relative;
+    margin: 0;
+    padding: 0 2.5rem 0 0;
   }
 }
 

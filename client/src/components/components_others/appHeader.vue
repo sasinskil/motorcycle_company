@@ -474,11 +474,11 @@ export default {
   }
 
   .navigation__logout {
-    margin: 3rem 0 0 0;
+    margin: 2rem 0 0 0;
   }
 
   .current-user {
-    margin: 3rem 0 0 0;
+    margin: 2rem 0 0 0;
   }
 }
 </style>
