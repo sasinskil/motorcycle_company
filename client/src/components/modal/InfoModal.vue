@@ -79,7 +79,6 @@ export default {
   margin: 0px auto;
   padding: 15px 15px;
   background-color: #fff;
-  border-radius: 2px;
   box-shadow: $default-shadow;
   transition: all 0.3s ease;
 }

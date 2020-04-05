@@ -55,7 +55,7 @@ export default {
 .card {
   width: 100%;
   margin: 0 2rem 3rem;
-  max-width: 440px;
+  max-width: 420px;
   box-shadow: $default-shadow;
   padding: 1rem 2rem 1.5rem;
   text-align: left;
@@ -66,7 +66,7 @@ export default {
     }
 
   &:hover {
-    box-shadow: $default-shadow-hover;
+    box-shadow: $default-shadow-grow;
   }
 
   &__body {

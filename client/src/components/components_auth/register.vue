@@ -193,7 +193,6 @@ export default {
 .registerPanel {
   display: flex;
   flex-direction: column;
-  border-radius: 0.2rem;
   justify-content: center;
   text-align: center;
   background-color: $white;

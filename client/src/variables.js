@@ -43,11 +43,40 @@ const countTestDrives = `${testDriveUrl}/count`;
 const countTransactions = `${transactionUrl}/count`;
 const countServices = `${serviceUrl}/count`;
 
+// Router links
+
+const routes = [
+     {
+          name: 'Klienci',
+          pathTo: 'customers',
+     },
+     {
+          name: 'Pracownicy',
+          pathTo: 'employees',
+     },
+     {
+          name: 'Katalog motocykli',
+          pathTo: 'motorcycles',
+     },
+     {
+          name: 'Jazdy testowe',
+          pathTo: 'testDrives',
+     },
+     {
+          name: 'Transakcje',
+          pathTo: 'transactions',
+     },
+     {
+          name: 'Serwisy posprzedażowe',
+          pathTo: 'services',
+     },
+]
+
 
 export {
      loginUrl, registerUrl, customerUrl, employeeUrl,
      motorcycleUrl, motorcycleDetailsUrl, motorcycleDetailsSoldTrueUrl, motorcycleDetailsSoldFalseUrl, testDriveUrl,
      transactionUrl, serviceUrl,
      countCustomers, countEmployees, countMotorcycleDetails, countTestDrives,
-     countTransactions, countServices
+     countTransactions, countServices, routes
     };

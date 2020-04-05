@@ -22,35 +22,10 @@
             <font-awesome-icon class="icon home-icon" icon="home" />
           </router-link>
         </li>
-        <li class="navigation__item">
-          <router-link class="navigation__link" to="/customers"
-            >Klienci</router-link
-          >
-        </li>
-        <li class="navigation__item">
-          <router-link class="navigation__link" to="/employees"
-            >Pracownicy</router-link
-          >
-        </li>
-        <li class="navigation__item">
-          <router-link class="navigation__link" to="/motorcycles"
-            >Katalog motocykli</router-link
-          >
-        </li>
-        <li class="navigation__item">
-          <router-link class="navigation__link" to="/testDrives"
-            >Jazdy testowe</router-link
-          >
-        </li>
-        <li class="navigation__item">
-          <router-link class="navigation__link" to="/transactions"
-            >Transakcje</router-link
-          >
-        </li>
-        <li class="navigation__item">
-          <router-link class="navigation__link" to="/services"
-            >Serwisy posprzedażowe</router-link
-          >
+        <li class="navigation__item" v-for="route in links" :key="route.name">
+          <router-link class="navigation__link" :to="`/${route.pathTo}`"
+            >{{route.name}}
+          </router-link>
         </li>
         <li class="current-user">
           <font-awesome-icon class="icon user" icon="user" />
@@ -95,6 +70,7 @@
 // eslint-disable-next-line no-unused-vars
 import { mapGetters } from "vuex";
 import DuosKolosLogo from "@/components/components_others/home/DuosKolosLogo.vue";
+import { routes } from "@/variables";
 
 export default {
   name: "appHeader",
@@ -103,7 +79,8 @@ export default {
   },
   data() {
     return {
-      user: {}
+      user: {},
+      links: routes,
     };
   },
   computed: {
