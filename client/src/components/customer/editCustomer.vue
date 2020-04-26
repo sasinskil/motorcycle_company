@@ -2,8 +2,8 @@
   <div id="editCustomer" class="main-container--edit">
      <h1 class="main-container--edit__title">Modyfikuj klienta: {{customer.firstName}}</h1>
      
-     <button class="single-customer__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
-    <form v-if="!submitted" class="form">
+    <button class="single-customer__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
+    <form class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
         <label class="form__label" for="name">Imię:</label>
@@ -46,8 +46,16 @@
     </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Klient został zmodyfikowany!</h2>
+      <h2 class="after-post__title">Klient został zmodyfikowany
+        <span class="after-post__title--pulse">
+            <font-awesome-icon
+              class="after-post__title--icon"
+              icon="check"
+            />
+          </span>
+      </h2>
     </div>
+
     <InfoModal
       v-if="showModal"
       :headerText="modalHeaderContent"
@@ -85,7 +93,7 @@ export default {
       errors: [],
       visible: false,
       hideErrors: false,
-      modalHeaderContent: "Uwaga!",
+      modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };

@@ -78,6 +78,7 @@
         <font-awesome-icon class="icon" icon="plus" />
       </router-link>
       <button
+        v-if="services.length > 0"
         title="Export"
         class="my-button export"
         @click="exportTableToExcel('serwisy')"
@@ -86,7 +87,7 @@
         <font-awesome-icon class="icon" icon="file-export" />
       </button>
     </div>
-    <div class="table-wrapper">
+    <div v-if="services.length > 0" class="table-wrapper">
       <table class="table">
         <thead>
           <tr>
@@ -117,6 +118,11 @@
         </tbody>
       </table>
     </div>
+
+    <div v-else class="empty-table">
+      <span class="empty-table__header">Brak pozycji</span>
+    </div>
+
   </div>
 </template>
 

@@ -2,8 +2,8 @@
   <div id="editEmployee" class="main-container--edit">
      <h1 class="main-container--edit__title">Modyfikuj pracownika: {{employee.firstName}}</h1>
      
-     <button class="single-employee__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
-    <form v-if="!submitted" class="form">
+    <button class="single-employee__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
+    <form class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
         <label class="form__label" for="name">Imię:</label>
@@ -64,8 +64,16 @@
     </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Pracownik został zmodyfikowany!</h2>
+      <h2 class="after-post__title">Pracownik został zmodyfikowany
+        <span class="after-post__title--pulse">
+            <font-awesome-icon
+              class="after-post__title--icon"
+              icon="check"
+            />
+          </span>
+      </h2>
     </div>
+
     <InfoModal
       v-if="showModal"
       :headerText="modalHeaderContent"
@@ -108,7 +116,7 @@ export default {
       errors: [],
       visible: false,
       hideErrors: false,
-      modalHeaderContent: "Uwaga!",
+      modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };
@@ -178,7 +186,7 @@ export default {
               this.employee.position = position;
               this.employee.salary = salary;
               this.employee.dateOfEmployment = moment(dateOfEmployment).format("YYYY-MM-DD");
-              this.employee.dateOfTermination = moment(dateOfTermination).format("YYYY-MM-DD") == null
+              this.employee.dateOfTermination = (dateOfTermination == null || dateOfTermination === "")
                ? "" : moment(dateOfTermination).format("YYYY-MM-DD");
               this.employee.address = address;
           })

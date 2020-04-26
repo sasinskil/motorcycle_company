@@ -119,7 +119,7 @@ export default {
       },
       isChecked: true,
       errors: [],
-      modalHeaderContent: "Uwaga!",
+      modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };

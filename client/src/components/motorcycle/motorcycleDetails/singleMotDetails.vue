@@ -128,13 +128,13 @@ export default {
           })
           .catch(() => {
             this.showActionModal = false;
-            this.modalHeaderContent = "Uwaga!";
+            this.modalHeaderContent = "Uwaga";
             this.modalBodyContent = "Motocykl nie może zostać usunięty, upewnij się, czy nie został zarezerowany dla jednej z usług salonu!";
             this.showInfoModal = true;
           });
     },
     deleteMotDetails() {
-        this.modalHeaderContent = "Uwaga!";
+        this.modalHeaderContent = "Uwaga";
         this.modalBodyContent = `Czy na pewno chcesz usunąć motocykl ?`;
         this.showActionModal = true;
     },

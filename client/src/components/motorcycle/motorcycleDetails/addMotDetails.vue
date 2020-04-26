@@ -5,7 +5,7 @@
       <font-awesome-icon class="plus-icon icon" icon="arrow-left" />
     </button>
      
-     <form v-if="!submitted" class="form">
+     <form class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
         <label class="form__label" for="motCode">Kod motocykla:</label>
@@ -29,12 +29,19 @@
           </li>
         </ul>
       </p>
-        <button class="form__send-button" @click.prevent="post"><font-awesome-icon class="plus-icon icon" icon="plus" />Dodaj motocykl</button>
+        <button class="form__send-button" @click.prevent="post"><font-awesome-icon class="plus-icon icon" icon="plus" />Dodaj</button>
         <button class="form__clear-button" @click.prevent="clear"><font-awesome-icon class="plus-icon icon" icon="eraser" />Wyczyść</button>
       </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Motocykl został dodany na stan!</h2>
+      <h2 class="after-post__title">Motocykl został dodany na stan
+        <span class="after-post__title--pulse">
+            <font-awesome-icon
+              class="after-post__title--icon"
+              icon="check"
+            />
+          </span>
+      </h2>
     </div>
 
     <div class="preview">
@@ -107,7 +114,7 @@ export default {
         errors: [],
         visible: false,
         hideErrors: false,
-        modalHeaderContent: "Uwaga!",
+        modalHeaderContent: "Uwaga",
         modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
         showModal: false
     };
@@ -147,6 +154,7 @@ export default {
       if(isValid) {
         this.$http.post(`${motorcycleDetailsUrl}`, this.motorcycleDetails)
         .then(() => {
+          this.clear();
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/motorcycleDetails');

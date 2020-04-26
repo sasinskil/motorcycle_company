@@ -157,13 +157,13 @@ export default {
           })
           .catch(() => {
             this.showActionModal = false;
-            this.modalHeaderContent = "Uwaga!";
+            this.modalHeaderContent = "Uwaga";
             this.modalBodyContent = "Coś poszło nie tak!";
             this.showInfoModal = true;
           });
     },
     deleteEmployee() {
-        this.modalHeaderContent = "Uwaga!";
+        this.modalHeaderContent = "Uwaga";
         this.modalBodyContent = `Czy na pewno chcesz usunąć transakcje?`;
         this.showActionModal = true;
     },

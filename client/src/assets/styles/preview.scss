@@ -156,6 +156,9 @@
       flex-basis: 100%;
       text-align: center;
     }
+    @media only screen and(max-width: 490px) {
+      align-items: flex-start;
+    }
   }
 
   .join {
@@ -170,6 +173,7 @@
    .single-service__button,
    .single-testDrive__button {
     @include default-button($navy-blue);
+    justify-content: flex-start;
     margin: 1rem 17rem 2rem 0;
     &:hover > svg {
             animation: moveYe .8s infinite;

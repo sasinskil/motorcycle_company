@@ -3,7 +3,7 @@
      <h1 class="main-container--edit__title">Modyfikuj transakcję z dnia: {{transaction.transactionTime | format-date-long}}</h1>
      
      <button class="single-transaction__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
-    <form v-if="!submitted" class="form">
+    <form class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
         <label class="form__label" for="operation">Operacja:</label>
@@ -25,8 +25,16 @@
     </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Transakcja została zmodyfikowana!</h2>
+      <h2 class="after-post__title">Transakcja została zmodyfikowana
+        <span class="after-post__title--pulse">
+            <font-awesome-icon
+              class="after-post__title--icon"
+              icon="check"
+            />
+          </span>
+      </h2>
     </div>
+
     <InfoModal
       v-if="showModal"
       :headerText="modalHeaderContent"
@@ -60,7 +68,7 @@ export default {
       errors: [],
       visible: false,
       hideErrors: false,
-      modalHeaderContent: "Uwaga!",
+      modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };

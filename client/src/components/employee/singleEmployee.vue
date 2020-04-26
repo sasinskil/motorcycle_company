@@ -127,13 +127,13 @@ export default {
           })
           .catch(() => {
             this.showActionModal = false;
-            this.modalHeaderContent = "Uwaga!";
+            this.modalHeaderContent = "Uwaga";
             this.modalBodyContent = "Pracownik nie może zostać usunięty, upewnij się, czy nie brał udziału w jednej z usług salonu!";
             this.showInfoModal = true;
           });
     },
     deleteEmployee() {
-        this.modalHeaderContent = "Uwaga!";
+        this.modalHeaderContent = "Uwaga";
         this.modalBodyContent = `Czy na pewno chcesz usunąć pracownika ?`;
         this.showActionModal = true;
     },

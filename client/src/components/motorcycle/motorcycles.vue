@@ -89,7 +89,7 @@
       </router-link>
     </div>
 
-    <ul class="motorcycles__list">
+    <ul v-if="motorcycles.length > 0" class="motorcycles__list">
       <li
         v-for="motorcycle in filteredMotorcycles"
         :key="motorcycle.id"
@@ -123,6 +123,11 @@
         </div>
       </li>
     </ul>
+
+    <div v-else class="empty-table">
+      <span class="empty-table__header">Brak pozycji</span>
+    </div>
+
   </div>
 </template>
 

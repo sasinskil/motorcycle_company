@@ -2,8 +2,10 @@
   <li class="statistics__item card">
     <div class="card__body">
       <div class="card__main-content">
-        <h2 class="card__title">{{title}}</h2>
-        <span :class="[{danger: count === 0}, 'card__count']">{{count | checkIsEmpty}}</span>
+        <h2 class="card__title">{{ title }}</h2>
+        <span :class="[{ danger: count === 0 }, 'card__count']">{{
+          count | checkIsEmpty
+        }}</span>
       </div>
       <p class="card__icon-wrapper card__icon-wrapper--user">
         <font-awesome-icon class="card__icon" :icon="`${iconName}`" />
@@ -25,10 +27,10 @@
 export default {
   name: "statisticCard",
   props: {
-      title: String,
-      count: Number,
-      moveTo: String,
-      iconName: String,
+    title: String,
+    count: Number,
+    moveTo: String,
+    iconName: String
   },
   data() {
     return {};
@@ -61,9 +63,9 @@ export default {
   text-align: left;
   transition: box-shadow 0.3s ease-in-out;
   @media only screen and (max-width: 1040px) {
-      margin: 0 1rem 2rem;
-      max-width: 370px;
-    }
+    margin: 0 1rem 2rem;
+    max-width: 370px;
+  }
 
   &:hover {
     box-shadow: $default-shadow-grow;
@@ -80,15 +82,12 @@ export default {
     font-size: 1.1rem;
 
     @media only screen and (max-width: 450px) {
-        display: none;
+      display: none;
     }
   }
 
   &__count {
     font-size: 1.7rem;
-    @media only screen and (max-width: 450px) {
-        font-size: 2.5rem;
-    }
     font-weight: bold;
     color: $orange;
     &.danger {
@@ -96,18 +95,22 @@ export default {
       font-weight: bold;
       font-size: 1.3rem;
     }
+    @media only screen and (max-width: 450px) {
+      font-size: 2.5rem;
+    }
   }
 
   &__icon-wrapper {
     padding: 1rem 1.2rem;
     margin: 0.5rem 0 0;
+    box-shadow: $default-shadow;
     background-color: $lazur;
     border-radius: 50%;
     color: $white;
     font-size: 2rem;
     @media only screen and (max-width: 450px) {
-        padding: 0.5rem 0.7rem;
-        font-size: 1.8rem;
+      padding: 0.5rem 0.7rem;
+      font-size: 1.8rem;
     }
 
     svg {
@@ -118,7 +121,7 @@ export default {
   &__footer {
     margin-top: 2rem;
     font-weight: bold;
-    font-size: .9rem;
+    font-size: 0.9rem;
 
     &--link {
       text-decoration: none;
@@ -128,11 +131,11 @@ export default {
       transition: color 0.4s ease-in-out;
 
       &:hover {
-          color: $bright-green;
+        color: $bright-green;
       }
 
       &:hover > .card__footer--icon {
-          transform: translateX(2px);
+        transform: translateX(2px);
       }
     }
 

@@ -39,6 +39,12 @@
       margin: 1rem 0 0 0.5rem;
      @include default-button($dark-grey);
     }
+    &__send-button,
+    &__clear-button {
+      @media only screen and(max-width: 768px) {
+        padding: 0.7rem 0.7rem;
+    }
+    }
     &__errors {
       margin-top: 2rem;
       color: $bright-red;
@@ -79,5 +85,70 @@
 
     @media only screen and(max-width: 910px) {
       display: none;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.9);
+      box-shadow: 0 0 0 0 rgba(67, 148, 67, 0.3);
+    }
+    70% {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 10px rgba(67, 148, 67, 0);
+    }
+    100% {
+      transform: scale(0.9);
+      box-shadow: 0 0 0 0 rgba(67, 148, 67, 0);
+    }
+  }
+  
+  @keyframes show-hide {
+    to {
+      visibility: hidden;
+    }
+    
+  }
+
+  .after-post {
+    position: fixed;
+    z-index: 1;
+    bottom: 10px;
+    right: 10px;
+    background: $white;
+    box-shadow: $default-shadow;
+    padding: 0 5rem 0 3rem;
+    animation: show-hide 0s ease-in 1.5s forwards;
+     @media only screen and (max-width: 768px) {
+       width: 100%;
+       bottom: 0;
+       right: 0;
+    }
+    &__title--pulse {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 22px;
+        right: 35px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: $dark-green;
+        cursor: pointer;
+        animation: pulse 1.5s infinite;
+        @media only screen and (max-width: 640px) {
+          top: 16px;
+          width: 25px;
+          height: 25px;
+        }
+    }
+    &__title--icon {
+        font-size: 1rem;
+        margin: 0;
+        color: $white;
+        @media only screen and (max-width: 640px) {
+          font-size: 0.8rem;
+        }
     }
   }

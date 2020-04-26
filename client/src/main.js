@@ -32,7 +32,8 @@ import {
   faUsers,
   faUserTag,
   faCarBattery,
-  faWeightHanging
+  faWeightHanging,
+  faExclamation,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -80,7 +81,8 @@ library.add(
   faUsers,
   faUserTag,
   faCarBattery,
-  faWeightHanging
+  faWeightHanging,
+  faExclamation
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

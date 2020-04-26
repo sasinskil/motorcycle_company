@@ -115,13 +115,13 @@ export default {
           })
           .catch(() => {
             this.showActionModal = false;
-            this.modalHeaderContent = "Uwaga!";
+            this.modalHeaderContent = "Uwaga";
             this.modalBodyContent = "Klient nie może zostać usunięty, upewnij się, czy nie korzystał z jednej z usług salonu!";
             this.showInfoModal = true;
           });
     },
     deleteCustomer() {
-        this.modalHeaderContent = "Uwaga!";
+        this.modalHeaderContent = "Uwaga";
         this.modalBodyContent = `Czy na pewno chcesz usunąć klienta ?`;
         this.showActionModal = true;
     },

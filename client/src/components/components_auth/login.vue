@@ -90,7 +90,7 @@ export default {
         password: ""
       },
       validErrors: [],
-      modalHeaderContent: "Uwaga!",
+      modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };

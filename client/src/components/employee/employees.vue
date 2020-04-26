@@ -45,11 +45,11 @@
       <router-link v-if=" checkIsAdmin" tag="button" title="Add" class="my-button add" to="/addEmployee">Dodaj
         <font-awesome-icon class="icon" icon="plus"/>
       </router-link>
-      <button title="Export" class="my-button export" @click="exportTableToExcel('pracownicy')">Export
+      <button v-if="employees.length > 0" title="Export" class="my-button export" @click="exportTableToExcel('pracownicy')">Export
         <font-awesome-icon class="icon" icon="file-export"/>
       </button>
     </div>
-    <div class="table-wrapper">
+    <div v-if="employees.length > 0" class="table-wrapper">
       <table class="table">
         <thead>
           <tr>
@@ -73,6 +73,11 @@
         </tbody>
       </table>
     </div>
+
+    <div v-else class="empty-table">
+      <span class="empty-table__header">Brak pozycji</span>
+    </div>
+
   </div>
 </template>
 

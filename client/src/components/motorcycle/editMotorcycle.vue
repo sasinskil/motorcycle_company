@@ -2,8 +2,8 @@
   <div id="editMotorcycle" class="main-container--edit">
      <h1 class="main-container--edit__title">Modyfikuj motocykl: {{motorcycle.model}}</h1>
      
-     <button class="single-motorcycle__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
-    <form v-if="!submitted" class="form">
+    <button class="single-motorcycle__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
+    <form class="form">
       <h2 class="form__title--main">Dane szczegółowe</h2>
       <p class="form__wrapper">
         <label class="form__label" for="model">Model:</label>
@@ -47,8 +47,16 @@
     </form>
 
     <div class="after-post" v-if="submitted">
-      <h2 class="after-post__title">Motocykl został zmodyfikowany!</h2>
+      <h2 class="after-post__title">Model został zmodyfikowany
+        <span class="after-post__title--pulse">
+            <font-awesome-icon
+              class="after-post__title--icon"
+              icon="check"
+            />
+          </span>
+      </h2>
     </div>
+
     <InfoModal
       v-if="showModal"
       :headerText="modalHeaderContent"
@@ -84,7 +92,7 @@ export default {
       errors: [],
       visible: false,
       hideErrors: false,
-      modalHeaderContent: "Uwaga!",
+      modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
       showModal: false
     };

@@ -9,7 +9,14 @@
         </button>
         <div class="modal-container">
           <div class="modal-header">
-            <h1 class="modal-header__title">{{headerText}}</h1>
+            <h1 class="modal-header__title">{{headerText}}
+              <span class="modal-pulse">
+                <font-awesome-icon
+                  class="modal-icon"
+                  icon="exclamation"
+                />
+              </span>
+            </h1>
           </div>
 
           <div class="modal-body">
@@ -55,6 +62,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@keyframes pulse {
+  0% {
+		transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.3);
+  }
+  70% {
+		transform: scale(1.1);
+      box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+  }
+  100% {
+		transform: scale(0.9);
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+  }
+}
+
 .modal-mask {
   position: fixed;
   z-index: 9999;
@@ -92,7 +114,7 @@ export default {
 
   &__title {
     margin: 2rem 0 3rem 0;
-    padding-bottom: 0.5rem;
+    padding: 0 3rem 0.5rem 0;
     position: relative;
     text-align: center;
 
@@ -109,6 +131,38 @@ export default {
       background-color: $navy-blue;
     }
   }
+}
+
+.modal-pulse {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 8px;
+  right: 118px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: $dark-red;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+    @media only screen and (max-width: 409px) {
+        right: 72px;
+    }
+     @media only screen and (max-width: 640px) {
+        top: 5px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.modal-icon {
+  font-size: 1rem;
+  margin: 0;
+  color: $white;
+    @media only screen and (max-width: 640px) {
+        font-size: 0.8rem;
+      }
 }
 
 .modal-body {
