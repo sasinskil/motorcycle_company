@@ -25,7 +25,8 @@ public class ServiceMotService {
 
         if(checkIsSold) {
             if(service.getEndWorkingDate() != null) {
-                if(service.getStartWorkingDate().isBefore(service.getEndWorkingDate())) {
+                if(service.getStartWorkingDate().isBefore(service.getEndWorkingDate())
+                        || service.getStartWorkingDate().isEqual(service.getEndWorkingDate())) {
                     _serviceRepository.save(service);
                 }
             } else {

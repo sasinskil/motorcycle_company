@@ -189,7 +189,7 @@ export default {
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/services');
-          }, 1500);
+          }, 2000);
         })
         .catch((err) => {
            this.showModal = true;

@@ -30,8 +30,8 @@ public class TransactionService {
         if(!checkIsSold) {
             motorcycleDetails.setIsSold(Boolean.TRUE);
             _motorcycleDetailsService.saveSimpleMotorcycle(motorcycleDetails);
-            _transactionRepository.save(transaction);
         }
+        _transactionRepository.save(transaction);
     }
 
     public Transaction getById(long id) {

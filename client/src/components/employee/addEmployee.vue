@@ -213,7 +213,7 @@ export default {
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/employees');
-          }, 1500);
+          }, 2000);
         })
         .catch(() => {
            this.showModal = true;

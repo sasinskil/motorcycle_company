@@ -100,7 +100,7 @@ export default {
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/transactions');
-          }, 1500);
+          }, 2000);
         })
         .catch(() => {
            this.showModal = true;

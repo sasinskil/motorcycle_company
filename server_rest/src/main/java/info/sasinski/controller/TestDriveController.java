@@ -145,7 +145,7 @@ public class TestDriveController extends ControllerBase {
 
         byId.setStartDrive(testDrive.getStartDrive());
         byId.setEndDrive(testDrive.getEndDrive());
-        
+
         _testDriveService.saveTestDrive(byId);
         return noContent();
     }
