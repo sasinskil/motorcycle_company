@@ -21,7 +21,7 @@ public class TestDrive implements Serializable {
     @Id
     @SequenceGenerator(name = "gen_test_drives", sequenceName = "seq_test_drives", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_test_drives")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     Long id;
 
     @Column(name = "start_drive")

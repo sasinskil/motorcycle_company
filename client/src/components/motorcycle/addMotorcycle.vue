@@ -179,7 +179,6 @@ export default {
       if(isValid) {
         this.$http.post(`${motorcycleUrl}`, this.motorcycle)
         .then(() => {
-          this.clear();
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/motorcycles');

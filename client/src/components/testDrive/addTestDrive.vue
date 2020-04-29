@@ -164,7 +164,6 @@ export default {
         this.testDrive.endDrive = moment(String(this.testDrive.endDrive)).format('YYYY-MM-DD HH:mm');
         this.$http.post(`${testDriveUrl}`, this.testDrive)
         .then(() => {
-          this.clear();
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/testDrives');

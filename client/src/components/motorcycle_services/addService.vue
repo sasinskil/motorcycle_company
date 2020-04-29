@@ -186,15 +186,15 @@ export default {
       if(isValid) {
         this.$http.post(`${serviceUrl}`, this.service)
         .then(() => {
-          this.clear();
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/services');
           }, 1500);
         })
-        .catch(() => {
+        .catch((err) => {
            this.showModal = true;
            this.errors.push("Podałeś/aś niepoprawne dane, sprawdź ponownie!");
+           console.log(err);
           })
       } else {
         this.showModal = true;

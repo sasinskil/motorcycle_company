@@ -210,7 +210,6 @@ export default {
       if(isValid) {
         this.$http.post(`${employeeUrl}`, this.employee)
         .then(() => {
-          this.clear();
           this.submitted = true;
           setTimeout(() => {
             this.$router.push('/employees');

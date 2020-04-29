@@ -145,7 +145,6 @@ public class TransactionController extends ControllerBase {
 
         transaction.setId(id);
         _transactionService.saveTransaction(transaction);
-
         return noContent();
     }
 

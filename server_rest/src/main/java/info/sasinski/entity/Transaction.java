@@ -23,7 +23,7 @@ public class Transaction implements Serializable {
     @Id
     @SequenceGenerator(name = "gen_transactions", sequenceName = "seq_transactions", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_transactions")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     Long id;
 
     @Column
