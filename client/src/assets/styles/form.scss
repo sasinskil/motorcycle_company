@@ -33,7 +33,7 @@
     }
     &__send-button {
       margin: 1rem 0;
-     @include default-button($navy-blue);
+     @include default-button-primary($navy-blue);
     }
     &__clear-button {
       margin: 1rem 0 0 0.5rem;

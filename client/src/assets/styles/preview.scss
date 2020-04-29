@@ -162,7 +162,7 @@
   }
 
   .join {
-    @include default-button($dark-green);
+    @include default-button-primary($dark-green);
    }
 
    .single-customer__button,
