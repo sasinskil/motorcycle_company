@@ -95,7 +95,7 @@ Vue.http.interceptors.push((request, next) => {
 
   next(response => {
 
-    if(response.status === 400 || response.status === 401 || response.status === 403) {
+    if(response.status === 401 || response.status === 403) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('authorised');

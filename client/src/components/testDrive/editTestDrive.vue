@@ -92,8 +92,7 @@ export default {
     put() {
       const isValid = this.checkForm();
       if(isValid) {
-        this.testDrive.startDrive = moment(String(this.testDrive.startDrive)).format('YYYY-MM-DD HH:mm');
-        this.testDrive.endDrive = moment(String(this.testDrive.endDrive)).format('YYYY-MM-DD HH:mm');
+        this.checkIsDateEmpty();
         this.$http.put(`${testDriveUrl}/${this.testDriveId}`, this.testDrive)
         .then(() => {
           this.submitted = true;
@@ -115,7 +114,9 @@ export default {
           .then(object => {
               const {startDrive, endDrive, customer, employee, motorcycleDetails} = object;
               this.testDrive.startDrive = moment(String(startDrive)).format('YYYY-MM-DDTHH:mm');
-              this.testDrive.endDrive = moment(String(endDrive)).format('YYYY-MM-DDTHH:mm');
+              if(this.testDrive.endDrive) {
+                this.testDrive.endDrive = moment(String(endDrive)).format('YYYY-MM-DDTHH:mm');
+               }
               this.testDrive.customer = customer;
               this.testDrive.employee = employee;
               this.testDrive.motorcycleDetails = motorcycleDetails;
@@ -126,7 +127,13 @@ export default {
         },
     close() {
       this.showModal = false;
-    }
+    },
+    checkIsDateEmpty() {
+      this.testDrive.startDrive = moment(String(this.testDrive.startDrive)).format('YYYY-MM-DD HH:mm');
+      if(this.testDrive.endDrive) {
+        this.testDrive.endDrive = moment(String(this.testDrive.endDrive)).format('YYYY-MM-DD HH:mm');
+      }
+    },
   },
   created() {
       this.getMotorcycleDetails();

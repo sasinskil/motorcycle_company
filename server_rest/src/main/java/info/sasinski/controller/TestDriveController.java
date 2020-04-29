@@ -143,8 +143,10 @@ public class TestDriveController extends ControllerBase {
             return conflict(new ConstraintViolationsResponse("409", "Validation failure", errors));
         }
 
-        testDrive.setId(id);
-        _testDriveService.saveTestDrive(testDrive);
+        byId.setStartDrive(testDrive.getStartDrive());
+        byId.setEndDrive(testDrive.getEndDrive());
+        
+        _testDriveService.saveTestDrive(byId);
         return noContent();
     }
 
