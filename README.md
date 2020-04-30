@@ -29,7 +29,21 @@ npm run build
 ```
 - create database: motorcycle_company
 - launch the application - automatically create a database structure
-- prepare user with admin rights
+- insert sql roles script:
+  INSERT INTO roles (id, name)
+  VALUES
+    (1,'ROLE_ADMIN'),
+    (2,'ROLE_USER')
+- prepare user with admin rights (for example, using a postman):
+   'http://localhost:9090/api/auth/signup' method 'POST'
+   {
+    "name" : "user",
+    "username" : "userName",
+    "email" : "user@gmail.com",
+    "role" : ["admin","user"],
+    "password" : "password"
+  }
+
 ```
 Enjoy 😎
 
