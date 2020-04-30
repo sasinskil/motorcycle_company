@@ -110,7 +110,7 @@ table thead th {
 }
 
 .add {
-  @include default-button($dark-green);
+  @include default-button-primary($dark-green);
 }
 
 .details {
