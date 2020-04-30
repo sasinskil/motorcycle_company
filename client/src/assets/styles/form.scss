@@ -136,7 +136,7 @@
         border-radius: 50%;
         background: $dark-green;
         cursor: pointer;
-        animation: pulse 1.5s infinite;
+        animation: pulse 1s infinite;
         @media only screen and (max-width: 640px) {
           top: 16px;
           width: 25px;
