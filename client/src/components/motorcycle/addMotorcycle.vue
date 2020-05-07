@@ -122,7 +122,7 @@ export default {
           power: '',
           weight:'',
       },
-      classifications: ['Supersport','Cross','Custom','Sport_Adventure_Tourer'],
+      classifications: ['Supersport','Cross','Custom'],
       submitted: false,
       errors: [],
       visible: false,

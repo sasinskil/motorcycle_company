@@ -86,7 +86,7 @@ export default {
           power: '',
           weight:'',
       },
-      classifications: ['Supersport','Cross','Custom','Sport_Adventure_Tourer'],
+      classifications: ['Supersport','Cross','Custom'],
       motorcycleId: this.$route.params.id,
       submitted: false,
       errors: [],
