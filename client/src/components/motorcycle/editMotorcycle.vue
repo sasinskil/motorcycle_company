@@ -1,6 +1,6 @@
 <template>
   <div id="editMotorcycle" class="main-container--edit">
-     <h1 class="main-container--edit__title">Modyfikuj motocykl: {{motorcycle.model}}</h1>
+     <h1 class="main-container--edit__title">Modyfikuj model z katalogu: {{motorcycle.model}}</h1>
      
     <button class="single-motorcycle__button" @click="back"><font-awesome-icon class="plus-icon icon" icon="arrow-left" />Powrót</button>
     <form class="form">
@@ -43,7 +43,10 @@
           </li>
         </ul>
       </p>
-      <button class="form__send-button join" @click.prevent="put"><font-awesome-icon class="plus-icon icon" icon="check" />Zatwierdź</button>
+      <div class="buttons-wrapper">
+        <button class="form__send-button join" @click.prevent="put"><font-awesome-icon class="plus-icon icon" icon="check" />Zatwierdź</button>
+        <button class="form__send-button delete" @click.prevent="deleteMotFromCatalogue"><font-awesome-icon class="plus-icon icon" icon="trash-alt" />Usuń</button>
+      </div>
     </form>
 
     <div class="after-post" v-if="submitted">
