@@ -45,7 +45,7 @@
       </p>
       <div class="buttons-wrapper">
         <button class="form__send-button join" @click.prevent="put"><font-awesome-icon class="plus-icon icon" icon="check" />Zatwierdź</button>
-        <button class="form__send-button delete" @click.prevent="deleteMotFromCatalogue"><font-awesome-icon class="plus-icon icon" icon="trash-alt" />Usuń</button>
+        <button v-if="mayBeRemoved" class="form__send-button delete" @click.prevent="deleteMotFromCatalogue"><font-awesome-icon class="plus-icon icon" icon="trash-alt" />Usuń</button>
       </div>
     </form>
 
@@ -66,17 +66,26 @@
       :bodyText="modalBodyContent"
       @confirm="close"
     />
+    <ActionModal
+      v-if="showActionModal"
+      :headerText="modalHeaderContent"
+      :bodyText="modalBodyContent"
+      @action="doAction"
+      @cancel="close"
+    />
   </div>
 </template>
 
 <script>
-import { motorcycleUrl } from "@/variables";
+import { motorcycleUrl, motorcycleDetailsUrl } from "@/variables";
 import InfoModal from "@/components/modal/InfoModal";
+import ActionModal from "@/components/modal/ActionModal";
 
 export default {
   name: "editMotorcycle",
   components: {
-    InfoModal
+    InfoModal,
+    ActionModal
   },
   data() {
     return {
@@ -97,7 +106,9 @@ export default {
       hideErrors: false,
       modalHeaderContent: "Uwaga",
       modalBodyContent: "Coś poszło nie tak, sprawdź błędy!",
-      showModal: false
+      mayBeRemoved: true,
+      showModal: false,
+      showActionModal: false
     };
   },
   methods: {
@@ -153,6 +164,27 @@ export default {
         this.showModal = true;
       }
     },
+    doAction() {
+          this.$http
+          .delete(`${motorcycleUrl}/${this.motorcycleId}`)
+          .then(() => {
+            this.showActionModal = false;
+            setTimeout(() => {
+                this.$router.push("/motorcycles");
+            }, 300);
+          })
+          .catch(() => {
+            this.showActionModal = false;
+            this.modalHeaderContent = "Uwaga";
+            this.modalBodyContent = "Model motocykla z katalogu nie może zostać usunięty !";
+            this.showInfoModal = true;
+          });
+    },
+    deleteMotFromCatalogue() {
+      this.modalHeaderContent = "Uwaga";
+      this.modalBodyContent = `Czy na pewno chcesz usunąć model motocykla z katalogu ?`;
+      this.showActionModal = true;
+    },
     getMotorcycle() {
            this.$http.get(`${motorcycleUrl}/${this.motorcycleId}`)
           .then(response => response.json())
@@ -170,11 +202,29 @@ export default {
             console.log(err)
             })
         },
+    getMotorcyclesInStock() {
+      this.$http
+        .get(`${motorcycleDetailsUrl}`)
+        .then(response => response.json())
+        .then(objects => {
+          objects.forEach((el) => {
+            if(el.motorcycle.id == this.motorcycleId) {
+              this.mayBeRemoved = false;
+            }
+          })
+          }
+        )
+        .catch(err => {
+          console.log(err);
+        });
+    },
     close() {
       this.showModal = false;
+      this.showActionModal = false;
     }
   },
   created() {
+      this.getMotorcyclesInStock();
       this.getMotorcycle();
   }
 };

@@ -5,7 +5,6 @@ import info.sasinski.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,14 +13,6 @@ import java.util.List;
 public class EmployeeService {
 
     final EmployeeRepository _employeeRepository;
-
-    public List<Employee> findAllByDateOfEmployment(LocalDate dateOfEmployment) {
-        return _employeeRepository.findAllByDateOfEmployment(dateOfEmployment);
-    }
-
-    public int countByFirstNameIgnoreCase(String firstName) {
-        return _employeeRepository.countByFirstNameIgnoreCase(firstName);
-    }
 
     public long countEmployees() { return _employeeRepository.count(); }
 

@@ -39,16 +39,6 @@ public class CustomerController extends ControllerBase {
                 ok(customerById);
     }
 
-    @PutMapping("/change/{id:\\d+}/{newLastName}")
-    public ResponseEntity<Void> put(@PathVariable("id") long id, @PathVariable("newLastName") String newLastName) {
-        Customer customerById = _customerService.findCustomerById(id);
-        if (customerById != null) {
-            _customerService.setLastNameForCustomer(newLastName, id);
-            return noContent();
-        }
-        return notFound();
-    }
-
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ok(_customerService.countCustomers());

@@ -40,20 +40,6 @@ public class MotorcycleController extends ControllerBase {
                 ok(motorcycleById);
     }
 
-    @GetMapping("/byBrand/{brand}")
-    public ResponseEntity<List<Motorcycle>> get(@PathVariable("brand") String brand) {
-        List<Motorcycle> byBrand = _motorcycleService.findByBrand(brand);
-        return ok(byBrand.isEmpty() ? get().getBody() : byBrand);
-    }
-
-    @GetMapping("/powerGreaterThan/{power}")
-    public ResponseEntity<List<Motorcycle>> get(@PathVariable("power") int pow) {
-        List<Motorcycle> byPower = _motorcycleService.powerGreaterThan(pow);
-        return byPower.isEmpty() ?
-                notFound() :
-                ok(byPower);
-    }
-
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ok(_motorcycleService.countMotorcyclesInStock());
@@ -98,5 +84,15 @@ public class MotorcycleController extends ControllerBase {
         _motorcycleService.saveMotorcycle(motorcycle);
 
         return noContent();
+    }
+
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
+        Motorcycle motorcycleFromCatalogueById = _motorcycleService.getMotorcycleById(id);
+        if (motorcycleFromCatalogueById != null) {
+            _motorcycleService.removeMotorcycleFromCatalogue(id);
+            return noContent();
+        }
+        return notFound();
     }
 }

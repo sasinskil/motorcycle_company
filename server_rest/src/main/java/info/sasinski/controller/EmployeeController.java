@@ -5,14 +5,12 @@ import info.sasinski.service.EmployeeService;
 import info.sasinski.transfer.response.ConstraintViolationsResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,22 +39,9 @@ public class EmployeeController extends ControllerBase {
                 ok(employeeById);
     }
 
-    @GetMapping("/countByFirstName/{firstName}")
-    public ResponseEntity<Integer> get(@PathVariable("firstName") String firstName) {
-        return ok(_employeeService.countByFirstNameIgnoreCase(firstName));
-    }
-
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ok(_employeeService.countEmployees());
-    }
-
-    @GetMapping("/allByDateOfEmployment/{date}")
-    public ResponseEntity<List<Employee>> get(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("date") LocalDate dateOfEmployment) {
-        List<Employee> byDateOfEmployment = _employeeService.findAllByDateOfEmployment(dateOfEmployment);
-        return byDateOfEmployment.isEmpty() ?
-                notFound() :
-                ok(byDateOfEmployment);
     }
 
     @PostMapping

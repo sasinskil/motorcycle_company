@@ -14,10 +14,6 @@ public class CustomerService {
 
     final CustomerRepository _customerRepository;
 
-    public void setLastNameForCustomer(String newLastName, long id) {
-        _customerRepository.setLastNameForCustomer(newLastName, id);
-    }
-
     public Customer findCustomerById(long id) {
         return _customerRepository.findById(id).orElse(null);
     }

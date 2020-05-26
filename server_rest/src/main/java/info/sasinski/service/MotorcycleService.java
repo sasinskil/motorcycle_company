@@ -22,16 +22,12 @@ public class MotorcycleService {
         return _motorcycleRepository.findAll();
     }
 
-    public List<Motorcycle> findByBrand(String brand) {
-        return _motorcycleRepository.findAllByBrand(brand);
-    }
-
-    public List<Motorcycle> powerGreaterThan(int pow) {
-        return _motorcycleRepository.findAllByPowerGreaterThan(pow);
-    }
-
     public long countMotorcyclesInStock() {
         return _motorcycleRepository.count();
+    }
+
+    public void removeMotorcycleFromCatalogue(long id) {
+        _motorcycleRepository.deleteById(id);
     }
 
     public void saveMotorcycle(Motorcycle motorcycle) {
